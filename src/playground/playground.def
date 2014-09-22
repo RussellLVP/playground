@@ -1,0 +1,8 @@
+LIBRARY	"Playground"
+EXPORTS
+    Load
+	Unload
+    Supports
+	AmxLoad
+	AmxUnload
+	ProcessTick
