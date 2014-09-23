@@ -13,36 +13,13 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <stdio.h>
+#include "playground/playground.h"
 
-#include "playground/playground_export.h"
+Playground::Playground(ServerInterface* server_interface)
+    : server_interface_(server_interface) {
 
-typedef struct AMX AMX;
-
-PLAYGROUND_EXPORT(bool) Load(void** data) {
-  printf("Playground::Load()\n");
-  return true;
 }
 
-PLAYGROUND_EXPORT(void) Unload() {
-  printf("Playground::Unload()\n");
-}
+Playground::~Playground() {}
 
-PLAYGROUND_EXPORT(unsigned int) Supports() {
-  printf("Playground::Supports()\n");
-  return 0;
-}
-
-PLAYGROUND_EXPORT(int) AmxLoad(AMX* amx) {
-  printf("Playground::AmxLoad()\n");
-  return 0;
-}
-
-PLAYGROUND_EXPORT(int) AmxUnload(AMX* amx) {
-  printf("Playground::AmxUnload()\n");
-  return 0;
-}
-
-PLAYGROUND_EXPORT(void) ProcessTick() {
-  printf("Playground::ProcessTick()\n");
-}
+void Playground::ProcessTick() {}

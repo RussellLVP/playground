@@ -12,12 +12,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="playground.cpp" />
+    <ClCompile Include="plugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="playground_export.h" />
+    <None Include="plugin.def" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="playground.def" />
+    <ClInclude Include="playground.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\base\base.vcxproj">
+      <Project>{dc7ba198-5b47-4d2e-b1ff-83819244a048}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\server\server.vcxproj">
+      <Project>{c08eb11f-1b0b-4a1a-a999-00eaaf701ae6}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6A609C4A-9644-4667-9F11-FA999EE2E6ED}</ProjectGuid>
@@ -65,7 +74,8 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ModuleDefinitionFile>playground.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>plugin.def</ModuleDefinitionFile>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -82,6 +92,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>plugin.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

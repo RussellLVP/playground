@@ -13,13 +13,22 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PLAYGROUND_PLAYGROUND_EXPORT_H_
-#define PLAYGROUND_PLAYGROUND_EXPORT_H_
+#ifndef PLAYGROUND_PLAYGROUND_H_
+#define PLAYGROUND_PLAYGROUND_H_
 
-#if defined(WINDOWS)
-#define PLAYGROUND_EXPORT(type) extern "C" type __stdcall
-#else  // !defined(WINDOWS)
-#define PLAYGROUND_EXPORT(type) extern "C" __attribute__((visibility("default"))) type
-#endif
+class ServerInterface;
 
-#endif  // PLAYGROUND_PLAYGROUND_EXPORT_H_
+class Playground {
+ public:
+  explicit Playground(ServerInterface* server_interface);
+  ~Playground();
+
+  // Called when the server's main thread has finished its event loop.
+  void ProcessTick();
+
+private:
+  // Weak pointer which' lifetime is controlled by the plugin runtime.
+  ServerInterface* server_interface_;
+};
+
+#endif  // PLAYGROUND_PLAYGROUND_H_
