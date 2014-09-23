@@ -23,6 +23,15 @@
 // TODO(Russell): Replace this with some minimalistic but real AMX runtime.
 typedef struct AMX AMX;
 
+// Values of the flags which could be supported by the plugin. The Supports() function will return
+// an OR'ed list of these values.
+enum PluginSupportFlags {
+  PluginVersion               = 0x0200,
+  PluginVersionMask           = 0xFFFF,
+  PluginSupportsAmxNatives    = 0x10000,
+  PluginSupportsProcessTick   = 0x20000
+};
+
 // Loads a given plugin, which must conform to the architecture and exported functions of a SA-MP
 // plugin, as a plugin. The loader will automatically free the library in the destructor.
 //
