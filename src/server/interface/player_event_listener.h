@@ -13,15 +13,17 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "playground/playground.h"
+#ifndef SERVER_INTERFACE_PLAYER_EVENT_LISTENER_H_
+#define SERVER_INTERFACE_PLAYER_EVENT_LISTENER_H_
 
-#include "server/server_interface.h"
+// The player event listener defines the events which will be triggered for players connecting to
+// the server. This is done at a higher level than the SA-MP event handling, in that we pass in the
+// Player objects and C++ types rather than the Pawn runtime information.
+class PlayerEventListener {
+ public:
+  virtual ~PlayerEventListener() {}
 
-Playground::Playground(ServerInterface* server_interface)
-    : server_interface_(server_interface) {
-  server_interface_->AttachEventListener(&player_manager_);
-}
+  virtual void OnPlayerConnect() = 0;
+};
 
-Playground::~Playground() {}
-
-void Playground::ProcessTick() {}
+#endif  // SERVER_INTERFACE_PLAYER_EVENT_LISTENER_H_

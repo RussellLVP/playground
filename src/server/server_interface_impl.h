@@ -16,26 +16,28 @@
 #ifndef SERVER_SERVER_INTERFACE_IMPL_H_
 #define SERVER_SERVER_INTERFACE_IMPL_H_
 
-#include "server/interface/samp_event_listener.h"
+#include <list>
+
+#include "server/interface/samp/event_listener.h"
 #include "server/server_interface.h"
 
-// The server interface is the primary layer between the SA-MP server and the Las Venturas
-// Playground gamemode logic, neither of which know directly about each other. It also serves as
-// the native event delegation class into more specific types.
 class ServerInterfaceImpl : public ServerInterface,
-                            public SampEventListener {
+                            public samp::EventListener {
  public:
-  // |data| should map to whatever the plugin's Load() function gives us.
   explicit ServerInterfaceImpl(void** data);
   virtual ~ServerInterfaceImpl();
 
-  // Events which will be triggered by the plugin, and allow the interface to keep track of the
-  // available scripts on the server.
+  // ServerInterface implementation.
+  virtual void AttachEventListener(PlayerEventListener* player_event_listener) override;
+  virtual void RemoveEventListener(PlayerEventListener* player_event_listener) override;
   virtual void DidLoadScript(AMX* amx) override;
   virtual void DidUnloadScript(AMX* amx) override;
 
-  // SampEventListener implementation.
+  // samp::EventListener implementation.
   virtual void OnPlayerConnect(int player_id) override;
+
+ private:
+  std::list<PlayerEventListener*> player_event_listeners_;
 };
 
 #endif  // SERVER_SERVER_INTERFACE_IMPL_H_

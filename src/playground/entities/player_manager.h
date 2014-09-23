@@ -13,15 +13,19 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "playground/playground.h"
+#ifndef PLAYGROUND_ENTITIES_PLAYER_MANAGER_H_
+#define PLAYGROUND_ENTITIES_PLAYER_MANAGER_H_
 
-#include "server/server_interface.h"
+#include "server/interface/player_event_listener.h"
 
-Playground::Playground(ServerInterface* server_interface)
-    : server_interface_(server_interface) {
-  server_interface_->AttachEventListener(&player_manager_);
-}
+// The Player manager keeps track of all the players which are connected to Las Venturas Playground,
+// and receives and delegates events related to them. It provides methods to query the players.
+class PlayerManager : public PlayerEventListener {
+ public:
+  PlayerManager();
 
-Playground::~Playground() {}
+  // PlayerEventListener implementation.
+  virtual void OnPlayerConnect() override;
+};
 
-void Playground::ProcessTick() {}
+#endif  // PLAYGROUND_ENTITIES_PLAYER_MANAGER_H_

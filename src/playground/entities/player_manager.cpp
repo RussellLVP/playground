@@ -13,16 +13,12 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SERVER_INTERFACE_SAMP_EVENT_LISTENER_H_
-#define SERVER_INTERFACE_SAMP_EVENT_LISTENER_H_
+#include "playground/entities/player_manager.h"
 
-// Pure virtual interface defining the available SA-MP events which can be forwarded to the
-// implementation. These are direct mappings of the native SA-MP events.
-class SampEventListener {
- public:
-  virtual ~SampEventListener() {}
+#include <stdio.h>
 
-  virtual void OnPlayerConnect(int player_id) = 0;
-};
+PlayerManager::PlayerManager() {}
 
-#endif  // SERVER_INTERFACE_SAMP_EVENT_LISTENER_H_
+void PlayerManager::OnPlayerConnect() {
+  printf("A new player has connected!\n");
+}

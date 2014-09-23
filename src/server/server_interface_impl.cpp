@@ -15,7 +15,7 @@
 
 #include "server/server_interface_impl.h"
 
-#include "server/sdk/plugincommon.h"
+#include "server/interface/player_event_listener.h"
 
 // -------------------------------------------------------------------------------------------------
 
@@ -30,8 +30,30 @@ ServerInterfaceImpl::ServerInterfaceImpl(void** data) {}
 
 ServerInterfaceImpl::~ServerInterfaceImpl() {}
 
+// -------------------------------------------------------------------------------------------------
+
+// Because several types of event listeners will be supported, all following exactly the same logic
+// for attaching and removing event listeners, we'll avoid manually duplicating a lot of code by
+// defining the two methods required for each type as part of a macro.
+#define WRITE_EVENT_LISTENER(type, member) \
+  void ServerInterfaceImpl::AttachEventListener(type* listener) { \
+    member.push_back(listener); \
+  } \
+  void ServerInterfaceImpl::RemoveEventListener(type* listener) { \
+    member.remove(listener); \
+  }
+
+WRITE_EVENT_LISTENER(PlayerEventListener, player_event_listeners_);
+
+// -------------------------------------------------------------------------------------------------
+
 void ServerInterfaceImpl::DidLoadScript(AMX* amx) {}
 
 void ServerInterfaceImpl::DidUnloadScript(AMX* amx) {}
 
-void ServerInterfaceImpl::OnPlayerConnect(int player_id) {}
+// -------------------------------------------------------------------------------------------------
+
+void ServerInterfaceImpl::OnPlayerConnect(int player_id) {
+  for (PlayerEventListener* listener : player_event_listeners_)
+    listener->OnPlayerConnect();
+}

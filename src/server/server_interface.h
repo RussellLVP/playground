@@ -16,6 +16,8 @@
 #ifndef SERVER_SERVER_INTERFACE_H_
 #define SERVER_SERVER_INTERFACE_H_
 
+class PlayerEventListener;
+
 typedef struct AMX AMX;
 
 // The server interface is the primary layer between the SA-MP server and the Las Venturas
@@ -26,6 +28,13 @@ class ServerInterface {
   // Creates a new implementation of the ServerInterface class. The |data| argument should be
   // set to whatever the SA-MP server gives us as part of loading the plugin.
   static ServerInterface* Create(void** data);
+
+  // Attaches a new event listener of type |interface|. Any number of event listeners may be
+  // registered for each type, but earlier interfaces get priority when the return value matters.
+  virtual void AttachEventListener(PlayerEventListener* player_event_listener) = 0;
+
+  // Removes |interface| from the list of event listeners for the relevant type.
+  virtual void RemoveEventListener(PlayerEventListener* player_event_listener) = 0;
 
   // Events which will be triggered by the plugin, and allow the interface to keep track of the
   // available scripts on the server.

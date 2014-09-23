@@ -16,8 +16,12 @@
 #ifndef PLAYGROUND_PLAYGROUND_H_
 #define PLAYGROUND_PLAYGROUND_H_
 
+#include "playground/entities/player_manager.h"
+
 class ServerInterface;
 
+// The Playground class is the core object providing the Las Venturas Playground C++ game logic. It
+// owns the different managers, receives critical events and talks to the individual features.
 class Playground {
  public:
   explicit Playground(ServerInterface* server_interface);
@@ -29,6 +33,9 @@ class Playground {
 private:
   // Weak pointer which' lifetime is controlled by the plugin runtime.
   ServerInterface* server_interface_;
+
+  // 
+  PlayerManager player_manager_;
 };
 
 #endif  // PLAYGROUND_PLAYGROUND_H_

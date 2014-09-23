@@ -13,15 +13,20 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "playground/playground.h"
+#ifndef SERVER_INTERFACE_SAMP_EVENT_LISTENER_H_
+#define SERVER_INTERFACE_SAMP_EVENT_LISTENER_H_
 
-#include "server/server_interface.h"
+namespace samp {
 
-Playground::Playground(ServerInterface* server_interface)
-    : server_interface_(server_interface) {
-  server_interface_->AttachEventListener(&player_manager_);
-}
+// Pure virtual interface defining the available SA-MP events which can be forwarded to the
+// implementation. These are direct mappings of the native SA-MP events.
+class EventListener {
+ public:
+  virtual ~EventListener() {}
 
-Playground::~Playground() {}
+  virtual void OnPlayerConnect(int player_id) = 0;
+};
 
-void Playground::ProcessTick() {}
+}  // namespace samp
+
+#endif  // SERVER_INTERFACE_SAMP_EVENT_LISTENER_H_
