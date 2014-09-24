@@ -16,9 +16,13 @@
 #ifndef SERVER_SERVER_INTERFACE_H_
 #define SERVER_SERVER_INTERFACE_H_
 
+#include <string>
+
+#include "server/native_function.h"
+
 class PlayerEventListener;
 
-typedef struct AMX AMX;
+typedef struct tagAMX AMX;
 
 // The server interface is the primary layer between the SA-MP server and the Las Venturas
 // Playground gamemode logic, neither of which know directly about each other. It also serves as
@@ -28,6 +32,9 @@ class ServerInterface {
   // Creates a new implementation of the ServerInterface class. The |data| argument should be
   // set to whatever the SA-MP server gives us as part of loading the plugin.
   static ServerInterface* Create(void** data);
+
+  // Provides a native called |name| to each of the AMX files which will be loaded in the server.
+  virtual void ProvideNativeFunction(const std::string& name, const NativeFunction& implementation) = 0;
 
   // Attaches a new event listener of type |interface|. Any number of event listeners may be
   // registered for each type, but earlier interfaces get priority when the return value matters.

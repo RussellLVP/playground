@@ -32,6 +32,12 @@ ServerInterfaceImpl::~ServerInterfaceImpl() {}
 
 // -------------------------------------------------------------------------------------------------
 
+void ServerInterfaceImpl::ProvideNativeFunction(const std::string& name, const NativeFunction& implementation) {
+  native_function_manager_.ProvideNativeFunction(name, implementation);
+}
+
+// -------------------------------------------------------------------------------------------------
+
 // Because several types of event listeners will be supported, all following exactly the same logic
 // for attaching and removing event listeners, we'll avoid manually duplicating a lot of code by
 // defining the two methods required for each type as part of a macro.
@@ -47,7 +53,9 @@ WRITE_EVENT_LISTENER(PlayerEventListener, player_event_listeners_);
 
 // -------------------------------------------------------------------------------------------------
 
-void ServerInterfaceImpl::DidLoadScript(AMX* amx) {}
+void ServerInterfaceImpl::DidLoadScript(AMX* amx) {
+  native_function_manager_.DidLoadScript(amx);
+}
 
 void ServerInterfaceImpl::DidUnloadScript(AMX* amx) {}
 

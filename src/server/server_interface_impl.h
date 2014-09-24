@@ -19,6 +19,7 @@
 #include <list>
 
 #include "server/interface/samp/event_listener.h"
+#include "server/native_function_manager.h"
 #include "server/server_interface.h"
 
 class ServerInterfaceImpl : public ServerInterface,
@@ -28,6 +29,7 @@ class ServerInterfaceImpl : public ServerInterface,
   virtual ~ServerInterfaceImpl();
 
   // ServerInterface implementation.
+  virtual void ProvideNativeFunction(const std::string& name, const NativeFunction& implementation) override;
   virtual void AttachEventListener(PlayerEventListener* player_event_listener) override;
   virtual void RemoveEventListener(PlayerEventListener* player_event_listener) override;
   virtual void DidLoadScript(AMX* amx) override;
@@ -37,6 +39,8 @@ class ServerInterfaceImpl : public ServerInterface,
   virtual void OnPlayerConnect(int player_id) override;
 
  private:
+  NativeFunctionManager native_function_manager_;
+
   std::list<PlayerEventListener*> player_event_listeners_;
 };
 
