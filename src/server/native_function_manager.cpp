@@ -18,6 +18,7 @@
 #include <array>
 
 #include "base/logging.h"
+#include "server/native_arguments.h"
 #include "server/sdk/amx.h"
 
 namespace {
@@ -56,9 +57,7 @@ class NativeTrampoline {
   static cell Invoke(AMX* amx, cell* parameters) {
     DCHECK((parameters[0] % 4) == 0) << "Invalid parameter count in Pawn call.";
 
-    // TODO(Russell): Create a NativeFunction instance so that we can conveniently wrap |amx| and
-    //                |parameters| for much easier access to their values.
-    return callback_list_[Index](parameters[0] / 4, 0);
+    return callback_list_[Index](NativeArguments(amx, parameters));
   }
 
   // Finds the appropriate Invoke<Index> function to refer to by finding |index| within the range

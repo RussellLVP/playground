@@ -18,9 +18,10 @@
 
 #include <functional>
 
+class NativeArguments;
+
 // Signature which a native function information has to conform to. The |arguments| parameter will
-// contain an array of signed intergers of size |argument_count|, the values of which may be
-// passed through one of the NativeFunction helpers to get the real value.
-typedef std::function<int(int, int)> NativeFunction;
+// contain an object which may be used to get and set values passed as function arguments.
+typedef std::function<int(NativeArguments&)> NativeFunction;
 
 #endif  // SERVER_NATIVE_FUNCTION_H_

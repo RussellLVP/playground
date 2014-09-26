@@ -75,11 +75,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="native_arguments.h" />
     <ClInclude Include="native_function.h" />
     <ClInclude Include="native_function_manager.h" />
     <ClInclude Include="interface\player_event_listener.h" />
     <ClInclude Include="interface\samp\event_listener.h" />
-    <ClInclude Include="interface\samp\native.h" />
     <ClInclude Include="sdk\amx.h" />
     <ClInclude Include="sdk\plugincommon.h" />
     <ClInclude Include="sdk\sclinux.h" />
@@ -87,6 +87,7 @@
     <ClInclude Include="server_interface_impl.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="native_arguments.cpp" />
     <ClCompile Include="native_function_manager.cpp" />
     <ClCompile Include="sdk\amxplugin.cpp" />
     <ClCompile Include="server_interface_impl.cpp" />
