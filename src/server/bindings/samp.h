@@ -16,9 +16,9 @@
 #ifndef SERVER_BINDINGS_SAMP_H_
 #define SERVER_BINDINGS_SAMP_H_
 
-// Generated on 2014-09-27 at 03:03:47.
+// Generated on 2014-09-27 at 03:13:47 GMT Summer Time.
 // Do not modify by hand, instead, look at /scripts/write_bindings.py.
-namespace bindings {
+namespace samp {
 
 #define MAX_PLAYER_NAME (24)
 #define MAX_PLAYERS (500)
@@ -340,6 +340,6 @@ int UpdatePlayer3DTextLabelText(int playerid, int id, int color, char* text);
 
 int ShowPlayerDialog(int playerid, int dialogid, int style, char* caption, char* info, char* button1, char* button2);
 
-}  // namespace bindings
+}  // namespace samp
 
 #endif  // SERVER_BINDINGS_SAMP_H_

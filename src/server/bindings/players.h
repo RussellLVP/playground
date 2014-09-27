@@ -16,9 +16,9 @@
 #ifndef SERVER_BINDINGS_PLAYERS_H_
 #define SERVER_BINDINGS_PLAYERS_H_
 
-// Generated on 2014-09-27 at 03:03:47.
+// Generated on 2014-09-27 at 03:13:47 GMT Summer Time.
 // Do not modify by hand, instead, look at /scripts/write_bindings.py.
-namespace bindings {
+namespace samp {
 
 #define SPECIAL_ACTION_NONE 0
 #define SPECIAL_ACTION_DUCK 1
@@ -314,6 +314,6 @@ int StartRecordingPlayerData(int playerid, int recordtype, char* recordname);
 
 int StopRecordingPlayerData(int playerid);
 
-}  // namespace bindings
+}  // namespace samp
 
 #endif  // SERVER_BINDINGS_PLAYERS_H_

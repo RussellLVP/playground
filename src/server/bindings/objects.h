@@ -16,9 +16,9 @@
 #ifndef SERVER_BINDINGS_OBJECTS_H_
 #define SERVER_BINDINGS_OBJECTS_H_
 
-// Generated on 2014-09-27 at 03:03:47.
+// Generated on 2014-09-27 at 03:13:47 GMT Summer Time.
 // Do not modify by hand, instead, look at /scripts/write_bindings.py.
-namespace bindings {
+namespace samp {
 
 int CreateObject(int modelid, float X, float Y, float Z, float rX, float rY, float rZ, float DrawDistance);
 
@@ -68,6 +68,6 @@ int IsPlayerObjectMoving(int playerid, int objectid);
 
 int AttachPlayerObjectToPlayer(int objectplayer, int objectid, int attachplayer, float OffsetX, float OffsetY, float OffsetZ, float rX, float rY, float rZ);
 
-}  // namespace bindings
+}  // namespace samp
 
 #endif  // SERVER_BINDINGS_OBJECTS_H_

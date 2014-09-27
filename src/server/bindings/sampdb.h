@@ -16,9 +16,9 @@
 #ifndef SERVER_BINDINGS_SAMPDB_H_
 #define SERVER_BINDINGS_SAMPDB_H_
 
-// Generated on 2014-09-27 at 03:03:47.
+// Generated on 2014-09-27 at 03:13:47 GMT Summer Time.
 // Do not modify by hand, instead, look at /scripts/write_bindings.py.
-namespace bindings {
+namespace samp {
 
 int db_open(char* name);
 
@@ -40,6 +40,6 @@ int db_get_field(int dbresult, int field, char* result, int maxlength);
 
 int db_get_field_assoc(int dbresult, char* field, char* result, int maxlength);
 
-}  // namespace bindings
+}  // namespace samp
 
 #endif  // SERVER_BINDINGS_SAMPDB_H_

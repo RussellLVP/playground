@@ -16,9 +16,9 @@
 #ifndef SERVER_BINDINGS_STRING_H_
 #define SERVER_BINDINGS_STRING_H_
 
-// Generated on 2014-09-27 at 03:03:47.
+// Generated on 2014-09-27 at 03:13:47 GMT Summer Time.
 // Do not modify by hand, instead, look at /scripts/write_bindings.py.
-namespace bindings {
+namespace samp {
 
 int strlen(char* string);
 
@@ -50,6 +50,6 @@ int uuencode(char* dest, char* source, int numbytes, int maxlength);
 
 int memcpy(char* dest, char* source, int index, int numbytes, int maxlength);
 
-}  // namespace bindings
+}  // namespace samp
 
 #endif  // SERVER_BINDINGS_STRING_H_

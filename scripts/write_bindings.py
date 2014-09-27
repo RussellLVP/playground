@@ -251,9 +251,9 @@ def WriteBindingsHeader(header_file, contents):
     lines.append('#define %s' % header_guard)
     lines.append('')
 
-    lines.append('// Generated on %s.' % time.strftime('%Y-%m-%d at %H:%M:%S'))
+    lines.append('// Generated on %s.' % time.strftime('%Y-%m-%d at %H:%M:%S %Z'))
     lines.append('// Do not modify by hand, instead, look at /scripts/write_bindings.py.')
-    lines.append('namespace bindings {')
+    lines.append('namespace samp {')
     lines.append('')
 
     constants = contents.GetConstants()
@@ -267,7 +267,7 @@ def WriteBindingsHeader(header_file, contents):
         lines.append('%s;' % PrototypeForNative(native))
         lines.append('')
 
-    lines.append('}  // namespace bindings')
+    lines.append('}  // namespace samp')
     lines.append('')
 
     lines.append('#endif  // %s' % header_guard)

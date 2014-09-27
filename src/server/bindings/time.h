@@ -16,9 +16,9 @@
 #ifndef SERVER_BINDINGS_TIME_H_
 #define SERVER_BINDINGS_TIME_H_
 
-// Generated on 2014-09-27 at 03:03:47.
+// Generated on 2014-09-27 at 03:13:47 GMT Summer Time.
 // Do not modify by hand, instead, look at /scripts/write_bindings.py.
-namespace bindings {
+namespace samp {
 
 int gettime(int* hour, int* minute, int* second);
 
@@ -26,6 +26,6 @@ int getdate(int* year, int* month, int* day);
 
 int tickcount(int* granularity);
 
-}  // namespace bindings
+}  // namespace samp
 
 #endif  // SERVER_BINDINGS_TIME_H_

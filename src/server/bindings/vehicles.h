@@ -16,9 +16,9 @@
 #ifndef SERVER_BINDINGS_VEHICLES_H_
 #define SERVER_BINDINGS_VEHICLES_H_
 
-// Generated on 2014-09-27 at 03:03:47.
+// Generated on 2014-09-27 at 03:13:47 GMT Summer Time.
 // Do not modify by hand, instead, look at /scripts/write_bindings.py.
-namespace bindings {
+namespace samp {
 
 #define CARMODTYPE_SPOILER 0
 #define CARMODTYPE_HOOD 1
@@ -112,6 +112,6 @@ int SetVehicleVirtualWorld(int vehicleid, int worldid);
 
 int GetVehicleVirtualWorld(int vehicleid);
 
-}  // namespace bindings
+}  // namespace samp
 
 #endif  // SERVER_BINDINGS_VEHICLES_H_

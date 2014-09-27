@@ -16,9 +16,9 @@
 #ifndef SERVER_BINDINGS_CORE_H_
 #define SERVER_BINDINGS_CORE_H_
 
-// Generated on 2014-09-27 at 03:03:47.
+// Generated on 2014-09-27 at 03:13:47 GMT Summer Time.
 // Do not modify by hand, instead, look at /scripts/write_bindings.py.
-namespace bindings {
+namespace samp {
 
 int heapspace();
 
@@ -52,6 +52,6 @@ int deleteproperty(int id, char* name, int value);
 
 int existproperty(int id, char* name, int value);
 
-}  // namespace bindings
+}  // namespace samp
 
 #endif  // SERVER_BINDINGS_CORE_H_

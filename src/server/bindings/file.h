@@ -16,9 +16,9 @@
 #ifndef SERVER_BINDINGS_FILE_H_
 #define SERVER_BINDINGS_FILE_H_
 
-// Generated on 2014-09-27 at 03:03:47.
+// Generated on 2014-09-27 at 03:13:47 GMT Summer Time.
 // Do not modify by hand, instead, look at /scripts/write_bindings.py.
-namespace bindings {
+namespace samp {
 
 int fopen(char* name, int  mode);
 
@@ -48,6 +48,6 @@ int fexist(char* pattern);
 
 bool fmatch(char* name, char* pattern, int index, int size);
 
-}  // namespace bindings
+}  // namespace samp
 
 #endif  // SERVER_BINDINGS_FILE_H_
