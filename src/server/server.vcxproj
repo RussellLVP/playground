@@ -75,6 +75,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="bindings\core.h" />
+    <ClInclude Include="bindings\datagram.h" />
+    <ClInclude Include="bindings\file.h" />
+    <ClInclude Include="bindings\float.h" />
+    <ClInclude Include="bindings\http.h" />
+    <ClInclude Include="bindings\objects.h" />
+    <ClInclude Include="bindings\players.h" />
+    <ClInclude Include="bindings\samp.h" />
+    <ClInclude Include="bindings\sampdb.h" />
+    <ClInclude Include="bindings\string.h" />
+    <ClInclude Include="bindings\time.h" />
+    <ClInclude Include="bindings\vehicles.h" />
     <ClInclude Include="native_arguments.h" />
     <ClInclude Include="native_function.h" />
     <ClInclude Include="native_function_manager.h" />
@@ -87,6 +99,7 @@
     <ClInclude Include="server_interface_impl.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="bindings\foo.cpp" />
     <ClCompile Include="native_arguments.cpp" />
     <ClCompile Include="native_function_manager.cpp" />
     <ClCompile Include="sdk\amxplugin.cpp" />
