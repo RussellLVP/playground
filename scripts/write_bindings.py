@@ -124,8 +124,8 @@ class PawnBindingParser(object):
             args.append(self._ParseNativeArgument(argument))
 
         self.natives_.append({
-            'name': name,
-            'type': type,
+            'name': name.strip(),
+            'type': type.strip(),
             'arguments': args
         })
 
@@ -225,7 +225,6 @@ class PawnBindingParser(object):
 def RepositoryPathForBinding(filename):
     return os.path.join('server', 'bindings', os.path.basename(filename))
 
-
 # C++ type for the given Pawn type
 CPP_TYPE_FOR_PAWN_TYPE = {
     'bool': 'bool',
@@ -279,11 +278,57 @@ def PrototypeForNative(native, contents):
 
     return prototype
 
+def HasVariableArguments(native):
+    for argument in native['arguments']:
+        if argument['name'] == '...':
+            return True
+    return False
+
+def SignatureForNative(native, contents):
+    parameters = []
+    signature = []
+
+    for argument in native['arguments']:
+        if contents.IsKnownEnum(argument['type']):
+            parameters.append('static_cast<int>(%s)' % argument['name'])
+            signature.append('i')
+            continue;
+
+        type = CPP_TYPE_FOR_PAWN_TYPE[argument['type'].lower()]
+        if type == 'bool' or type == 'int':
+            if type == 'bool':
+                parameters.append('static_cast<int>(%s)' % argument['name'])
+            else:
+                parameters.append(argument['name'])
+
+            if argument['reference']:
+                signature.append('I')
+            else:
+                signature.append('i')
+        elif type == 'float':
+            parameters.append(argument['name'])
+            if argument['reference']:
+                signature.append('F')
+            else:
+                signature.append('f')
+        elif type == 'char*':
+            parameters.append(argument['name'])
+            signature.append('c')
+        else:
+            print 'WARNING: Unrecognized type: %s (%s)' % (type, argument['type'])
+            continue
+
+    params = ''
+    if parameters:
+        params = ', ' + ', '.join(parameters)
+
+    return ''.join(signature), params
+
 def WriteBindings(pawn_file, header_file, implementation_file):
     contents = PawnBindingParser(pawn_file)
 
     WriteBindingsHeader(header_file, contents)
-    WriteBindingsImplementation(implementation_file, contents)
+    WriteBindingsImplementation(implementation_file, header_file, contents)
 
 def WriteBindingsHeader(header_file, contents):
     lines = [COPYRIGHT_HEADER, '']
@@ -294,7 +339,7 @@ def WriteBindingsHeader(header_file, contents):
     lines.append('#define %s' % header_guard)
     lines.append('')
 
-    lines.append('// Generated on %s.' % time.strftime('%Y-%m-%d at %H:%M:%S %Z'))
+    lines.append('// Generated on %s.' % time.strftime('%Y-%m-%d'))
     lines.append('// Do not modify by hand, instead, look at /scripts/write_bindings.py.')
     lines.append('namespace samp {')
     lines.append('')
@@ -327,8 +372,56 @@ def WriteBindingsHeader(header_file, contents):
     with open(header_file, 'w') as file:
         file.write('\n'.join(lines))
 
-def WriteBindingsImplementation(implementation_file, contents):
-    pass
+def WriteBindingsImplementation(implementation_file, header_file, contents):
+    if not contents.GetNatives():
+        return
+
+    lines = [COPYRIGHT_HEADER, '']
+
+    header = os.path.basename(header_file);
+    lines.append('#include "server/bindings/%s"' % header)
+    lines.append('')
+
+    lines.append('#include "base/logging.h"')
+    lines.append('#include "server/native_function_manager.h"')
+    lines.append('')
+
+    lines.append('extern NativeFunctionManager* g_native_function_manager;')
+    lines.append('')
+
+    lines.append('// Generated on %s.' % time.strftime('%Y-%m-%d'))
+    lines.append('// Do not modify by hand, instead, look at /scripts/write_bindings.py.')
+    lines.append('namespace samp {')
+    lines.append('')
+
+    for native in contents.GetNatives():
+        lines.append('%s {' % PrototypeForNative(native, contents))
+        lines.append('  CHECK(g_native_function_manager);')
+
+        if HasVariableArguments(native):
+            lines.append('  CHECK(false) << "Support for Pawn functions with variable argument counts has not been implemented yet.";')
+            lines.append('  return 0;')
+            lines.append('}')
+            lines.append('')
+            continue
+
+        signature, parameters = SignatureForNative(native, contents)
+        call = 'g_native_function_manager->Invoke("%s", "%s"%s)' % (native['name'], signature, parameters)
+
+        if native['type'] is 'integer':
+            lines.append('  return %s;' % call)
+        else:
+            lines.append('  int result = %s;' % call)
+            lines.append('  return * (%s*) &result;' % CPP_TYPE_FOR_PAWN_TYPE[native['type'].lower()])
+
+        lines.append('}')
+        lines.append('')
+
+    lines.append('}  // namespace samp')
+    lines.append('')
+
+    with open(implementation_file, 'w') as file:
+        file.write('\n'.join(lines))
 
 if __name__ == "__main__":
     arguments = argparse.ArgumentParser(description='Converts a SA-MP header to C++ bindings.')

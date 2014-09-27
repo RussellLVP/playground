@@ -29,10 +29,14 @@
 class NativeFunctionManager {
  public:
   NativeFunctionManager();
+  ~NativeFunctionManager();
 
   // Provides a native called |name| to each of the AMX files which will be loaded in the server.
   // This method must be called before any AMX file has been registered.
   void ProvideNativeFunction(const std::string& name, const NativeFunction& implementation);
+
+  // Invokes a function called |name| having |signature| as its signature.
+  int Invoke(const char* name, const char* format, ...);
 
   // Must be called when a new AMX is introduced to the server. All provided native functions will
   // be registered. If there are unresolved external natives, they will be ran against the new AMX

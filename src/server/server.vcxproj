@@ -99,7 +99,18 @@
     <ClInclude Include="server_interface_impl.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="bindings\compile.cpp" />
+    <ClCompile Include="bindings\core.cpp" />
+    <ClCompile Include="bindings\datagram.cpp" />
+    <ClCompile Include="bindings\file.cpp" />
+    <ClCompile Include="bindings\float.cpp" />
+    <ClCompile Include="bindings\http.cpp" />
+    <ClCompile Include="bindings\objects.cpp" />
+    <ClCompile Include="bindings\players.cpp" />
+    <ClCompile Include="bindings\samp.cpp" />
+    <ClCompile Include="bindings\sampdb.cpp" />
+    <ClCompile Include="bindings\string.cpp" />
+    <ClCompile Include="bindings\time.cpp" />
+    <ClCompile Include="bindings\vehicles.cpp" />
     <ClCompile Include="native_arguments.cpp" />
     <ClCompile Include="native_function_manager.cpp" />
     <ClCompile Include="sdk\amxplugin.cpp" />

@@ -93,8 +93,23 @@ bool AmxNativeNameEquals(const std::string& name, const AMX_NATIVE_INFO& native)
 
 }  // namespace
 
+// -------------------------------------------------------------------------------------------------
+
+// Entry point for accessing native functions through the bindings. The pointer will be set in the
+// constructor of NativeFunctionManager, and will be reset in the destructor.
+NativeFunctionManager* g_native_function_manager = nullptr;
+
 NativeFunctionManager::NativeFunctionManager()
-    : has_provided_natives_(false) {}
+    : has_provided_natives_(false) {
+  CHECK(!g_native_function_manager) << "The native function manager has already been initialized.";
+  g_native_function_manager = this;
+}
+
+NativeFunctionManager::~NativeFunctionManager() {
+  g_native_function_manager = nullptr;
+}
+
+// -------------------------------------------------------------------------------------------------
 
 void NativeFunctionManager::ProvideNativeFunction(const std::string& name, const NativeFunction& implementation) {
   CHECK(!has_provided_natives_) << "Native functions must be provided before any Pawn script gets loaded.";
@@ -110,6 +125,14 @@ void NativeFunctionManager::ProvideNativeFunction(const std::string& name, const
 
   provided_natives_.push_back(native);
 }
+
+// -------------------------------------------------------------------------------------------------
+
+int NativeFunctionManager::Invoke(const char* name, const char* format, ...) {
+  return -1;
+}
+
+// -------------------------------------------------------------------------------------------------
 
 void NativeFunctionManager::DidLoadScript(AMX* amx) {
   amx_Register(amx, provided_natives_.data(), -1);
