@@ -16,7 +16,7 @@
 #ifndef SERVER_BINDINGS_VEHICLES_H_
 #define SERVER_BINDINGS_VEHICLES_H_
 
-// Generated on 2014-09-27 at 03:13:47 GMT Summer Time.
+// Generated on 2014-09-27 at 03:34:10 GMT Summer Time.
 // Do not modify by hand, instead, look at /scripts/write_bindings.py.
 namespace samp {
 
@@ -39,77 +39,41 @@ namespace samp {
 #define VEHICLE_PARAMS_ON 1
 
 int CreateVehicle(int vehicletype, float x, float y, float z, float rotation, int color1, int color2, int respawn_delay);
-
 int DestroyVehicle(int vehicleid);
-
 int IsVehicleStreamedIn(int vehicleid, int forplayerid);
-
 int GetVehiclePos(int vehicleid, float* x, float* y, float* z);
-
 int SetVehiclePos(int vehicleid, float x, float y, float z);
-
 int GetVehicleZAngle(int vehicleid, float* z_angle);
-
 int GetVehicleRotationQuat(int vehicleid, float* w, float* x, float* y, float* z);
-
 float GetVehicleDistanceFromPoint(int vehicleid, float X, float Y, float Z);
-
 int SetVehicleZAngle(int vehicleid, float z_angle);
-
 int SetVehicleParamsForPlayer(int vehicleid, int playerid, int objective, int doorslocked);
-
 int ManualVehicleEngineAndLights();
-
 int SetVehicleParamsEx(int vehicleid, int engine, int lights, int alarm, int doors, int bonnet, int boot, int objective);
-
 int GetVehicleParamsEx(int vehicleid, int* engine, int* lights, int* alarm, int* doors, int* bonnet, int* boot, int* objective);
-
 int SetVehicleToRespawn(int vehicleid);
-
 int LinkVehicleToInterior(int vehicleid, int interiorid);
-
 int AddVehicleComponent(int vehicleid, int componentid);
-
 int RemoveVehicleComponent(int vehicleid, int componentid);
-
 int ChangeVehicleColor(int vehicleid, int color1, int color2);
-
 int ChangeVehiclePaintjob(int vehicleid, int paintjobid);
-
 int SetVehicleHealth(int vehicleid, float health);
-
 int GetVehicleHealth(int vehicleid, float* health);
-
 int AttachTrailerToVehicle(int trailerid, int vehicleid);
-
 int DetachTrailerFromVehicle(int vehicleid);
-
 int IsTrailerAttachedToVehicle(int vehicleid);
-
 int GetVehicleTrailer(int vehicleid);
-
 int SetVehicleNumberPlate(int vehicleid, char* numberplate);
-
 int GetVehicleModel(int vehicleid);
-
 int GetVehicleComponentInSlot(int vehicleid, int slot);
-
 int GetVehicleComponentType(int component);
-
 int RepairVehicle(int vehicleid);
-
 int GetVehicleVelocity(int vehicleid, float* X, float* Y, float* Z);
-
 int SetVehicleVelocity(int vehicleid, float X, float Y, float Z);
-
 int SetVehicleAngularVelocity(int vehicleid, float X, float Y, float Z);
-
 int GetVehicleDamageStatus(int vehicleid, int* panels, int* doors, int* lights, int* tires);
-
 int UpdateVehicleDamageStatus(int vehicleid, int panels, int doors, int lights, int tires);
-
 int SetVehicleVirtualWorld(int vehicleid, int worldid);
-
 int GetVehicleVirtualWorld(int vehicleid);
 
 }  // namespace samp

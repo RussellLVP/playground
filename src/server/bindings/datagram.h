@@ -16,14 +16,12 @@
 #ifndef SERVER_BINDINGS_DATAGRAM_H_
 #define SERVER_BINDINGS_DATAGRAM_H_
 
-// Generated on 2014-09-27 at 03:13:47 GMT Summer Time.
+// Generated on 2014-09-27 at 03:34:10 GMT Summer Time.
 // Do not modify by hand, instead, look at /scripts/write_bindings.py.
 namespace samp {
 
 int sendstring(char* message, char* destination);
-
 int sendpacket(char* packet, int size, char* destination);
-
 int listenport(int port);
 
 }  // namespace samp

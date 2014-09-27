@@ -56,6 +56,7 @@ class PawnBindingParser(object):
     def __init__(self, pawn_file):
         self.pawn_file_ = self._GetFileContents(pawn_file)
         self.constants_ = []
+        self.enums_ = []
         self.natives_ = []
 
         while len(self.pawn_file_):
@@ -64,17 +65,26 @@ class PawnBindingParser(object):
     def GetConstants(self):
         return self.constants_
 
+    def GetEnums(self):
+        return self.enums_
+
     def GetNatives(self):
         return self.natives_
 
+    def IsKnownEnum(self, name):
+        for enum in self.enums_:
+            if enum['name'] == name:
+                return True
+        return False
+
     def _ParseNextLine(self):
-        line = self.pawn_file_.popleft()
+        line = self._GetNextLine()
         if line.startswith('native'):
             self._ParseNative(line)
         elif line.startswith('#define'):
             self._ParseConstant(line)
         elif line.startswith('enum'):
-            print('WARNING: Skipping enumeration.')
+            self._ParseEnum(line)
 
     def _ParseNative(self, line):
         """Parses |line| containing a native function definition in to a structure similar to:
@@ -92,11 +102,10 @@ class PawnBindingParser(object):
         if line.find(':operator') is not -1:
             return  # no need to generate bindings for operators.
 
-        line = re.sub('\s*//.*', '', line)
         if not line.endswith(');'):
             print 'Unable to parse the following native declaration:'
             print line
-            sys.exit(0)
+            sys.exit(1)
 
         name, arguments = line[7:-2].split('(')
         type = 'integer'
@@ -156,7 +165,6 @@ class PawnBindingParser(object):
              value: '12'
            }"""
 
-        line = re.sub('\s*//.*', '', line)
         line = line[8:].strip()
 
         # Ignore the "_file_included" defines, and other defines without a value.
@@ -168,6 +176,42 @@ class PawnBindingParser(object):
             'name': name,
             'value': value
         })
+
+    def _ParseEnum(self, line):
+        """Parses |line| and the following lines into an enumeration, creating a structure like:
+           { name: 'MyEnumeration',
+             values: [ 'Foo', 'Bar', 'Baz' ] }"""
+
+        while line.find('}') == -1:
+            line += self._GetNextLine()
+
+        if not line.endswith('}'):
+            print 'Unable to parse the following enumeration:'
+            print line
+            sys.exit(1)
+
+        line = line[5:-1].strip()
+        name, line = line.split('{', 2)
+
+        values = []
+        for value in line.split(','):
+            value = value.strip()
+            if not len(value):
+                continue
+
+            values.append(value)
+
+        self.enums_.append({
+            'name': name.strip(),
+            'values': values
+        })
+
+    def _GetNextLine(self):
+        line = self.pawn_file_.popleft()
+        line = re.sub('\s*//.*', '', line)
+        line = re.sub('/\*.+?\*/', '', line)
+
+        return line.strip()
 
     def _GetFileContents(self, pawn_file):
         if not os.path.isfile(pawn_file):
@@ -196,16 +240,10 @@ CPP_TYPE_FOR_PAWN_TYPE = {
     'menu': 'int',
     'playertext3d': 'int',
     'text': 'int',
-    'text3d': 'int',
-
-    # TODO(Russell): Replace with real enums
-    'anglemode': 'int',
-    'filemode': 'int',
-    'floatround_method': 'int',
-    'seek_whence': 'int'
+    'text3d': 'int'
 }
 
-def PrototypeForNative(native):
+def PrototypeForNative(native, contents):
     prototype = ''
     prototype += CPP_TYPE_FOR_PAWN_TYPE[native['type'].lower()] + ' '
 
@@ -222,7 +260,12 @@ def PrototypeForNative(native):
             args.append('...')
             continue
 
-        arg = CPP_TYPE_FOR_PAWN_TYPE[argument['type'].lower()]
+        arg = None
+        if contents.IsKnownEnum(argument['type']):
+            arg = argument['type']
+        else:
+            arg = CPP_TYPE_FOR_PAWN_TYPE[argument['type'].lower()]
+
         if argument['reference']:
             arg += '*'
 
@@ -263,10 +306,18 @@ def WriteBindingsHeader(header_file, contents):
 
         lines.append('')
 
-    for native in contents.GetNatives():
-        lines.append('%s;' % PrototypeForNative(native))
+    for enum in contents.GetEnums():
+        lines.append('enum %s {' % enum['name'])
+        for value in enum['values']:
+            lines.append('  %s,' % value)
+
+        lines.append('};')
         lines.append('')
 
+    for native in contents.GetNatives():
+        lines.append('%s;' % PrototypeForNative(native, contents))
+
+    lines.append('')
     lines.append('}  // namespace samp')
     lines.append('')
 

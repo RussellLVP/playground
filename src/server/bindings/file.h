@@ -16,36 +16,36 @@
 #ifndef SERVER_BINDINGS_FILE_H_
 #define SERVER_BINDINGS_FILE_H_
 
-// Generated on 2014-09-27 at 03:13:47 GMT Summer Time.
+// Generated on 2014-09-27 at 03:34:10 GMT Summer Time.
 // Do not modify by hand, instead, look at /scripts/write_bindings.py.
 namespace samp {
 
-int fopen(char* name, int  mode);
+enum filemode {
+  io_read,
+  io_write,
+  io_readwrite,
+  io_append,
+};
 
+enum seek_whence {
+  seek_start,
+  seek_current,
+  seek_end,
+};
+
+int fopen(char* name, filemode  mode);
 bool fclose(int  handle);
-
 int ftemp();
-
 bool fremove(char* name);
-
 int fwrite(int  handle, char* string);
-
 int fread(int  handle, char* string, int size, bool  pack);
-
 bool fputchar(int  handle, int value, bool  utf8);
-
 int fgetchar(int  handle, int value, bool  utf8);
-
 int fblockwrite(int  handle, char* buffer, int size);
-
 int fblockread(int  handle, char* buffer, int size);
-
-int fseek(int  handle, int position, int  whence);
-
+int fseek(int  handle, int position, seek_whence  whence);
 int flength(int  handle);
-
 int fexist(char* pattern);
-
 bool fmatch(char* name, char* pattern, int index, int size);
 
 }  // namespace samp

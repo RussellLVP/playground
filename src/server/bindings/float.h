@@ -16,40 +16,39 @@
 #ifndef SERVER_BINDINGS_FLOAT_H_
 #define SERVER_BINDINGS_FLOAT_H_
 
-// Generated on 2014-09-27 at 03:13:47 GMT Summer Time.
+// Generated on 2014-09-27 at 03:34:10 GMT Summer Time.
 // Do not modify by hand, instead, look at /scripts/write_bindings.py.
 namespace samp {
 
+enum floatround_method {
+  floatround_round,
+  floatround_floor,
+  floatround_ceil,
+  floatround_tozero,
+  floatround_unbiased,
+};
+
+enum anglemode {
+  radian,
+  degrees,
+  grades,
+};
+
 float _float(int value);
-
 float floatstr(char* string);
-
 float floatmul(float oper1, float oper2);
-
 float floatdiv(float dividend, float divisor);
-
 float floatadd(float oper1, float oper2);
-
 float floatsub(float oper1, float oper2);
-
 float floatfract(float value);
-
-int floatround(float value, int method);
-
+int floatround(float value, floatround_method method);
 int floatcmp(float oper1, float oper2);
-
 float floatsqroot(float value);
-
 float floatpower(float value, float exponent);
-
 float floatlog(float value, float base);
-
-float floatsin(float value, int mode);
-
-float floatcos(float value, int mode);
-
-float floattan(float value, int mode);
-
+float floatsin(float value, anglemode mode);
+float floatcos(float value, anglemode mode);
+float floattan(float value, anglemode mode);
 float floatabs(float value);
 
 }  // namespace samp

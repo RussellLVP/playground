@@ -16,7 +16,7 @@
 #ifndef SERVER_BINDINGS_SAMP_H_
 #define SERVER_BINDINGS_SAMP_H_
 
-// Generated on 2014-09-27 at 03:13:47 GMT Summer Time.
+// Generated on 2014-09-27 at 03:34:10 GMT Summer Time.
 // Do not modify by hand, instead, look at /scripts/write_bindings.py.
 namespace samp {
 
@@ -125,219 +125,112 @@ namespace samp {
 #define CLICK_SOURCE_SCOREBOARD 0
 
 int print(char* string);
-
 int printf(char* format, ...);
-
 int format(char* output, int len, char* format, ...);
-
 int SendClientMessage(int playerid, int color, char* message);
-
 int SendClientMessageToAll(int color, char* message);
-
 int SendPlayerMessageToPlayer(int playerid, int senderid, char* message);
-
 int SendPlayerMessageToAll(int senderid, char* message);
-
 int SendDeathMessage(int killer, int killee, int weapon);
-
 int GameTextForAll(char* string, int time, int style);
-
 int GameTextForPlayer(int playerid, char* string, int time, int style);
-
 int SetTimer(char* funcname, int interval, int repeating);
-
 int SetTimerEx(char* funcname, int interval, int repeating, char* format, ...);
-
 int KillTimer(int timerid);
-
 int GetTickCount();
-
 int GetMaxPlayers();
-
 int CallRemoteFunction(char* function, char* format, ...);
-
 int CallLocalFunction(char* function, char* format, ...);
-
 float asin(float value);
-
 float acos(float value);
-
 float atan(float value);
-
 float atan2(float x, float y);
-
 int SetGameModeText(char* string);
-
 int SetTeamCount(int count);
-
 int AddPlayerClass(int modelid, float spawn_x, float spawn_y, float spawn_z, float z_angle, int weapon1, int weapon1_ammo, int weapon2, int weapon2_ammo, int weapon3, int weapon3_ammo);
-
 int AddPlayerClassEx(int teamid, int modelid, float spawn_x, float spawn_y, float spawn_z, float z_angle, int weapon1, int weapon1_ammo, int weapon2, int weapon2_ammo, int weapon3, int weapon3_ammo);
-
 int AddStaticVehicle(int modelid, float spawn_x, float spawn_y, float spawn_z, float z_angle, int color1, int color2);
-
 int AddStaticVehicleEx(int modelid, float spawn_x, float spawn_y, float spawn_z, float z_angle, int color1, int color2, int respawn_delay);
-
 int AddStaticPickup(int model, int type, float X, float Y, float Z, int virtualworld);
-
 int CreatePickup(int model, int type, float X, float Y, float Z, int virtualworld);
-
 int DestroyPickup(int pickup);
-
 int ShowNameTags(int show);
-
 int ShowPlayerMarkers(int mode);
-
 int GameModeExit();
-
 int SetWorldTime(int hour);
-
 int GetWeaponName(int weaponid, char* weapon, int len);
-
 int EnableTirePopping(int enable);
-
 int AllowInteriorWeapons(int allow);
-
 int SetWeather(int weatherid);
-
 int SetGravity(float gravity);
-
 int AllowAdminTeleport(int allow);
-
 int SetDeathDropAmount(int amount);
-
 int CreateExplosion(float X, float Y, float Z, int type, float Radius);
-
 int EnableZoneNames(int enable);
-
 int UsePlayerPedAnims();
-
 int DisableInteriorEnterExits();
-
 int SetNameTagDrawDistance(float distance);
-
 int DisableNameTagLOS();
-
 int LimitGlobalChatRadius(float chat_radius);
-
 int LimitPlayerMarkerRadius(float marker_radius);
-
 int ConnectNPC(char* name, char* script);
-
 int IsPlayerNPC(int playerid);
-
 int IsPlayerAdmin(int playerid);
-
 int Kick(int playerid);
-
 int Ban(int playerid);
-
 int BanEx(int playerid, char* reason);
-
 int SendRconCommand(char* command);
-
 int GetServerVarAsString(char* varname, char* buffer, int len);
-
 int GetServerVarAsInt(char* varname);
-
 int GetServerVarAsBool(char* varname);
-
 int GetPlayerNetworkStats(int playerid, char* retstr, int retstr_size);
-
 int GetNetworkStats(char* retstr, int retstr_size);
-
 int CreateMenu(char* title, int columns, float x, float y, float col1width, float col2width);
-
 int DestroyMenu(int menuid);
-
 int AddMenuItem(int menuid, int column, char* menutext);
-
 int SetMenuColumnHeader(int menuid, int column, char* columnheader);
-
 int ShowMenuForPlayer(int menuid, int playerid);
-
 int HideMenuForPlayer(int menuid, int playerid);
-
 int IsValidMenu(int menuid);
-
 int DisableMenu(int menuid);
-
 int DisableMenuRow(int menuid, int row);
-
 int GetPlayerMenu(int playerid);
-
 int TextDrawCreate(float x, float y, char* text);
-
 int TextDrawDestroy(int text);
-
 int TextDrawLetterSize(int text, float x, float y);
-
 int TextDrawTextSize(int text, float x, float y);
-
 int TextDrawAlignment(int text, int alignment);
-
 int TextDrawColor(int text, int color);
-
 int TextDrawUseBox(int text, int use);
-
 int TextDrawBoxColor(int text, int color);
-
 int TextDrawSetShadow(int text, int size);
-
 int TextDrawSetOutline(int text, int size);
-
 int TextDrawBackgroundColor(int text, int color);
-
 int TextDrawFont(int text, int font);
-
 int TextDrawSetProportional(int text, int set);
-
 int TextDrawShowForPlayer(int playerid, int text);
-
 int TextDrawHideForPlayer(int playerid, int text);
-
 int TextDrawShowForAll(int text);
-
 int TextDrawHideForAll(int text);
-
 int TextDrawSetString(int text, char* string);
-
 int GangZoneCreate(float minx, float miny, float maxx, float maxy);
-
 int GangZoneDestroy(int zone);
-
 int GangZoneShowForPlayer(int playerid, int zone, int color);
-
 int GangZoneShowForAll(int zone, int color);
-
 int GangZoneHideForPlayer(int playerid, int zone);
-
 int GangZoneHideForAll(int zone);
-
 int GangZoneFlashForPlayer(int playerid, int zone, int flashcolor);
-
 int GangZoneFlashForAll(int zone, int flashcolor);
-
 int GangZoneStopFlashForPlayer(int playerid, int zone);
-
 int GangZoneStopFlashForAll(int zone);
-
 int Create3DTextLabel(char* text, int color, float X, float Y, float Z, float DrawDistance, int virtualworld, int testLOS);
-
 int Delete3DTextLabel(int id);
-
 int Attach3DTextLabelToPlayer(int id, int playerid, float OffsetX, float OffsetY, float OffsetZ);
-
 int Attach3DTextLabelToVehicle(int id, int vehicleid, float OffsetX, float OffsetY, float OffsetZ);
-
 int Update3DTextLabelText(int id, int color, char* text);
-
 int CreatePlayer3DTextLabel(int playerid, char* text, int color, float X, float Y, float Z, float DrawDistance, int attachedplayer, int attachedvehicle, int testLOS);
-
 int DeletePlayer3DTextLabel(int playerid, int id);
-
 int UpdatePlayer3DTextLabelText(int playerid, int id, int color, char* text);
-
 int ShowPlayerDialog(int playerid, int dialogid, int style, char* caption, char* info, char* button1, char* button2);
 
 }  // namespace samp
