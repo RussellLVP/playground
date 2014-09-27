@@ -16,6 +16,9 @@
 #include "server/server_interface_impl.h"
 
 #include "server/interface/player_event_listener.h"
+#include "server/sdk/plugincommon.h"
+
+extern void *pAMXFunctions;
 
 // -------------------------------------------------------------------------------------------------
 
@@ -26,7 +29,9 @@ ServerInterface* ServerInterface::Create(void** data) {
 
 // -------------------------------------------------------------------------------------------------
 
-ServerInterfaceImpl::ServerInterfaceImpl(void** data) {}
+ServerInterfaceImpl::ServerInterfaceImpl(void** data) {
+  pAMXFunctions = data[PLUGIN_DATA_AMX_EXPORTS];
+}
 
 ServerInterfaceImpl::~ServerInterfaceImpl() {}
 

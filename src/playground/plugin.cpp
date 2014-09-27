@@ -50,10 +50,13 @@ PLUGIN_EXPORT void PLUGIN_CALL Unload() {
   g_server_interface = nullptr;
 }
 
+#include "server/bindings/samp.h"
 PLUGIN_EXPORT int PLUGIN_CALL AmxLoad(AMX* amx) {
   CHECK(g_server_interface);
 
   g_server_interface->DidLoadScript(amx);
+  samp::SetWeather(8);
+
   return 0;
 }
 
