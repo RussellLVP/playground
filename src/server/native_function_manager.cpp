@@ -119,8 +119,11 @@ void NativeFunctionManager::ProvideNativeFunction(const std::string& name, const
 
   CHECK(!already_registered) << "Native functions may only be provided once (" << name << ").";
   
+  char* native_name = (char*) calloc(sNAMEMAX + 1, 1);
+  strncpy(native_name, name.c_str(), sNAMEMAX);
+
   AMX_NATIVE_INFO native;
-  native.name = (const char*) calloc(name.length() + 1, 1);
+  native.name = native_name;
   native.func = NativeTrampoline::Create(implementation);
 
   provided_natives_.push_back(native);
@@ -137,4 +140,47 @@ int NativeFunctionManager::Invoke(const char* name, const char* format, ...) {
 void NativeFunctionManager::DidLoadScript(AMX* amx) {
   amx_Register(amx, provided_natives_.data(), -1);
   has_provided_natives_ = true;
+
+  int native_count;
+  amx_NumNatives(amx, &native_count);
+
+  AMX_HEADER* header = reinterpret_cast<AMX_HEADER*>(amx->base);
+  for (int index = 0; index < native_count; ++index) {
+    AMX_FUNCSTUB* function =
+        reinterpret_cast<AMX_FUNCSTUB*>(amx->base + header->natives + index * header->defsize);
+    
+    if (GetNative(function->name) != nullptr)
+      continue;
+
+    char* native_name = (char*) calloc(sNAMEMAX + 1, 1);
+    strncpy(native_name, function->name, sNAMEMAX);
+
+    AMX_NATIVE_INFO native;
+    native.name = native_name;
+    native.func = reinterpret_cast<AMX_NATIVE>(function->address);
+
+    registered_natives_.push_back(native);
+  }
+
+  std::sort(registered_natives_.begin(),
+            registered_natives_.end(),
+            [] (const AMX_NATIVE_INFO& left, const AMX_NATIVE_INFO& right) {
+              return strcmp(left.name, right.name);
+            });
+}
+
+// -------------------------------------------------------------------------------------------------
+
+AMX_NATIVE NativeFunctionManager::GetNative(const char* name) const {
+  // TODO(Russell): This can be optimized to perform a binary search instead.
+  auto& iterator = std::find_if(registered_natives_.begin(),
+                                registered_natives_.end(),
+                                [name](const AMX_NATIVE_INFO& native) {
+                                  return !strcmp(native.name, name);
+                                });
+
+  if (iterator == registered_natives_.end())
+    return nullptr;
+
+  return iterator->func;
 }

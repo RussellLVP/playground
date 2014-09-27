@@ -44,7 +44,12 @@ class NativeFunctionManager {
   void DidLoadScript(AMX* amx);
 
  private:
+  // Returns the the native function associated with |name|, which can directly be invoked. If the
+  // returned value is a nullptr, the native does not exist.
+  AMX_NATIVE GetNative(const char* name) const;
+
   std::vector<AMX_NATIVE_INFO> provided_natives_;
+  std::vector<AMX_NATIVE_INFO> registered_natives_;
   bool has_provided_natives_;
 };
 
