@@ -16,7 +16,7 @@
 #ifndef SERVER_BINDINGS_STRING_H_
 #define SERVER_BINDINGS_STRING_H_
 
-// Generated on 2014-09-27 at 03:34:10 GMT Summer Time.
+// Generated on 2014-09-27.
 // Do not modify by hand, instead, look at /scripts/write_bindings.py.
 namespace samp {
 
@@ -25,13 +25,13 @@ int strpack(char* dest, char* source, int maxlength);
 int strunpack(char* dest, char* source, int maxlength);
 int strcat(char* dest, char* source, int maxlength);
 int strmid(char* dest, char* source, int start, int end, int maxlength);
-bool  strins(char* string, char* substr, int pos, int maxlength);
-bool  strdel(char* string, int start, int end);
+bool strins(char* string, char* substr, int pos, int maxlength);
+bool strdel(char* string, int start, int end);
 int strcmp(char* string1, char* string2, bool ignorecase, int length);
 int strfind(char* string, char* sub, bool ignorecase, int pos);
 int strval(char* string);
 int valstr(char* dest, int value, bool pack);
-bool  ispacked(char* string);
+bool ispacked(char* string);
 int uudecode(char* dest, char* source, int maxlength);
 int uuencode(char* dest, char* source, int numbytes, int maxlength);
 int memcpy(char* dest, char* source, int index, int numbytes, int maxlength);
