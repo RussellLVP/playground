@@ -15,7 +15,7 @@
 
 #include "server/native_function_manager.h"
 
-#include <array>
+#include <algorithm>
 
 #include "base/logging.h"
 #include "server/native_arguments.h"
