@@ -16,27 +16,27 @@
 #ifndef SERVER_BINDINGS_VEHICLES_H_
 #define SERVER_BINDINGS_VEHICLES_H_
 
-// Generated on 2014-09-27 at 03:34:10 GMT Summer Time.
+// Generated on 2014-09-27 at 03:39:47 GMT Summer Time.
 // Do not modify by hand, instead, look at /scripts/write_bindings.py.
 namespace samp {
 
-#define CARMODTYPE_SPOILER 0
-#define CARMODTYPE_HOOD 1
-#define CARMODTYPE_ROOF 2
-#define CARMODTYPE_SIDESKIRT 3
-#define CARMODTYPE_LAMPS 4
-#define CARMODTYPE_NITRO 5
-#define CARMODTYPE_EXHAUST 6
-#define CARMODTYPE_WHEELS 7
-#define CARMODTYPE_STEREO 8
-#define CARMODTYPE_HYDRAULICS 9
-#define CARMODTYPE_FRONT_BUMPER 10
-#define CARMODTYPE_REAR_BUMPER 11
-#define CARMODTYPE_VENT_RIGHT 12
-#define CARMODTYPE_VENT_LEFT 13
-#define VEHICLE_PARAMS_UNSET -1
-#define VEHICLE_PARAMS_OFF 0
-#define VEHICLE_PARAMS_ON 1
+const int CARMODTYPE_SPOILER = 0;
+const int CARMODTYPE_HOOD = 1;
+const int CARMODTYPE_ROOF = 2;
+const int CARMODTYPE_SIDESKIRT = 3;
+const int CARMODTYPE_LAMPS = 4;
+const int CARMODTYPE_NITRO = 5;
+const int CARMODTYPE_EXHAUST = 6;
+const int CARMODTYPE_WHEELS = 7;
+const int CARMODTYPE_STEREO = 8;
+const int CARMODTYPE_HYDRAULICS = 9;
+const int CARMODTYPE_FRONT_BUMPER = 10;
+const int CARMODTYPE_REAR_BUMPER = 11;
+const int CARMODTYPE_VENT_RIGHT = 12;
+const int CARMODTYPE_VENT_LEFT = 13;
+const int VEHICLE_PARAMS_UNSET = -1;
+const int VEHICLE_PARAMS_OFF = 0;
+const int VEHICLE_PARAMS_ON = 1;
 
 int CreateVehicle(int vehicletype, float x, float y, float z, float rotation, int color1, int color2, int respawn_delay);
 int DestroyVehicle(int vehicleid);

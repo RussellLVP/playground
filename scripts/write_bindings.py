@@ -302,7 +302,7 @@ def WriteBindingsHeader(header_file, contents):
     constants = contents.GetConstants()
     if constants:
         for define in constants:
-            lines.append('#define %s %s' % (define['name'], define['value']))
+            lines.append('const int %s = %s;' % (define['name'], define['value']))
 
         lines.append('')
 
