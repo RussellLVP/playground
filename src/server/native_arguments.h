@@ -40,6 +40,9 @@ class NativeArguments {
   // Returns argument |index| as a string. A copy will be performed on the data.
   std::string GetStringArgument(unsigned int index) const;
 
+  // Returns the AMX this object wraps. Should only be used in //server/.
+  AMX* amx() const { return amx_; }
+
  private:
   AMX* amx_;
   cell* parameters_;

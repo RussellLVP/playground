@@ -18,32 +18,29 @@
 
 #include <list>
 
-#include "server/interface/samp/event_listener.h"
+#include "server/native_callback_interceptor.h"
 #include "server/native_function_manager.h"
 #include "server/server_interface.h"
 #include "server/server_log_delegate.h"
 
-class ServerInterfaceImpl : public ServerInterface,
-                            public samp::EventListener {
+class ServerInterfaceImpl : public ServerInterface {
  public:
   explicit ServerInterfaceImpl(void** data);
   virtual ~ServerInterfaceImpl();
 
   // ServerInterface implementation.
   virtual void ProvideNativeFunction(const std::string& name, const NativeFunction& implementation) override;
-  virtual void AttachEventListener(PlayerEventListener* player_event_listener) override;
-  virtual void RemoveEventListener(PlayerEventListener* player_event_listener) override;
+  virtual void AttachEventListener(samp::PlayerEventListener* player_event_listener) override;
+  virtual void RemoveEventListener(samp::PlayerEventListener* player_event_listener) override;
   virtual void DidLoadScript(AMX* amx) override;
   virtual void DidUnloadScript(AMX* amx) override;
 
-  // samp::EventListener implementation.
-  virtual void OnPlayerConnect(int player_id) override;
-
  private:
+  NativeCallbackInterceptor native_callback_interceptor_;
   NativeFunctionManager native_function_manager_;
   ServerLogDelegate log_delegate_;
 
-  std::list<PlayerEventListener*> player_event_listeners_;
+  std::list<samp::PlayerEventListener*> player_event_listeners_;
 };
 
 #endif  // SERVER_SERVER_INTERFACE_IMPL_H_

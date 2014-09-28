@@ -15,7 +15,7 @@
 
 #include "server/server_interface_impl.h"
 
-#include "server/interface/player_event_listener.h"
+#include "server/listeners/player_event_listener.h"
 #include "server/sdk/plugincommon.h"
 
 extern void *pAMXFunctions;
@@ -29,9 +29,12 @@ ServerInterface* ServerInterface::Create(void** data) {
 
 // -------------------------------------------------------------------------------------------------
 
-ServerInterfaceImpl::ServerInterfaceImpl(void** data) 
-    : log_delegate_(static_cast<logprintf_t>(data[PLUGIN_DATA_LOGPRINTF])) {
+ServerInterfaceImpl::ServerInterfaceImpl(void** data)
+    : native_callback_interceptor_(data[PLUGIN_DATA_AMX_EXPORTS]),
+      log_delegate_(static_cast<logprintf_t>(data[PLUGIN_DATA_LOGPRINTF])) {
   pAMXFunctions = data[PLUGIN_DATA_AMX_EXPORTS];
+
+  native_callback_interceptor_.RegisterNatives(this);
 }
 
 ServerInterfaceImpl::~ServerInterfaceImpl() {}
@@ -48,10 +51,10 @@ void ServerInterfaceImpl::ProvideNativeFunction(const std::string& name, const N
 // for attaching and removing event listeners, we'll avoid manually duplicating a lot of code by
 // defining the two methods required for each type as part of a macro.
 #define WRITE_EVENT_LISTENER(type, member) \
-  void ServerInterfaceImpl::AttachEventListener(type* listener) { \
+  void ServerInterfaceImpl::AttachEventListener(samp::type* listener) { \
     member.push_back(listener); \
   } \
-  void ServerInterfaceImpl::RemoveEventListener(type* listener) { \
+  void ServerInterfaceImpl::RemoveEventListener(samp::type* listener) { \
     member.remove(listener); \
   }
 
@@ -64,10 +67,3 @@ void ServerInterfaceImpl::DidLoadScript(AMX* amx) {
 }
 
 void ServerInterfaceImpl::DidUnloadScript(AMX* amx) {}
-
-// -------------------------------------------------------------------------------------------------
-
-void ServerInterfaceImpl::OnPlayerConnect(int player_id) {
-  for (PlayerEventListener* listener : player_event_listeners_)
-    listener->OnPlayerConnect();
-}

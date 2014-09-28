@@ -82,6 +82,7 @@
     <ClInclude Include="bindings\float.h" />
     <ClInclude Include="bindings\http.h" />
     <ClInclude Include="bindings\internal\mock_amx.h" />
+    <ClInclude Include="native_callback_interceptor.h" />
     <ClInclude Include="server_log_delegate.h" />
     <ClInclude Include="bindings\objects.h" />
     <ClInclude Include="bindings\players.h" />
@@ -93,8 +94,7 @@
     <ClInclude Include="native_arguments.h" />
     <ClInclude Include="native_function.h" />
     <ClInclude Include="native_function_manager.h" />
-    <ClInclude Include="interface\player_event_listener.h" />
-    <ClInclude Include="interface\samp\event_listener.h" />
+    <ClInclude Include="listeners\player_event_listener.h" />
     <ClInclude Include="sdk\amx.h" />
     <ClInclude Include="sdk\plugincommon.h" />
     <ClInclude Include="sdk\sclinux.h" />
@@ -108,6 +108,7 @@
     <ClCompile Include="bindings\float.cpp" />
     <ClCompile Include="bindings\http.cpp" />
     <ClCompile Include="bindings\internal\mock_amx.cpp" />
+    <ClCompile Include="native_callback_interceptor.cpp" />
     <ClCompile Include="server_log_delegate.cpp" />
     <ClCompile Include="bindings\objects.cpp" />
     <ClCompile Include="bindings\players.cpp" />

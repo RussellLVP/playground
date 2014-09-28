@@ -116,7 +116,7 @@ void NativeFunctionManager::ProvideNativeFunction(const std::string& name, const
   CHECK(!has_provided_natives_) << "Native functions must be provided before any Pawn script gets loaded.";
   bool already_registered = std::find_if(provided_natives_.begin(),
                                          provided_natives_.end(),
-                                         std::bind(AmxNativeNameEquals, name, std::placeholders::_1)) == provided_natives_.end();
+                                         std::bind(AmxNativeNameEquals, name, std::placeholders::_1)) != provided_natives_.end();
 
   CHECK(!already_registered) << "Native functions may only be provided once (" << name << ").";
   
