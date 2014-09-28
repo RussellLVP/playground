@@ -16,11 +16,11 @@
 #ifndef PLAYGROUND_ENTITIES_PLAYER_MANAGER_H_
 #define PLAYGROUND_ENTITIES_PLAYER_MANAGER_H_
 
-#include "server/interface/player_event_listener.h"
+#include "server/listeners/player_event_listener.h"
 
 // The Player manager keeps track of all the players which are connected to Las Venturas Playground,
 // and receives and delegates events related to them. It provides methods to query the players.
-class PlayerManager : public PlayerEventListener {
+class PlayerManager : public samp::PlayerEventListener {
  public:
   PlayerManager();
 

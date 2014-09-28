@@ -13,20 +13,21 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SERVER_INTERFACE_SAMP_EVENT_LISTENER_H_
-#define SERVER_INTERFACE_SAMP_EVENT_LISTENER_H_
+#ifndef SERVER_INTERFACE_PLAYER_EVENT_LISTENER_H_
+#define SERVER_INTERFACE_PLAYER_EVENT_LISTENER_H_
 
 namespace samp {
 
-// Pure virtual interface defining the available SA-MP events which can be forwarded to the
-// implementation. These are direct mappings of the native SA-MP events.
-class EventListener {
+// The player event listener defines the events which will be triggered for players connecting to
+// the server. This is done at a higher level than the SA-MP event handling, in that we pass in the
+// Player objects and C++ types rather than the Pawn runtime information.
+class PlayerEventListener {
  public:
-  virtual ~EventListener() {}
+  virtual ~PlayerEventListener() {}
 
-  virtual void OnPlayerConnect(int player_id) = 0;
+  virtual void OnPlayerConnect() = 0;
 };
 
 }  // namespace samp
 
-#endif  // SERVER_INTERFACE_SAMP_EVENT_LISTENER_H_
+#endif  // SERVER_INTERFACE_PLAYER_EVENT_LISTENER_H_
