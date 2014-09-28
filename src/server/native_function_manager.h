@@ -20,6 +20,7 @@
 #include <unordered_map>
 #include <vector>
 
+#include "server/bindings/internal/mock_amx.h"
 #include "server/native_function.h"
 #include "server/sdk/amx.h"
 
@@ -51,6 +52,9 @@ class NativeFunctionManager {
   std::vector<AMX_NATIVE_INFO> provided_natives_;
   std::vector<AMX_NATIVE_INFO> registered_natives_;
   bool has_provided_natives_;
+
+  std::vector<cell> parameters_;
+  MockAMX mock_amx_;
 };
 
 #endif  // SERVER_NATIVE_FUNCTION_MANAGER_H_

@@ -16,6 +16,7 @@
 #include "server/native_function_manager.h"
 
 #include <algorithm>
+#include <stdarg.h>
 
 #include "base/logging.h"
 #include "server/native_arguments.h"
@@ -55,7 +56,7 @@ class NativeTrampoline {
   // typename triggered by std::enable_if on the equation.
   template <size_t Index, typename = typename std::enable_if<(Index < Size)>::type>
   static cell Invoke(AMX* amx, cell* parameters) {
-    DCHECK((parameters[0] % 4) == 0) << "Invalid parameter count in Pawn call.";
+    DCHECK((parameters[0] % sizeof(cell)) == 0) << "Invalid parameter count in Pawn call.";
 
     return callback_list_[Index](NativeArguments(amx, parameters));
   }
@@ -138,8 +139,37 @@ int NativeFunctionManager::Invoke(const char* name, const char* format, ...) {
     return 0;
   }
 
+  unsigned int parameter_count = strlen(format);
+
+  parameters_.resize(parameter_count + 1);
+  parameters_[0] = parameter_count * sizeof(cell);
+
+  va_list arguments;
+  va_start(arguments, format);
+
+  for (unsigned int index = 0; index < parameter_count; ++index) {
+    switch (format[index]) {
+    case 'i': // integer
+      parameters_[index + 1] = va_arg(arguments, cell);
+      break;
+    case 'I': // integer reference
+    case 'f': // float
+      parameters_[index + 1] = amx_ftoc(va_arg(arguments, float));
+      break;
+    case 'F': // float reference
+    case 'a': // vector<cell>
+    default:
+      CHECK(false) << "Unrecognized parameter type '" << format[index] << "' while invoking " << name << ".";
+      break;
+    }
+  }
+
   LOG(INFO) << "Calling " << name << " with format (" << format << ").";
-  return -1;
+  int return_value = native(&mock_amx_, parameters_.data());
+  LOG(INFO) << "Return value: " << return_value;
+
+  va_end(arguments);
+  return return_value;
 }
 
 // -------------------------------------------------------------------------------------------------
