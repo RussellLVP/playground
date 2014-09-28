@@ -16,34 +16,34 @@
 #ifndef SERVER_BINDINGS_OBJECTS_H_
 #define SERVER_BINDINGS_OBJECTS_H_
 
-// Generated on 2014-09-27.
+// Generated on 2014-09-28.
 // Do not modify by hand, instead, look at /scripts/write_bindings.py.
 namespace samp {
 
-int CreateObject(int modelid, float X, float Y, float Z, float rX, float rY, float rZ, float DrawDistance);
-int AttachObjectToVehicle(int objectid, int vehicleid, float OffsetX, float OffsetY, float OffsetZ, float RotX, float RotY, float RotZ);
-int AttachObjectToObject(int objectid, int attachtoid, float OffsetX, float OffsetY, float OffsetZ, float RotX, float RotY, float RotZ, int SyncRotation);
-int AttachObjectToPlayer(int objectid, int playerid, float OffsetX, float OffsetY, float OffsetZ, float RotX, float RotY, float RotZ);
-int SetObjectPos(int objectid, float X, float Y, float Z);
-int GetObjectPos(int objectid, float* X, float* Y, float* Z);
-int SetObjectRot(int objectid, float RotX, float RotY, float RotZ);
-int GetObjectRot(int objectid, float* RotX, float* RotY, float* RotZ);
+int CreateObject(int modelid, double X, double Y, double Z, double rX, double rY, double rZ, double DrawDistance);
+int AttachObjectToVehicle(int objectid, int vehicleid, double OffsetX, double OffsetY, double OffsetZ, double RotX, double RotY, double RotZ);
+int AttachObjectToObject(int objectid, int attachtoid, double OffsetX, double OffsetY, double OffsetZ, double RotX, double RotY, double RotZ, int SyncRotation);
+int AttachObjectToPlayer(int objectid, int playerid, double OffsetX, double OffsetY, double OffsetZ, double RotX, double RotY, double RotZ);
+int SetObjectPos(int objectid, double X, double Y, double Z);
+int GetObjectPos(int objectid, double* X, double* Y, double* Z);
+int SetObjectRot(int objectid, double RotX, double RotY, double RotZ);
+int GetObjectRot(int objectid, double* RotX, double* RotY, double* RotZ);
 int IsValidObject(int objectid);
 int DestroyObject(int objectid);
-int MoveObject(int objectid, float X, float Y, float Z, float Speed, float RotX, float RotY, float RotZ);
+int MoveObject(int objectid, double X, double Y, double Z, double Speed, double RotX, double RotY, double RotZ);
 int StopObject(int objectid);
 int IsObjectMoving(int objectid);
-int CreatePlayerObject(int playerid, int modelid, float X, float Y, float Z, float rX, float rY, float rZ, float DrawDistance);
-int SetPlayerObjectPos(int playerid, int objectid, float X, float Y, float Z);
-int GetPlayerObjectPos(int playerid, int objectid, float* X, float* Y, float* Z);
-int SetPlayerObjectRot(int playerid, int objectid, float RotX, float RotY, float RotZ);
-int GetPlayerObjectRot(int playerid, int objectid, float* RotX, float* RotY, float* RotZ);
+int CreatePlayerObject(int playerid, int modelid, double X, double Y, double Z, double rX, double rY, double rZ, double DrawDistance);
+int SetPlayerObjectPos(int playerid, int objectid, double X, double Y, double Z);
+int GetPlayerObjectPos(int playerid, int objectid, double* X, double* Y, double* Z);
+int SetPlayerObjectRot(int playerid, int objectid, double RotX, double RotY, double RotZ);
+int GetPlayerObjectRot(int playerid, int objectid, double* RotX, double* RotY, double* RotZ);
 int IsValidPlayerObject(int playerid, int objectid);
 int DestroyPlayerObject(int playerid, int objectid);
-int MovePlayerObject(int playerid, int objectid, float X, float Y, float Z, float Speed, float RotX, float RotY, float RotZ);
+int MovePlayerObject(int playerid, int objectid, double X, double Y, double Z, double Speed, double RotX, double RotY, double RotZ);
 int StopPlayerObject(int playerid, int objectid);
 int IsPlayerObjectMoving(int playerid, int objectid);
-int AttachPlayerObjectToPlayer(int objectplayer, int objectid, int attachplayer, float OffsetX, float OffsetY, float OffsetZ, float rX, float rY, float rZ);
+int AttachPlayerObjectToPlayer(int objectplayer, int objectid, int attachplayer, double OffsetX, double OffsetY, double OffsetZ, double rX, double rY, double rZ);
 
 }  // namespace samp
 

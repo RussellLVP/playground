@@ -228,7 +228,7 @@ def RepositoryPathForBinding(filename):
 # C++ type for the given Pawn type
 CPP_TYPE_FOR_PAWN_TYPE = {
     'bool': 'bool',
-    'float': 'float',
+    'float': 'double',
     'integer': 'int',
     'string': 'char*',
 
@@ -305,7 +305,7 @@ def SignatureForNative(native, contents):
                 signature.append('I')
             else:
                 signature.append('i')
-        elif type == 'float':
+        elif type == 'double':
             parameters.append(argument['name'])
             if argument['reference']:
                 signature.append('F')
@@ -408,8 +408,11 @@ def WriteBindingsImplementation(implementation_file, header_file, contents):
         signature, parameters = SignatureForNative(native, contents)
         call = 'g_native_function_manager->Invoke("%s", "%s"%s)' % (native['name'], signature, parameters)
 
-        if native['type'] is 'integer':
+        if native['type'] == 'integer':
             lines.append('  return %s;' % call)
+        elif native['type'] == 'Float':
+            lines.append('  int result = %s;' % call)
+            lines.append('  return (double) amx_ctof(result);')
         else:
             lines.append('  int result = %s;' % call)
             lines.append('  return * (%s*) &result;' % CPP_TYPE_FOR_PAWN_TYPE[native['type'].lower()])

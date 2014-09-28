@@ -20,11 +20,11 @@
 
 extern NativeFunctionManager* g_native_function_manager;
 
-// Generated on 2014-09-27.
+// Generated on 2014-09-28.
 // Do not modify by hand, instead, look at /scripts/write_bindings.py.
 namespace samp {
 
-int SetSpawnInfo(int playerid, int team, int skin, float x, float y, float z, float rotation, int weapon1, int weapon1_ammo, int weapon2, int weapon2_ammo, int weapon3, int weapon3_ammo) {
+int SetSpawnInfo(int playerid, int team, int skin, double x, double y, double z, double rotation, int weapon1, int weapon1_ammo, int weapon2, int weapon2_ammo, int weapon3, int weapon3_ammo) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetSpawnInfo", "iiiffffiiiiii", playerid, team, skin, x, y, z, rotation, weapon1, weapon1_ammo, weapon2, weapon2_ammo, weapon3, weapon3_ammo);
 }
@@ -34,40 +34,40 @@ int SpawnPlayer(int playerid) {
   return g_native_function_manager->Invoke("SpawnPlayer", "i", playerid);
 }
 
-int SetPlayerPos(int playerid, float x, float y, float z) {
+int SetPlayerPos(int playerid, double x, double y, double z) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetPlayerPos", "ifff", playerid, x, y, z);
 }
 
-int SetPlayerPosFindZ(int playerid, float x, float y, float z) {
+int SetPlayerPosFindZ(int playerid, double x, double y, double z) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetPlayerPosFindZ", "ifff", playerid, x, y, z);
 }
 
-int GetPlayerPos(int playerid, float* x, float* y, float* z) {
+int GetPlayerPos(int playerid, double* x, double* y, double* z) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("GetPlayerPos", "iFFF", playerid, x, y, z);
 }
 
-int SetPlayerFacingAngle(int playerid, float ang) {
+int SetPlayerFacingAngle(int playerid, double ang) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetPlayerFacingAngle", "if", playerid, ang);
 }
 
-int GetPlayerFacingAngle(int playerid, float* ang) {
+int GetPlayerFacingAngle(int playerid, double* ang) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("GetPlayerFacingAngle", "iF", playerid, ang);
 }
 
-int IsPlayerInRangeOfPoint(int playerid, float range, float x, float y, float z) {
+int IsPlayerInRangeOfPoint(int playerid, double range, double x, double y, double z) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("IsPlayerInRangeOfPoint", "iffff", playerid, range, x, y, z);
 }
 
-float GetPlayerDistanceFromPoint(int playerid, float X, float Y, float Z) {
+double GetPlayerDistanceFromPoint(int playerid, double X, double Y, double Z) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("GetPlayerDistanceFromPoint", "ifff", playerid, X, Y, Z);
-  return * (float*) &result;
+  return (double) amx_ctof(result);
 }
 
 int IsPlayerStreamedIn(int playerid, int forplayerid) {
@@ -85,22 +85,22 @@ int GetPlayerInterior(int playerid) {
   return g_native_function_manager->Invoke("GetPlayerInterior", "i", playerid);
 }
 
-int SetPlayerHealth(int playerid, float health) {
+int SetPlayerHealth(int playerid, double health) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetPlayerHealth", "if", playerid, health);
 }
 
-int GetPlayerHealth(int playerid, float* health) {
+int GetPlayerHealth(int playerid, double* health) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("GetPlayerHealth", "iF", playerid, health);
 }
 
-int SetPlayerArmour(int playerid, float armour) {
+int SetPlayerArmour(int playerid, double armour) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetPlayerArmour", "if", playerid, armour);
 }
 
-int GetPlayerArmour(int playerid, float* armour) {
+int GetPlayerArmour(int playerid, double* armour) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("GetPlayerArmour", "iF", playerid, armour);
 }
@@ -290,12 +290,12 @@ int GetPlayerFightingStyle(int playerid) {
   return g_native_function_manager->Invoke("GetPlayerFightingStyle", "i", playerid);
 }
 
-int SetPlayerVelocity(int playerid, float X, float Y, float Z) {
+int SetPlayerVelocity(int playerid, double X, double Y, double Z) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetPlayerVelocity", "ifff", playerid, X, Y, Z);
 }
 
-int GetPlayerVelocity(int playerid, float* X, float* Y, float* Z) {
+int GetPlayerVelocity(int playerid, double* X, double* Y, double* Z) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("GetPlayerVelocity", "iFFF", playerid, X, Y, Z);
 }
@@ -305,7 +305,7 @@ int PlayCrimeReportForPlayer(int playerid, int suspectid, int crime) {
   return g_native_function_manager->Invoke("PlayCrimeReportForPlayer", "iii", playerid, suspectid, crime);
 }
 
-int PlayAudioStreamForPlayer(int playerid, char* url, float posX, float posY, float posZ, float distance, int usepos) {
+int PlayAudioStreamForPlayer(int playerid, char* url, double posX, double posY, double posZ, double distance, int usepos) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("PlayAudioStreamForPlayer", "icffffi", playerid, url, posX, posY, posZ, distance, usepos);
 }
@@ -335,12 +335,12 @@ int GetPlayerSurfingObjectID(int playerid) {
   return g_native_function_manager->Invoke("GetPlayerSurfingObjectID", "i", playerid);
 }
 
-int RemoveBuildingForPlayer(int playerid, int modelid, float fX, float fY, float fZ, float fRadius) {
+int RemoveBuildingForPlayer(int playerid, int modelid, double fX, double fY, double fZ, double fRadius) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("RemoveBuildingForPlayer", "iiffff", playerid, modelid, fX, fY, fZ, fRadius);
 }
 
-int SetPlayerAttachedObject(int playerid, int index, int modelid, int bone, float fOffsetX, float fOffsetY, float fOffsetZ, float fRotX, float fRotY, float fRotZ, float fScaleX, float fScaleY, float fScaleZ) {
+int SetPlayerAttachedObject(int playerid, int index, int modelid, int bone, double fOffsetX, double fOffsetY, double fOffsetZ, double fRotX, double fRotY, double fRotZ, double fScaleX, double fScaleY, double fScaleZ) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetPlayerAttachedObject", "iiiifffffffff", playerid, index, modelid, bone, fOffsetX, fOffsetY, fOffsetZ, fRotX, fRotY, fRotZ, fScaleX, fScaleY, fScaleZ);
 }
@@ -375,15 +375,15 @@ int GetPVarString(int playerid, char* varname, char* string_return, int len) {
   return g_native_function_manager->Invoke("GetPVarString", "icci", playerid, varname, string_return, len);
 }
 
-int SetPVarFloat(int playerid, char* varname, float float_value) {
+int SetPVarFloat(int playerid, char* varname, double float_value) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetPVarFloat", "icf", playerid, varname, float_value);
 }
 
-float GetPVarFloat(int playerid, char* varname) {
+double GetPVarFloat(int playerid, char* varname) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("GetPVarFloat", "ic", playerid, varname);
-  return * (float*) &result;
+  return (double) amx_ctof(result);
 }
 
 int DeletePVar(int playerid, char* varname) {
@@ -406,7 +406,7 @@ int GetPVarType(int playerid, char* varname) {
   return g_native_function_manager->Invoke("GetPVarType", "ic", playerid, varname);
 }
 
-int SetPlayerChatBubble(int playerid, char* text, int color, float drawdistance, int expiretime) {
+int SetPlayerChatBubble(int playerid, char* text, int color, double drawdistance, int expiretime) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetPlayerChatBubble", "icifi", playerid, text, color, drawdistance, expiretime);
 }
@@ -436,12 +436,12 @@ int TogglePlayerControllable(int playerid, int toggle) {
   return g_native_function_manager->Invoke("TogglePlayerControllable", "ii", playerid, toggle);
 }
 
-int PlayerPlaySound(int playerid, int soundid, float x, float y, float z) {
+int PlayerPlaySound(int playerid, int soundid, double x, double y, double z) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("PlayerPlaySound", "iifff", playerid, soundid, x, y, z);
 }
 
-int ApplyAnimation(int playerid, char* animlib, char* animname, float fDelta, int loop, int lockx, int locky, int freeze, int time, int forcesync) {
+int ApplyAnimation(int playerid, char* animlib, char* animname, double fDelta, int loop, int lockx, int locky, int freeze, int time, int forcesync) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("ApplyAnimation", "iccfiiiiii", playerid, animlib, animname, fDelta, loop, lockx, locky, freeze, time, forcesync);
 }
@@ -471,7 +471,7 @@ int SetPlayerSpecialAction(int playerid, int actionid) {
   return g_native_function_manager->Invoke("SetPlayerSpecialAction", "ii", playerid, actionid);
 }
 
-int SetPlayerCheckpoint(int playerid, float x, float y, float z, float size) {
+int SetPlayerCheckpoint(int playerid, double x, double y, double z, double size) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetPlayerCheckpoint", "iffff", playerid, x, y, z, size);
 }
@@ -481,7 +481,7 @@ int DisablePlayerCheckpoint(int playerid) {
   return g_native_function_manager->Invoke("DisablePlayerCheckpoint", "i", playerid);
 }
 
-int SetPlayerRaceCheckpoint(int playerid, int type, float x, float y, float z, float nextx, float nexty, float nextz, float size) {
+int SetPlayerRaceCheckpoint(int playerid, int type, double x, double y, double z, double nextx, double nexty, double nextz, double size) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetPlayerRaceCheckpoint", "iifffffff", playerid, type, x, y, z, nextx, nexty, nextz, size);
 }
@@ -491,7 +491,7 @@ int DisablePlayerRaceCheckpoint(int playerid) {
   return g_native_function_manager->Invoke("DisablePlayerRaceCheckpoint", "i", playerid);
 }
 
-int SetPlayerWorldBounds(int playerid, float x_max, float x_min, float y_max, float y_min) {
+int SetPlayerWorldBounds(int playerid, double x_max, double x_min, double y_max, double y_min) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetPlayerWorldBounds", "iffff", playerid, x_max, x_min, y_max, y_min);
 }
@@ -506,7 +506,7 @@ int ShowPlayerNameTagForPlayer(int playerid, int showplayerid, int show) {
   return g_native_function_manager->Invoke("ShowPlayerNameTagForPlayer", "iii", playerid, showplayerid, show);
 }
 
-int SetPlayerMapIcon(int playerid, int iconid, float x, float y, float z, int markertype, int color, int style) {
+int SetPlayerMapIcon(int playerid, int iconid, double x, double y, double z, int markertype, int color, int style) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetPlayerMapIcon", "iifffiii", playerid, iconid, x, y, z, markertype, color, style);
 }
@@ -521,12 +521,12 @@ int AllowPlayerTeleport(int playerid, int allow) {
   return g_native_function_manager->Invoke("AllowPlayerTeleport", "ii", playerid, allow);
 }
 
-int SetPlayerCameraPos(int playerid, float x, float y, float z) {
+int SetPlayerCameraPos(int playerid, double x, double y, double z) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetPlayerCameraPos", "ifff", playerid, x, y, z);
 }
 
-int SetPlayerCameraLookAt(int playerid, float x, float y, float z) {
+int SetPlayerCameraLookAt(int playerid, double x, double y, double z) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetPlayerCameraLookAt", "ifff", playerid, x, y, z);
 }
@@ -536,12 +536,12 @@ int SetCameraBehindPlayer(int playerid) {
   return g_native_function_manager->Invoke("SetCameraBehindPlayer", "i", playerid);
 }
 
-int GetPlayerCameraPos(int playerid, float* x, float* y, float* z) {
+int GetPlayerCameraPos(int playerid, double* x, double* y, double* z) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("GetPlayerCameraPos", "iFFF", playerid, x, y, z);
 }
 
-int GetPlayerCameraFrontVector(int playerid, float* x, float* y, float* z) {
+int GetPlayerCameraFrontVector(int playerid, double* x, double* y, double* z) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("GetPlayerCameraFrontVector", "iFFF", playerid, x, y, z);
 }

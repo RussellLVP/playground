@@ -55,7 +55,10 @@ PLUGIN_EXPORT int PLUGIN_CALL AmxLoad(AMX* amx) {
   CHECK(g_server_interface);
 
   g_server_interface->DidLoadScript(amx);
-  samp::SetWeather(8);
+
+  LOG(INFO) << "Gravity: " << samp::GetGravity();
+  samp::SetGravity(0.1);
+  LOG(INFO) << "Gravity: " << samp::GetGravity();
 
   return 0;
 }

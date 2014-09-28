@@ -20,7 +20,7 @@
 
 extern NativeFunctionManager* g_native_function_manager;
 
-// Generated on 2014-09-27.
+// Generated on 2014-09-28.
 // Do not modify by hand, instead, look at /scripts/write_bindings.py.
 namespace samp {
 
@@ -114,28 +114,28 @@ int CallLocalFunction(char* function, char* format, ...) {
   return 0;
 }
 
-float asin(float value) {
+double asin(double value) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("asin", "f", value);
-  return * (float*) &result;
+  return (double) amx_ctof(result);
 }
 
-float acos(float value) {
+double acos(double value) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("acos", "f", value);
-  return * (float*) &result;
+  return (double) amx_ctof(result);
 }
 
-float atan(float value) {
+double atan(double value) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("atan", "f", value);
-  return * (float*) &result;
+  return (double) amx_ctof(result);
 }
 
-float atan2(float x, float y) {
+double atan2(double x, double y) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("atan2", "ff", x, y);
-  return * (float*) &result;
+  return (double) amx_ctof(result);
 }
 
 int SetGameModeText(char* string) {
@@ -148,32 +148,32 @@ int SetTeamCount(int count) {
   return g_native_function_manager->Invoke("SetTeamCount", "i", count);
 }
 
-int AddPlayerClass(int modelid, float spawn_x, float spawn_y, float spawn_z, float z_angle, int weapon1, int weapon1_ammo, int weapon2, int weapon2_ammo, int weapon3, int weapon3_ammo) {
+int AddPlayerClass(int modelid, double spawn_x, double spawn_y, double spawn_z, double z_angle, int weapon1, int weapon1_ammo, int weapon2, int weapon2_ammo, int weapon3, int weapon3_ammo) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("AddPlayerClass", "iffffiiiiii", modelid, spawn_x, spawn_y, spawn_z, z_angle, weapon1, weapon1_ammo, weapon2, weapon2_ammo, weapon3, weapon3_ammo);
 }
 
-int AddPlayerClassEx(int teamid, int modelid, float spawn_x, float spawn_y, float spawn_z, float z_angle, int weapon1, int weapon1_ammo, int weapon2, int weapon2_ammo, int weapon3, int weapon3_ammo) {
+int AddPlayerClassEx(int teamid, int modelid, double spawn_x, double spawn_y, double spawn_z, double z_angle, int weapon1, int weapon1_ammo, int weapon2, int weapon2_ammo, int weapon3, int weapon3_ammo) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("AddPlayerClassEx", "iiffffiiiiii", teamid, modelid, spawn_x, spawn_y, spawn_z, z_angle, weapon1, weapon1_ammo, weapon2, weapon2_ammo, weapon3, weapon3_ammo);
 }
 
-int AddStaticVehicle(int modelid, float spawn_x, float spawn_y, float spawn_z, float z_angle, int color1, int color2) {
+int AddStaticVehicle(int modelid, double spawn_x, double spawn_y, double spawn_z, double z_angle, int color1, int color2) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("AddStaticVehicle", "iffffii", modelid, spawn_x, spawn_y, spawn_z, z_angle, color1, color2);
 }
 
-int AddStaticVehicleEx(int modelid, float spawn_x, float spawn_y, float spawn_z, float z_angle, int color1, int color2, int respawn_delay) {
+int AddStaticVehicleEx(int modelid, double spawn_x, double spawn_y, double spawn_z, double z_angle, int color1, int color2, int respawn_delay) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("AddStaticVehicleEx", "iffffiii", modelid, spawn_x, spawn_y, spawn_z, z_angle, color1, color2, respawn_delay);
 }
 
-int AddStaticPickup(int model, int type, float X, float Y, float Z, int virtualworld) {
+int AddStaticPickup(int model, int type, double X, double Y, double Z, int virtualworld) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("AddStaticPickup", "iifffi", model, type, X, Y, Z, virtualworld);
 }
 
-int CreatePickup(int model, int type, float X, float Y, float Z, int virtualworld) {
+int CreatePickup(int model, int type, double X, double Y, double Z, int virtualworld) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("CreatePickup", "iifffi", model, type, X, Y, Z, virtualworld);
 }
@@ -223,9 +223,15 @@ int SetWeather(int weatherid) {
   return g_native_function_manager->Invoke("SetWeather", "i", weatherid);
 }
 
-int SetGravity(float gravity) {
+int SetGravity(double gravity) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetGravity", "f", gravity);
+}
+
+double GetGravity() {
+  CHECK(g_native_function_manager);
+  int result = g_native_function_manager->Invoke("GetGravity", "");
+  return (double) amx_ctof(result);
 }
 
 int AllowAdminTeleport(int allow) {
@@ -238,7 +244,7 @@ int SetDeathDropAmount(int amount) {
   return g_native_function_manager->Invoke("SetDeathDropAmount", "i", amount);
 }
 
-int CreateExplosion(float X, float Y, float Z, int type, float Radius) {
+int CreateExplosion(double X, double Y, double Z, int type, double Radius) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("CreateExplosion", "fffif", X, Y, Z, type, Radius);
 }
@@ -258,7 +264,7 @@ int DisableInteriorEnterExits() {
   return g_native_function_manager->Invoke("DisableInteriorEnterExits", "");
 }
 
-int SetNameTagDrawDistance(float distance) {
+int SetNameTagDrawDistance(double distance) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetNameTagDrawDistance", "f", distance);
 }
@@ -268,12 +274,12 @@ int DisableNameTagLOS() {
   return g_native_function_manager->Invoke("DisableNameTagLOS", "");
 }
 
-int LimitGlobalChatRadius(float chat_radius) {
+int LimitGlobalChatRadius(double chat_radius) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("LimitGlobalChatRadius", "f", chat_radius);
 }
 
-int LimitPlayerMarkerRadius(float marker_radius) {
+int LimitPlayerMarkerRadius(double marker_radius) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("LimitPlayerMarkerRadius", "f", marker_radius);
 }
@@ -338,7 +344,7 @@ int GetNetworkStats(char* retstr, int retstr_size) {
   return g_native_function_manager->Invoke("GetNetworkStats", "ci", retstr, retstr_size);
 }
 
-int CreateMenu(char* title, int columns, float x, float y, float col1width, float col2width) {
+int CreateMenu(char* title, int columns, double x, double y, double col1width, double col2width) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("CreateMenu", "ciffff", title, columns, x, y, col1width, col2width);
   return * (int*) &result;
@@ -390,7 +396,7 @@ int GetPlayerMenu(int playerid) {
   return * (int*) &result;
 }
 
-int TextDrawCreate(float x, float y, char* text) {
+int TextDrawCreate(double x, double y, char* text) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("TextDrawCreate", "ffc", x, y, text);
   return * (int*) &result;
@@ -401,12 +407,12 @@ int TextDrawDestroy(int text) {
   return g_native_function_manager->Invoke("TextDrawDestroy", "i", text);
 }
 
-int TextDrawLetterSize(int text, float x, float y) {
+int TextDrawLetterSize(int text, double x, double y) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("TextDrawLetterSize", "iff", text, x, y);
 }
 
-int TextDrawTextSize(int text, float x, float y) {
+int TextDrawTextSize(int text, double x, double y) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("TextDrawTextSize", "iff", text, x, y);
 }
@@ -481,7 +487,7 @@ int TextDrawSetString(int text, char* string) {
   return g_native_function_manager->Invoke("TextDrawSetString", "ic", text, string);
 }
 
-int GangZoneCreate(float minx, float miny, float maxx, float maxy) {
+int GangZoneCreate(double minx, double miny, double maxx, double maxy) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("GangZoneCreate", "ffff", minx, miny, maxx, maxy);
 }
@@ -531,7 +537,7 @@ int GangZoneStopFlashForAll(int zone) {
   return g_native_function_manager->Invoke("GangZoneStopFlashForAll", "i", zone);
 }
 
-int Create3DTextLabel(char* text, int color, float X, float Y, float Z, float DrawDistance, int virtualworld, int testLOS) {
+int Create3DTextLabel(char* text, int color, double X, double Y, double Z, double DrawDistance, int virtualworld, int testLOS) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("Create3DTextLabel", "ciffffii", text, color, X, Y, Z, DrawDistance, virtualworld, testLOS);
   return * (int*) &result;
@@ -542,12 +548,12 @@ int Delete3DTextLabel(int id) {
   return g_native_function_manager->Invoke("Delete3DTextLabel", "i", id);
 }
 
-int Attach3DTextLabelToPlayer(int id, int playerid, float OffsetX, float OffsetY, float OffsetZ) {
+int Attach3DTextLabelToPlayer(int id, int playerid, double OffsetX, double OffsetY, double OffsetZ) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("Attach3DTextLabelToPlayer", "iifff", id, playerid, OffsetX, OffsetY, OffsetZ);
 }
 
-int Attach3DTextLabelToVehicle(int id, int vehicleid, float OffsetX, float OffsetY, float OffsetZ) {
+int Attach3DTextLabelToVehicle(int id, int vehicleid, double OffsetX, double OffsetY, double OffsetZ) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("Attach3DTextLabelToVehicle", "iifff", id, vehicleid, OffsetX, OffsetY, OffsetZ);
 }
@@ -557,7 +563,7 @@ int Update3DTextLabelText(int id, int color, char* text) {
   return g_native_function_manager->Invoke("Update3DTextLabelText", "iic", id, color, text);
 }
 
-int CreatePlayer3DTextLabel(int playerid, char* text, int color, float X, float Y, float Z, float DrawDistance, int attachedplayer, int attachedvehicle, int testLOS) {
+int CreatePlayer3DTextLabel(int playerid, char* text, int color, double X, double Y, double Z, double DrawDistance, int attachedplayer, int attachedvehicle, int testLOS) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("CreatePlayer3DTextLabel", "iciffffiii", playerid, text, color, X, Y, Z, DrawDistance, attachedplayer, attachedvehicle, testLOS);
   return * (int*) &result;

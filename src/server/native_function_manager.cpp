@@ -154,7 +154,10 @@ int NativeFunctionManager::Invoke(const char* name, const char* format, ...) {
       break;
     case 'I': // integer reference
     case 'f': // float
-      parameters_[index + 1] = amx_ftoc(va_arg(arguments, float));
+      {
+        float value = static_cast<float>(va_arg(arguments, double));
+        parameters_[index + 1] = amx_ftoc(value);
+      }
       break;
     case 'F': // float reference
     case 'a': // vector<cell>

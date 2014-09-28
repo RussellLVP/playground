@@ -20,11 +20,11 @@
 
 extern NativeFunctionManager* g_native_function_manager;
 
-// Generated on 2014-09-27.
+// Generated on 2014-09-28.
 // Do not modify by hand, instead, look at /scripts/write_bindings.py.
 namespace samp {
 
-int CreateVehicle(int vehicletype, float x, float y, float z, float rotation, int color1, int color2, int respawn_delay) {
+int CreateVehicle(int vehicletype, double x, double y, double z, double rotation, int color1, int color2, int respawn_delay) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("CreateVehicle", "iffffiii", vehicletype, x, y, z, rotation, color1, color2, respawn_delay);
 }
@@ -39,33 +39,33 @@ int IsVehicleStreamedIn(int vehicleid, int forplayerid) {
   return g_native_function_manager->Invoke("IsVehicleStreamedIn", "ii", vehicleid, forplayerid);
 }
 
-int GetVehiclePos(int vehicleid, float* x, float* y, float* z) {
+int GetVehiclePos(int vehicleid, double* x, double* y, double* z) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("GetVehiclePos", "iFFF", vehicleid, x, y, z);
 }
 
-int SetVehiclePos(int vehicleid, float x, float y, float z) {
+int SetVehiclePos(int vehicleid, double x, double y, double z) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetVehiclePos", "ifff", vehicleid, x, y, z);
 }
 
-int GetVehicleZAngle(int vehicleid, float* z_angle) {
+int GetVehicleZAngle(int vehicleid, double* z_angle) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("GetVehicleZAngle", "iF", vehicleid, z_angle);
 }
 
-int GetVehicleRotationQuat(int vehicleid, float* w, float* x, float* y, float* z) {
+int GetVehicleRotationQuat(int vehicleid, double* w, double* x, double* y, double* z) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("GetVehicleRotationQuat", "iFFFF", vehicleid, w, x, y, z);
 }
 
-float GetVehicleDistanceFromPoint(int vehicleid, float X, float Y, float Z) {
+double GetVehicleDistanceFromPoint(int vehicleid, double X, double Y, double Z) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("GetVehicleDistanceFromPoint", "ifff", vehicleid, X, Y, Z);
-  return * (float*) &result;
+  return (double) amx_ctof(result);
 }
 
-int SetVehicleZAngle(int vehicleid, float z_angle) {
+int SetVehicleZAngle(int vehicleid, double z_angle) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetVehicleZAngle", "if", vehicleid, z_angle);
 }
@@ -120,12 +120,12 @@ int ChangeVehiclePaintjob(int vehicleid, int paintjobid) {
   return g_native_function_manager->Invoke("ChangeVehiclePaintjob", "ii", vehicleid, paintjobid);
 }
 
-int SetVehicleHealth(int vehicleid, float health) {
+int SetVehicleHealth(int vehicleid, double health) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetVehicleHealth", "if", vehicleid, health);
 }
 
-int GetVehicleHealth(int vehicleid, float* health) {
+int GetVehicleHealth(int vehicleid, double* health) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("GetVehicleHealth", "iF", vehicleid, health);
 }
@@ -175,17 +175,17 @@ int RepairVehicle(int vehicleid) {
   return g_native_function_manager->Invoke("RepairVehicle", "i", vehicleid);
 }
 
-int GetVehicleVelocity(int vehicleid, float* X, float* Y, float* Z) {
+int GetVehicleVelocity(int vehicleid, double* X, double* Y, double* Z) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("GetVehicleVelocity", "iFFF", vehicleid, X, Y, Z);
 }
 
-int SetVehicleVelocity(int vehicleid, float X, float Y, float Z) {
+int SetVehicleVelocity(int vehicleid, double X, double Y, double Z) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetVehicleVelocity", "ifff", vehicleid, X, Y, Z);
 }
 
-int SetVehicleAngularVelocity(int vehicleid, float X, float Y, float Z) {
+int SetVehicleAngularVelocity(int vehicleid, double X, double Y, double Z) {
   CHECK(g_native_function_manager);
   return g_native_function_manager->Invoke("SetVehicleAngularVelocity", "ifff", vehicleid, X, Y, Z);
 }

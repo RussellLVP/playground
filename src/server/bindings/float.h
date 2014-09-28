@@ -16,7 +16,7 @@
 #ifndef SERVER_BINDINGS_FLOAT_H_
 #define SERVER_BINDINGS_FLOAT_H_
 
-// Generated on 2014-09-27.
+// Generated on 2014-09-28.
 // Do not modify by hand, instead, look at /scripts/write_bindings.py.
 namespace samp {
 
@@ -34,22 +34,22 @@ enum anglemode {
   grades,
 };
 
-float _float(int value);
-float floatstr(char* string);
-float floatmul(float oper1, float oper2);
-float floatdiv(float dividend, float divisor);
-float floatadd(float oper1, float oper2);
-float floatsub(float oper1, float oper2);
-float floatfract(float value);
-int floatround(float value, floatround_method method);
-int floatcmp(float oper1, float oper2);
-float floatsqroot(float value);
-float floatpower(float value, float exponent);
-float floatlog(float value, float base);
-float floatsin(float value, anglemode mode);
-float floatcos(float value, anglemode mode);
-float floattan(float value, anglemode mode);
-float floatabs(float value);
+double _float(int value);
+double floatstr(char* string);
+double floatmul(double oper1, double oper2);
+double floatdiv(double dividend, double divisor);
+double floatadd(double oper1, double oper2);
+double floatsub(double oper1, double oper2);
+double floatfract(double value);
+int floatround(double value, floatround_method method);
+int floatcmp(double oper1, double oper2);
+double floatsqroot(double value);
+double floatpower(double value, double exponent);
+double floatlog(double value, double base);
+double floatsin(double value, anglemode mode);
+double floatcos(double value, anglemode mode);
+double floattan(double value, anglemode mode);
+double floatabs(double value);
 
 }  // namespace samp
 
