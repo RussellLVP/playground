@@ -29,7 +29,8 @@ ServerInterface* ServerInterface::Create(void** data) {
 
 // -------------------------------------------------------------------------------------------------
 
-ServerInterfaceImpl::ServerInterfaceImpl(void** data) {
+ServerInterfaceImpl::ServerInterfaceImpl(void** data) 
+    : log_delegate_(static_cast<logprintf_t>(data[PLUGIN_DATA_LOGPRINTF])) {
   pAMXFunctions = data[PLUGIN_DATA_AMX_EXPORTS];
 }
 

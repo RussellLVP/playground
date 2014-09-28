@@ -11,6 +11,15 @@ namespace logging {
 
 class LogMessage {
  public:
+  // Logging delegate. May be used to override the destination of messages.
+  class Delegate {
+   public:
+     virtual bool WriteMessage(const std::string& message) = 0;
+  };
+
+  // Outputs messages to |delegate| instead of writing to stderr.
+  static void SetDelegate(Delegate* delegate);
+
   // Override the default minimum log severity level to output to STDOUT.
   static void SetMinimumLogSeverity(int level);
 
@@ -25,6 +34,8 @@ class LogMessage {
   std::ostream& stream() { return stream_; }
 
 private:
+  static Delegate* delegate_;
+
   // Initializes the first parts of the message, shared among the constructors.
   void Initialize();
 

@@ -82,6 +82,7 @@
     <ClInclude Include="bindings\float.h" />
     <ClInclude Include="bindings\http.h" />
     <ClInclude Include="bindings\internal\mock_amx.h" />
+    <ClInclude Include="server_log_delegate.h" />
     <ClInclude Include="bindings\objects.h" />
     <ClInclude Include="bindings\players.h" />
     <ClInclude Include="bindings\samp.h" />
@@ -107,6 +108,7 @@
     <ClCompile Include="bindings\float.cpp" />
     <ClCompile Include="bindings\http.cpp" />
     <ClCompile Include="bindings\internal\mock_amx.cpp" />
+    <ClCompile Include="server_log_delegate.cpp" />
     <ClCompile Include="bindings\objects.cpp" />
     <ClCompile Include="bindings\players.cpp" />
     <ClCompile Include="bindings\samp.cpp" />

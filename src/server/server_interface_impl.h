@@ -21,6 +21,7 @@
 #include "server/interface/samp/event_listener.h"
 #include "server/native_function_manager.h"
 #include "server/server_interface.h"
+#include "server/server_log_delegate.h"
 
 class ServerInterfaceImpl : public ServerInterface,
                             public samp::EventListener {
@@ -40,6 +41,7 @@ class ServerInterfaceImpl : public ServerInterface,
 
  private:
   NativeFunctionManager native_function_manager_;
+  ServerLogDelegate log_delegate_;
 
   std::list<PlayerEventListener*> player_event_listeners_;
 };

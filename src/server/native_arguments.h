@@ -19,7 +19,7 @@
 #include <string>
 
 typedef struct tagAMX AMX;
-typedef long int cell;
+typedef int cell;
 
 // Dealing with Pawn arguments can be a pain and may require complicated manual work. In order to
 // make this more convenient, access to them has been wrapped in this utility class.

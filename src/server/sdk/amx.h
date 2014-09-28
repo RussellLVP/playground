@@ -34,7 +34,7 @@
 #include "sclinux.h"
 #endif
 
-#if defined HAVE_STDINT_H
+#if defined HAVE_STDINT_H || defined(WINDOWS)
   #include <stdint.h>
 #else
   #if defined __LCC__ || defined __DMC__ || defined __LINUX__ || (defined __WATCOMC__ && __WATCOMC__ >= 1200)

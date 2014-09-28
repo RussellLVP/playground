@@ -27,6 +27,13 @@ const char* log_severity_name(int severity) {
 
 }  // namespace
 
+LogMessage::Delegate* LogMessage::delegate_;
+
+// static
+void LogMessage::SetDelegate(Delegate* delegate) {
+  delegate_ = delegate;
+}
+
 // static
 void LogMessage::SetMinimumLogSeverity(int severity) {
   g_minimum_log_severity = severity;
@@ -43,12 +50,14 @@ LogMessage::LogMessage(const char* file, int line, int severity)
 }
 
 LogMessage::~LogMessage() {
-  stream_ << std::endl;
-
   std::string message = stream_.str();
+  if (!delegate_ ||
+      !delegate_->WriteMessage(message)) {
+    fwrite(message.data(), message.length(), 1, stderr);
+    fputc('\n', stderr);
 
-  fwrite(message.data(), message.length(), 1, stderr);
-  fflush(stderr);
+    fflush(stderr);
+  }
   
   if (severity_ == LOG_FATAL)
     __debugbreak();
