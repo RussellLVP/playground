@@ -36,7 +36,6 @@ PLUGIN_EXPORT bool PLUGIN_CALL Load(void** data) {
 
   g_server_interface = ServerInterface::Create(data);
   g_playground = new Playground(g_server_interface);
-
   return true;
 }
 
@@ -50,16 +49,10 @@ PLUGIN_EXPORT void PLUGIN_CALL Unload() {
   g_server_interface = nullptr;
 }
 
-#include "server/bindings/samp.h"
 PLUGIN_EXPORT int PLUGIN_CALL AmxLoad(AMX* amx) {
   CHECK(g_server_interface);
 
   g_server_interface->DidLoadScript(amx);
-
-  LOG(INFO) << "Gravity: " << samp::GetGravity();
-  samp::SetGravity(0.1);
-  LOG(INFO) << "Gravity: " << samp::GetGravity();
-
   return 0;
 }
 
