@@ -18,6 +18,8 @@
 
 #include "server/sdk/amx.h"
 
+#include <stack>
+
 // In order to avoid changing the stack state of the real AMX instances which run the Pawn gamemode,
 // we use a mocked AMX structure containing our own stack space.
 class MockAMX : public AMX {
@@ -25,9 +27,28 @@ class MockAMX : public AMX {
   MockAMX();
   ~MockAMX();
 
+  // Stores the current state of the mocked AMX' heap, which can be reset using PopState(). The
+  // state will be pushed on a stack in case calls are reentrant (which should be rare). By
+  // restoring the previous state, we don't have to care about per-argument cleanup.
+  void PushState();
+  void PopState();
+
+  // Pushes |cell| on the heap of the AMX, storing the address in |address|.
+  void Push(cell value, cell* address);
+
+  // Reads the value stored in |address| from the heap and stores it in |value|.
+  void Read(cell address, cell* value) const;
+
  private:
   AMX_HEADER header_;
-  void* heap_;
+  cell* heap_;
+
+  // Serialized version of the heap state at the time of a push.
+  struct HeapState {
+    cell hea;
+  };
+
+  std::stack<HeapState> pushed_states_;
 };
 
 #endif  // SERVER_BINDINGS_INTERNAL_MOCK_AMX_H_

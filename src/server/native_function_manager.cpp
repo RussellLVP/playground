@@ -147,19 +147,28 @@ int NativeFunctionManager::Invoke(const char* name, const char* format, ...) {
   va_list arguments;
   va_start(arguments, format);
 
+  mock_amx_.PushState();
+
   for (unsigned int index = 0; index < parameter_count; ++index) {
     switch (format[index]) {
     case 'i': // integer
       parameters_[index + 1] = va_arg(arguments, cell);
       break;
     case 'I': // integer reference
+      mock_amx_.Push(*va_arg(arguments, cell*), &parameters_[index + 1]);
+      break;
+    case 'F': // float reference
+      {
+        float value = static_cast<float>(*va_arg(arguments, double*));
+        mock_amx_.Push(amx_ftoc(value), &parameters_[index + 1]);
+      }
+      break;
     case 'f': // float
       {
         float value = static_cast<float>(va_arg(arguments, double));
         parameters_[index + 1] = amx_ftoc(value);
       }
       break;
-    case 'F': // float reference
     case 'a': // vector<cell>
     default:
       CHECK(false) << "Unrecognized parameter type '" << format[index] << "' while invoking " << name << ".";
@@ -167,11 +176,37 @@ int NativeFunctionManager::Invoke(const char* name, const char* format, ...) {
     }
   }
 
-  LOG(INFO) << "Calling " << name << " with format (" << format << ").";
+  LOG(INFO) << "Native call: " << name << " (" << format << ")";
   int return_value = native(&mock_amx_, parameters_.data());
-  LOG(INFO) << "Return value: " << return_value;
 
   va_end(arguments);
+  va_start(arguments, format);
+
+  cell temporary;
+  for (unsigned int index = 0; index < parameter_count; ++index) {
+    switch (format[index]) {
+    case 'I': // integer reference
+      mock_amx_.Read(parameters_[index + 1], va_arg(arguments, cell*));
+      break;
+    case 'F': // float reference
+      {
+        double* value = va_arg(arguments, double*);
+
+        mock_amx_.Read(parameters_[index + 1], &temporary);
+        *value = static_cast<double>(amx_ctof(temporary));
+      }
+      break;
+    case 'a': // vector<cell>
+      break;
+    default:  // pop the argument from the argument iterator.
+      va_arg(arguments, void*);
+      break;
+    }
+  }
+
+  mock_amx_.PopState();
+  va_end(arguments);
+
   return return_value;
 }
 

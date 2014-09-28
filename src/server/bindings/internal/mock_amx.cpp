@@ -15,20 +15,21 @@
 
 #include "server/bindings/internal/mock_amx.h"
 
-#define _STDINT  // Pawn's definitions conflict with the native ones.
 #include <memory>
+
+#include "base/logging.h"
 
 namespace {
 
 const int kStackSize = 128;
-const int kHeapSize = 1024;
+const int kHeapSize = 4096;
 
 }  // namespace
 
 MockAMX::MockAMX() {
-  memset(this, 0, sizeof(MockAMX));
+  memset(this, 0, sizeof(AMX) + sizeof(AMX_HEADER));
 
-  heap_ = calloc(kStackSize + kHeapSize, 1);
+  heap_ = static_cast<cell*>(calloc(kStackSize + kHeapSize, 1));
 
   base = reinterpret_cast<unsigned char*>(&header_);
   data = nullptr;
@@ -44,4 +45,43 @@ MockAMX::MockAMX() {
 
 MockAMX::~MockAMX() {
   delete heap_;
+}
+
+// -------------------------------------------------------------------------------------------------
+
+void MockAMX::PushState() {
+  HeapState state;
+  state.hea = hea;
+
+  pushed_states_.push(state);
+}
+
+void MockAMX::PopState() {
+  DCHECK(!pushed_states_.empty());
+
+  HeapState state = pushed_states_.top();
+  hea = state.hea;
+
+  pushed_states_.pop();
+}
+
+// -------------------------------------------------------------------------------------------------
+
+void MockAMX::Push(cell value, cell* address) {
+  CHECK((hea + sizeof(cell)) < (kHeapSize * sizeof(cell))) << "Mocked AMX heap overflow detected.";
+  CHECK(address);
+
+  *address = hea;
+
+  hea += sizeof(cell);
+  heap_[*address / sizeof(cell)] = value;
+}
+
+// -------------------------------------------------------------------------------------------------
+
+void MockAMX::Read(cell address, cell* value) const {
+  CHECK(address < (kHeapSize * sizeof(cell)));
+  CHECK(value);
+
+  *value = heap_[address / sizeof(cell)];
 }
