@@ -15,14 +15,17 @@
 
 #include "server/bindings/internal/mock_amx.h"
 
+#include <algorithm>
 #include <memory>
 
 #include "base/logging.h"
 
 namespace {
 
-const int kStackSize = 128;
-const int kHeapSize = 4096;
+const unsigned int kStackSize = 128;
+const unsigned int kHeapSize = 16 * 1024;  // 16384 cells, 65KiB of memory.
+
+const unsigned int kStringLength = 2048;
 
 }  // namespace
 
@@ -68,13 +71,29 @@ void MockAMX::PopState() {
 // -------------------------------------------------------------------------------------------------
 
 void MockAMX::Push(cell value, cell* address) {
-  CHECK((hea + sizeof(cell)) < (kHeapSize * sizeof(cell))) << "Mocked AMX heap overflow detected.";
+  CHECK((hea + sizeof(cell)) < (kHeapSize * sizeof(cell))) << "Mocked AMX heap overflow detected (cell).";
   CHECK(address);
 
   *address = hea;
 
   hea += sizeof(cell);
   heap_[*address / sizeof(cell)] = value;
+}
+
+void MockAMX::Push(const std::string& value, cell* address) {
+  unsigned int length = std::max(kStringLength, value.length());
+
+  CHECK((hea + 1 + length * sizeof(cell)) < (kHeapSize * sizeof(cell))) << "Mocked AMX heap overflow detected (string).";
+  CHECK(address);
+
+  *address = hea;
+  hea += (length + 1) * sizeof(cell);
+
+  unsigned int start = *address / sizeof(cell);
+  for (unsigned int index = 0; index < value.length(); ++index)
+    heap_[start + index] = value[index];
+
+  heap_[start + length] = 0;
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -84,4 +103,21 @@ void MockAMX::Read(cell address, cell* value) const {
   CHECK(value);
 
   *value = heap_[address / sizeof(cell)];
+}
+
+void MockAMX::Read(cell address, std::string* value) const {
+  CHECK(address < (kHeapSize * sizeof(cell)));
+  CHECK(value);
+
+  const cell* string = &heap_[address / sizeof(cell)];
+  unsigned int length = 0;
+
+  while (string[length])
+    ++length;
+
+  if (value->length() != length)
+    value->resize(length);
+
+  for (unsigned int index = 0; index < length; ++index)
+    (*value)[index] = string[index];
 }

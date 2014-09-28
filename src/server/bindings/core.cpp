@@ -28,9 +28,9 @@ int heapspace() {
   return g_native_function_manager->Invoke("heapspace", "");
 }
 
-int funcidx(char* name) {
+int funcidx(std::string& name) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("funcidx", "c", name);
+  return g_native_function_manager->Invoke("funcidx", "s", &name);
 }
 
 int numargs() {
@@ -83,24 +83,24 @@ int clamp(int value, int min, int max) {
   return g_native_function_manager->Invoke("clamp", "iii", value, min, max);
 }
 
-int getproperty(int id, char* name, int value, char* string) {
+int getproperty(int id, std::string& name, int value, std::string& string) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("getproperty", "icic", id, name, value, string);
+  return g_native_function_manager->Invoke("getproperty", "isis", id, &name, value, &string);
 }
 
-int setproperty(int id, char* name, int value, char* string) {
+int setproperty(int id, std::string& name, int value, std::string& string) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("setproperty", "icic", id, name, value, string);
+  return g_native_function_manager->Invoke("setproperty", "isis", id, &name, value, &string);
 }
 
-int deleteproperty(int id, char* name, int value) {
+int deleteproperty(int id, std::string& name, int value) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("deleteproperty", "ici", id, name, value);
+  return g_native_function_manager->Invoke("deleteproperty", "isi", id, &name, value);
 }
 
-int existproperty(int id, char* name, int value) {
+int existproperty(int id, std::string& name, int value) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("existproperty", "ici", id, name, value);
+  return g_native_function_manager->Invoke("existproperty", "isi", id, &name, value);
 }
 
 }  // namespace samp

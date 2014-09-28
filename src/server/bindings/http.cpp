@@ -23,9 +23,9 @@ extern NativeFunctionManager* g_native_function_manager;
 // Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.
 namespace samp {
 
-int HTTP(int index, int type, char* url, char* data, char* callback) {
+int HTTP(int index, int type, std::string& url, std::string& data, std::string& callback) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("HTTP", "iiccc", index, type, url, data, callback);
+  return g_native_function_manager->Invoke("HTTP", "iisss", index, type, &url, &data, &callback);
 }
 
 }  // namespace samp

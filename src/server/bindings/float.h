@@ -16,6 +16,8 @@
 #ifndef SERVER_BINDINGS_FLOAT_H_
 #define SERVER_BINDINGS_FLOAT_H_
 
+#include <string>
+
 // Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.
 namespace samp {
 
@@ -34,7 +36,7 @@ enum anglemode {
 };
 
 double _float(int value);
-double floatstr(char* string);
+double floatstr(std::string& string);
 double floatmul(double oper1, double oper2);
 double floatdiv(double dividend, double divisor);
 double floatadd(double oper1, double oper2);

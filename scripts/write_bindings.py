@@ -76,6 +76,13 @@ class PawnBindingParser(object):
                 return True
         return False
 
+    def IsUsingStrings(self):
+        for native in self.natives_:
+            for argument in native['arguments']:
+                if argument['type'] == 'string':
+                    return True
+        return False
+
     def _ParseNextLine(self):
         line = self._GetNextLine()
         if line.startswith('native'):
@@ -229,7 +236,7 @@ CPP_TYPE_FOR_PAWN_TYPE = {
     'bool': 'bool',
     'float': 'double',
     'integer': 'int',
-    'string': 'char*',
+    'string': 'std::string&',
 
     # Custom types
     'db': 'int',
@@ -310,9 +317,9 @@ def SignatureForNative(native, contents):
                 signature.append('F')
             else:
                 signature.append('f')
-        elif type == 'char*':
-            parameters.append(argument['name'])
-            signature.append('c')
+        elif type == 'std::string&':
+            parameters.append('&%s' % argument['name'])
+            signature.append('s')
         else:
             print 'WARNING: Unrecognized type: %s (%s)' % (type, argument['type'])
             continue
@@ -337,6 +344,10 @@ def WriteBindingsHeader(header_file, contents):
     lines.append('#ifndef %s' % header_guard)
     lines.append('#define %s' % header_guard)
     lines.append('')
+
+    if contents.IsUsingStrings():
+        lines.append('#include <string>')
+        lines.append('')
 
     lines.append('// Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.')
     lines.append('namespace samp {')

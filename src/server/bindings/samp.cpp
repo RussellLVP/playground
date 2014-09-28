@@ -23,41 +23,41 @@ extern NativeFunctionManager* g_native_function_manager;
 // Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.
 namespace samp {
 
-int print(char* string) {
+int print(std::string& string) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("print", "c", string);
+  return g_native_function_manager->Invoke("print", "s", &string);
 }
 
-int printf(char* format, ...) {
+int printf(std::string& format, ...) {
   CHECK(g_native_function_manager);
   CHECK(false) << "Support for Pawn functions with variable argument counts has not been implemented yet.";
   return 0;
 }
 
-int format(char* output, int len, char* format, ...) {
+int format(std::string& output, int len, std::string& format, ...) {
   CHECK(g_native_function_manager);
   CHECK(false) << "Support for Pawn functions with variable argument counts has not been implemented yet.";
   return 0;
 }
 
-int SendClientMessage(int playerid, int color, char* message) {
+int SendClientMessage(int playerid, int color, std::string& message) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("SendClientMessage", "iic", playerid, color, message);
+  return g_native_function_manager->Invoke("SendClientMessage", "iis", playerid, color, &message);
 }
 
-int SendClientMessageToAll(int color, char* message) {
+int SendClientMessageToAll(int color, std::string& message) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("SendClientMessageToAll", "ic", color, message);
+  return g_native_function_manager->Invoke("SendClientMessageToAll", "is", color, &message);
 }
 
-int SendPlayerMessageToPlayer(int playerid, int senderid, char* message) {
+int SendPlayerMessageToPlayer(int playerid, int senderid, std::string& message) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("SendPlayerMessageToPlayer", "iic", playerid, senderid, message);
+  return g_native_function_manager->Invoke("SendPlayerMessageToPlayer", "iis", playerid, senderid, &message);
 }
 
-int SendPlayerMessageToAll(int senderid, char* message) {
+int SendPlayerMessageToAll(int senderid, std::string& message) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("SendPlayerMessageToAll", "ic", senderid, message);
+  return g_native_function_manager->Invoke("SendPlayerMessageToAll", "is", senderid, &message);
 }
 
 int SendDeathMessage(int killer, int killee, int weapon) {
@@ -65,22 +65,22 @@ int SendDeathMessage(int killer, int killee, int weapon) {
   return g_native_function_manager->Invoke("SendDeathMessage", "iii", killer, killee, weapon);
 }
 
-int GameTextForAll(char* string, int time, int style) {
+int GameTextForAll(std::string& string, int time, int style) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("GameTextForAll", "cii", string, time, style);
+  return g_native_function_manager->Invoke("GameTextForAll", "sii", &string, time, style);
 }
 
-int GameTextForPlayer(int playerid, char* string, int time, int style) {
+int GameTextForPlayer(int playerid, std::string& string, int time, int style) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("GameTextForPlayer", "icii", playerid, string, time, style);
+  return g_native_function_manager->Invoke("GameTextForPlayer", "isii", playerid, &string, time, style);
 }
 
-int SetTimer(char* funcname, int interval, int repeating) {
+int SetTimer(std::string& funcname, int interval, int repeating) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("SetTimer", "cii", funcname, interval, repeating);
+  return g_native_function_manager->Invoke("SetTimer", "sii", &funcname, interval, repeating);
 }
 
-int SetTimerEx(char* funcname, int interval, int repeating, char* format, ...) {
+int SetTimerEx(std::string& funcname, int interval, int repeating, std::string& format, ...) {
   CHECK(g_native_function_manager);
   CHECK(false) << "Support for Pawn functions with variable argument counts has not been implemented yet.";
   return 0;
@@ -101,13 +101,13 @@ int GetMaxPlayers() {
   return g_native_function_manager->Invoke("GetMaxPlayers", "");
 }
 
-int CallRemoteFunction(char* function, char* format, ...) {
+int CallRemoteFunction(std::string& function, std::string& format, ...) {
   CHECK(g_native_function_manager);
   CHECK(false) << "Support for Pawn functions with variable argument counts has not been implemented yet.";
   return 0;
 }
 
-int CallLocalFunction(char* function, char* format, ...) {
+int CallLocalFunction(std::string& function, std::string& format, ...) {
   CHECK(g_native_function_manager);
   CHECK(false) << "Support for Pawn functions with variable argument counts has not been implemented yet.";
   return 0;
@@ -137,9 +137,9 @@ double atan2(double x, double y) {
   return static_cast<double>(amx_ctof(result));
 }
 
-int SetGameModeText(char* string) {
+int SetGameModeText(std::string& string) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("SetGameModeText", "c", string);
+  return g_native_function_manager->Invoke("SetGameModeText", "s", &string);
 }
 
 int SetTeamCount(int count) {
@@ -202,9 +202,9 @@ int SetWorldTime(int hour) {
   return g_native_function_manager->Invoke("SetWorldTime", "i", hour);
 }
 
-int GetWeaponName(int weaponid, char* weapon, int len) {
+int GetWeaponName(int weaponid, std::string& weapon, int len) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("GetWeaponName", "ici", weaponid, weapon, len);
+  return g_native_function_manager->Invoke("GetWeaponName", "isi", weaponid, &weapon, len);
 }
 
 int EnableTirePopping(int enable) {
@@ -283,9 +283,9 @@ int LimitPlayerMarkerRadius(double marker_radius) {
   return g_native_function_manager->Invoke("LimitPlayerMarkerRadius", "f", marker_radius);
 }
 
-int ConnectNPC(char* name, char* script) {
+int ConnectNPC(std::string& name, std::string& script) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("ConnectNPC", "cc", name, script);
+  return g_native_function_manager->Invoke("ConnectNPC", "ss", &name, &script);
 }
 
 int IsPlayerNPC(int playerid) {
@@ -308,44 +308,44 @@ int Ban(int playerid) {
   return g_native_function_manager->Invoke("Ban", "i", playerid);
 }
 
-int BanEx(int playerid, char* reason) {
+int BanEx(int playerid, std::string& reason) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("BanEx", "ic", playerid, reason);
+  return g_native_function_manager->Invoke("BanEx", "is", playerid, &reason);
 }
 
-int SendRconCommand(char* command) {
+int SendRconCommand(std::string& command) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("SendRconCommand", "c", command);
+  return g_native_function_manager->Invoke("SendRconCommand", "s", &command);
 }
 
-int GetServerVarAsString(char* varname, char* buffer, int len) {
+int GetServerVarAsString(std::string& varname, std::string& buffer, int len) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("GetServerVarAsString", "cci", varname, buffer, len);
+  return g_native_function_manager->Invoke("GetServerVarAsString", "ssi", &varname, &buffer, len);
 }
 
-int GetServerVarAsInt(char* varname) {
+int GetServerVarAsInt(std::string& varname) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("GetServerVarAsInt", "c", varname);
+  return g_native_function_manager->Invoke("GetServerVarAsInt", "s", &varname);
 }
 
-int GetServerVarAsBool(char* varname) {
+int GetServerVarAsBool(std::string& varname) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("GetServerVarAsBool", "c", varname);
+  return g_native_function_manager->Invoke("GetServerVarAsBool", "s", &varname);
 }
 
-int GetPlayerNetworkStats(int playerid, char* retstr, int retstr_size) {
+int GetPlayerNetworkStats(int playerid, std::string& retstr, int retstr_size) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("GetPlayerNetworkStats", "ici", playerid, retstr, retstr_size);
+  return g_native_function_manager->Invoke("GetPlayerNetworkStats", "isi", playerid, &retstr, retstr_size);
 }
 
-int GetNetworkStats(char* retstr, int retstr_size) {
+int GetNetworkStats(std::string& retstr, int retstr_size) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("GetNetworkStats", "ci", retstr, retstr_size);
+  return g_native_function_manager->Invoke("GetNetworkStats", "si", &retstr, retstr_size);
 }
 
-int CreateMenu(char* title, int columns, double x, double y, double col1width, double col2width) {
+int CreateMenu(std::string& title, int columns, double x, double y, double col1width, double col2width) {
   CHECK(g_native_function_manager);
-  int result = g_native_function_manager->Invoke("CreateMenu", "ciffff", title, columns, x, y, col1width, col2width);
+  int result = g_native_function_manager->Invoke("CreateMenu", "siffff", &title, columns, x, y, col1width, col2width);
   return * (int*) &result;
 }
 
@@ -354,14 +354,14 @@ int DestroyMenu(int menuid) {
   return g_native_function_manager->Invoke("DestroyMenu", "i", menuid);
 }
 
-int AddMenuItem(int menuid, int column, char* menutext) {
+int AddMenuItem(int menuid, int column, std::string& menutext) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("AddMenuItem", "iic", menuid, column, menutext);
+  return g_native_function_manager->Invoke("AddMenuItem", "iis", menuid, column, &menutext);
 }
 
-int SetMenuColumnHeader(int menuid, int column, char* columnheader) {
+int SetMenuColumnHeader(int menuid, int column, std::string& columnheader) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("SetMenuColumnHeader", "iic", menuid, column, columnheader);
+  return g_native_function_manager->Invoke("SetMenuColumnHeader", "iis", menuid, column, &columnheader);
 }
 
 int ShowMenuForPlayer(int menuid, int playerid) {
@@ -395,9 +395,9 @@ int GetPlayerMenu(int playerid) {
   return * (int*) &result;
 }
 
-int TextDrawCreate(double x, double y, char* text) {
+int TextDrawCreate(double x, double y, std::string& text) {
   CHECK(g_native_function_manager);
-  int result = g_native_function_manager->Invoke("TextDrawCreate", "ffc", x, y, text);
+  int result = g_native_function_manager->Invoke("TextDrawCreate", "ffs", x, y, &text);
   return * (int*) &result;
 }
 
@@ -481,9 +481,9 @@ int TextDrawHideForAll(int text) {
   return g_native_function_manager->Invoke("TextDrawHideForAll", "i", text);
 }
 
-int TextDrawSetString(int text, char* string) {
+int TextDrawSetString(int text, std::string& string) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("TextDrawSetString", "ic", text, string);
+  return g_native_function_manager->Invoke("TextDrawSetString", "is", text, &string);
 }
 
 int GangZoneCreate(double minx, double miny, double maxx, double maxy) {
@@ -536,9 +536,9 @@ int GangZoneStopFlashForAll(int zone) {
   return g_native_function_manager->Invoke("GangZoneStopFlashForAll", "i", zone);
 }
 
-int Create3DTextLabel(char* text, int color, double X, double Y, double Z, double DrawDistance, int virtualworld, int testLOS) {
+int Create3DTextLabel(std::string& text, int color, double X, double Y, double Z, double DrawDistance, int virtualworld, int testLOS) {
   CHECK(g_native_function_manager);
-  int result = g_native_function_manager->Invoke("Create3DTextLabel", "ciffffii", text, color, X, Y, Z, DrawDistance, virtualworld, testLOS);
+  int result = g_native_function_manager->Invoke("Create3DTextLabel", "siffffii", &text, color, X, Y, Z, DrawDistance, virtualworld, testLOS);
   return * (int*) &result;
 }
 
@@ -557,14 +557,14 @@ int Attach3DTextLabelToVehicle(int id, int vehicleid, double OffsetX, double Off
   return g_native_function_manager->Invoke("Attach3DTextLabelToVehicle", "iifff", id, vehicleid, OffsetX, OffsetY, OffsetZ);
 }
 
-int Update3DTextLabelText(int id, int color, char* text) {
+int Update3DTextLabelText(int id, int color, std::string& text) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("Update3DTextLabelText", "iic", id, color, text);
+  return g_native_function_manager->Invoke("Update3DTextLabelText", "iis", id, color, &text);
 }
 
-int CreatePlayer3DTextLabel(int playerid, char* text, int color, double X, double Y, double Z, double DrawDistance, int attachedplayer, int attachedvehicle, int testLOS) {
+int CreatePlayer3DTextLabel(int playerid, std::string& text, int color, double X, double Y, double Z, double DrawDistance, int attachedplayer, int attachedvehicle, int testLOS) {
   CHECK(g_native_function_manager);
-  int result = g_native_function_manager->Invoke("CreatePlayer3DTextLabel", "iciffffiii", playerid, text, color, X, Y, Z, DrawDistance, attachedplayer, attachedvehicle, testLOS);
+  int result = g_native_function_manager->Invoke("CreatePlayer3DTextLabel", "isiffffiii", playerid, &text, color, X, Y, Z, DrawDistance, attachedplayer, attachedvehicle, testLOS);
   return * (int*) &result;
 }
 
@@ -573,14 +573,14 @@ int DeletePlayer3DTextLabel(int playerid, int id) {
   return g_native_function_manager->Invoke("DeletePlayer3DTextLabel", "ii", playerid, id);
 }
 
-int UpdatePlayer3DTextLabelText(int playerid, int id, int color, char* text) {
+int UpdatePlayer3DTextLabelText(int playerid, int id, int color, std::string& text) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("UpdatePlayer3DTextLabelText", "iiic", playerid, id, color, text);
+  return g_native_function_manager->Invoke("UpdatePlayer3DTextLabelText", "iiis", playerid, id, color, &text);
 }
 
-int ShowPlayerDialog(int playerid, int dialogid, int style, char* caption, char* info, char* button1, char* button2) {
+int ShowPlayerDialog(int playerid, int dialogid, int style, std::string& caption, std::string& info, std::string& button1, std::string& button2) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("ShowPlayerDialog", "iiicccc", playerid, dialogid, style, caption, info, button1, button2);
+  return g_native_function_manager->Invoke("ShowPlayerDialog", "iiissss", playerid, dialogid, style, &caption, &info, &button1, &button2);
 }
 
 }  // namespace samp

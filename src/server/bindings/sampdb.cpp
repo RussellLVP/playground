@@ -23,9 +23,9 @@ extern NativeFunctionManager* g_native_function_manager;
 // Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.
 namespace samp {
 
-int db_open(char* name) {
+int db_open(std::string& name) {
   CHECK(g_native_function_manager);
-  int result = g_native_function_manager->Invoke("db_open", "c", name);
+  int result = g_native_function_manager->Invoke("db_open", "s", &name);
   return * (int*) &result;
 }
 
@@ -34,9 +34,9 @@ int db_close(int db) {
   return g_native_function_manager->Invoke("db_close", "i", db);
 }
 
-int db_query(int db, char* query) {
+int db_query(int db, std::string& query) {
   CHECK(g_native_function_manager);
-  int result = g_native_function_manager->Invoke("db_query", "ic", db, query);
+  int result = g_native_function_manager->Invoke("db_query", "is", db, &query);
   return * (int*) &result;
 }
 
@@ -60,19 +60,19 @@ int db_num_fields(int dbresult) {
   return g_native_function_manager->Invoke("db_num_fields", "i", dbresult);
 }
 
-int db_field_name(int dbresult, int field, char* result, int maxlength) {
+int db_field_name(int dbresult, int field, std::string& result, int maxlength) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("db_field_name", "iici", dbresult, field, result, maxlength);
+  return g_native_function_manager->Invoke("db_field_name", "iisi", dbresult, field, &result, maxlength);
 }
 
-int db_get_field(int dbresult, int field, char* result, int maxlength) {
+int db_get_field(int dbresult, int field, std::string& result, int maxlength) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("db_get_field", "iici", dbresult, field, result, maxlength);
+  return g_native_function_manager->Invoke("db_get_field", "iisi", dbresult, field, &result, maxlength);
 }
 
-int db_get_field_assoc(int dbresult, char* field, char* result, int maxlength) {
+int db_get_field_assoc(int dbresult, std::string& field, std::string& result, int maxlength) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("db_get_field_assoc", "icci", dbresult, field, result, maxlength);
+  return g_native_function_manager->Invoke("db_get_field_assoc", "issi", dbresult, &field, &result, maxlength);
 }
 
 }  // namespace samp

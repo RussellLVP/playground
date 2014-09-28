@@ -29,9 +29,9 @@ double _float(int value) {
   return static_cast<double>(amx_ctof(result));
 }
 
-double floatstr(char* string) {
+double floatstr(std::string& string) {
   CHECK(g_native_function_manager);
-  int result = g_native_function_manager->Invoke("floatstr", "c", string);
+  int result = g_native_function_manager->Invoke("floatstr", "s", &string);
   return static_cast<double>(amx_ctof(result));
 }
 

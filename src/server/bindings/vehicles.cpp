@@ -149,9 +149,9 @@ int GetVehicleTrailer(int vehicleid) {
   return g_native_function_manager->Invoke("GetVehicleTrailer", "i", vehicleid);
 }
 
-int SetVehicleNumberPlate(int vehicleid, char* numberplate) {
+int SetVehicleNumberPlate(int vehicleid, std::string& numberplate) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("SetVehicleNumberPlate", "ic", vehicleid, numberplate);
+  return g_native_function_manager->Invoke("SetVehicleNumberPlate", "is", vehicleid, &numberplate);
 }
 
 int GetVehicleModel(int vehicleid) {

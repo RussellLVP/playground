@@ -16,6 +16,8 @@
 #ifndef SERVER_BINDINGS_FILE_H_
 #define SERVER_BINDINGS_FILE_H_
 
+#include <string>
+
 // Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.
 namespace samp {
 
@@ -32,20 +34,20 @@ enum seek_whence {
   seek_end,
 };
 
-int fopen(char* name, filemode  mode);
+int fopen(std::string& name, filemode  mode);
 bool fclose(int  handle);
 int ftemp();
-bool fremove(char* name);
-int fwrite(int  handle, char* string);
-int fread(int  handle, char* string, int size, bool  pack);
+bool fremove(std::string& name);
+int fwrite(int  handle, std::string& string);
+int fread(int  handle, std::string& string, int size, bool  pack);
 bool fputchar(int  handle, int value, bool  utf8);
 int fgetchar(int  handle, int value, bool  utf8);
-int fblockwrite(int  handle, char* buffer, int size);
-int fblockread(int  handle, char* buffer, int size);
+int fblockwrite(int  handle, std::string& buffer, int size);
+int fblockread(int  handle, std::string& buffer, int size);
 int fseek(int  handle, int position, seek_whence  whence);
 int flength(int  handle);
-int fexist(char* pattern);
-bool fmatch(char* name, char* pattern, int index, int size);
+int fexist(std::string& pattern);
+bool fmatch(std::string& name, std::string& pattern, int index, int size);
 
 }  // namespace samp
 

@@ -23,9 +23,9 @@ extern NativeFunctionManager* g_native_function_manager;
 // Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.
 namespace samp {
 
-int fopen(char* name, filemode  mode) {
+int fopen(std::string& name, filemode  mode) {
   CHECK(g_native_function_manager);
-  int result = g_native_function_manager->Invoke("fopen", "ci", name, static_cast<int>( mode));
+  int result = g_native_function_manager->Invoke("fopen", "si", &name, static_cast<int>( mode));
   return * (int*) &result;
 }
 
@@ -41,20 +41,20 @@ int ftemp() {
   return * (int*) &result;
 }
 
-bool fremove(char* name) {
+bool fremove(std::string& name) {
   CHECK(g_native_function_manager);
-  int result = g_native_function_manager->Invoke("fremove", "c", name);
+  int result = g_native_function_manager->Invoke("fremove", "s", &name);
   return * (bool*) &result;
 }
 
-int fwrite(int  handle, char* string) {
+int fwrite(int  handle, std::string& string) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("fwrite", "ic",  handle, string);
+  return g_native_function_manager->Invoke("fwrite", "is",  handle, &string);
 }
 
-int fread(int  handle, char* string, int size, bool  pack) {
+int fread(int  handle, std::string& string, int size, bool  pack) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("fread", "icii",  handle, string, size, static_cast<int>( pack));
+  return g_native_function_manager->Invoke("fread", "isii",  handle, &string, size, static_cast<int>( pack));
 }
 
 bool fputchar(int  handle, int value, bool  utf8) {
@@ -68,14 +68,14 @@ int fgetchar(int  handle, int value, bool  utf8) {
   return g_native_function_manager->Invoke("fgetchar", "iii",  handle, value, static_cast<int>( utf8));
 }
 
-int fblockwrite(int  handle, char* buffer, int size) {
+int fblockwrite(int  handle, std::string& buffer, int size) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("fblockwrite", "ici",  handle, buffer, size);
+  return g_native_function_manager->Invoke("fblockwrite", "isi",  handle, &buffer, size);
 }
 
-int fblockread(int  handle, char* buffer, int size) {
+int fblockread(int  handle, std::string& buffer, int size) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("fblockread", "ici",  handle, buffer, size);
+  return g_native_function_manager->Invoke("fblockread", "isi",  handle, &buffer, size);
 }
 
 int fseek(int  handle, int position, seek_whence  whence) {
@@ -88,14 +88,14 @@ int flength(int  handle) {
   return g_native_function_manager->Invoke("flength", "i",  handle);
 }
 
-int fexist(char* pattern) {
+int fexist(std::string& pattern) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("fexist", "c", pattern);
+  return g_native_function_manager->Invoke("fexist", "s", &pattern);
 }
 
-bool fmatch(char* name, char* pattern, int index, int size) {
+bool fmatch(std::string& name, std::string& pattern, int index, int size) {
   CHECK(g_native_function_manager);
-  int result = g_native_function_manager->Invoke("fmatch", "ccii", name, pattern, index, size);
+  int result = g_native_function_manager->Invoke("fmatch", "ssii", &name, &pattern, index, size);
   return * (bool*) &result;
 }
 

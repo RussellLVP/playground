@@ -151,25 +151,30 @@ int NativeFunctionManager::Invoke(const char* name, const char* format, ...) {
 
   for (unsigned int index = 0; index < parameter_count; ++index) {
     switch (format[index]) {
-    case 'i': // integer
+    case 'i':  // integer
       parameters_[index + 1] = va_arg(arguments, cell);
       break;
-    case 'I': // integer reference
+    case 'I':  // integer reference
       mock_amx_.Push(*va_arg(arguments, cell*), &parameters_[index + 1]);
       break;
-    case 'F': // float reference
-      {
-        float value = static_cast<float>(*va_arg(arguments, double*));
-        mock_amx_.Push(amx_ftoc(value), &parameters_[index + 1]);
-      }
-      break;
-    case 'f': // float
+    case 'f':  // float
       {
         float value = static_cast<float>(va_arg(arguments, double));
         parameters_[index + 1] = amx_ftoc(value);
       }
       break;
-    case 'a': // vector<cell>
+    case 'F':  // float reference
+      {
+        float value = static_cast<float>(*va_arg(arguments, double*));
+        mock_amx_.Push(amx_ftoc(value), &parameters_[index + 1]);
+      }
+      break;
+    case 's':  // string
+      {
+        const std::string& string = *va_arg(arguments, std::string*);
+        mock_amx_.Push(string, &parameters_[index + 1]);
+      }
+      break;
     default:
       CHECK(false) << "Unrecognized parameter type '" << format[index] << "' while invoking " << name << ".";
       break;
@@ -185,10 +190,14 @@ int NativeFunctionManager::Invoke(const char* name, const char* format, ...) {
   cell temporary;
   for (unsigned int index = 0; index < parameter_count; ++index) {
     switch (format[index]) {
-    case 'I': // integer reference
+    case 'i':  // integer
+    case 'f':  // float
+      va_arg(arguments, void*);
+      break;
+    case 'I':  // integer reference
       mock_amx_.Read(parameters_[index + 1], va_arg(arguments, cell*));
       break;
-    case 'F': // float reference
+    case 'F':  // float reference
       {
         double* value = va_arg(arguments, double*);
 
@@ -196,10 +205,11 @@ int NativeFunctionManager::Invoke(const char* name, const char* format, ...) {
         *value = static_cast<double>(amx_ctof(temporary));
       }
       break;
-    case 'a': // vector<cell>
-      break;
-    default:  // pop the argument from the argument iterator.
-      va_arg(arguments, void*);
+    case 's':  // string
+      {
+        std::string* string = va_arg(arguments, std::string*);
+        mock_amx_.Read(parameters_[index + 1], string);
+      }
       break;
     }
   }

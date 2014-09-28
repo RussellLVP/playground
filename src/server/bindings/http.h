@@ -16,6 +16,8 @@
 #ifndef SERVER_BINDINGS_HTTP_H_
 #define SERVER_BINDINGS_HTTP_H_
 
+#include <string>
+
 // Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.
 namespace samp {
 
@@ -29,7 +31,7 @@ const int HTTP_ERROR_CANT_WRITE = 4;
 const int HTTP_ERROR_CONTENT_TOO_BIG = 5;
 const int HTTP_ERROR_MALFORMED_RESPONSE = 6;
 
-int HTTP(int index, int type, char* url, char* data, char* callback);
+int HTTP(int index, int type, std::string& url, std::string& data, std::string& callback);
 
 }  // namespace samp
 

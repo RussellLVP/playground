@@ -204,9 +204,9 @@ int ResetPlayerMoney(int playerid) {
   return g_native_function_manager->Invoke("ResetPlayerMoney", "i", playerid);
 }
 
-int SetPlayerName(int playerid, char* name) {
+int SetPlayerName(int playerid, std::string& name) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("SetPlayerName", "ic", playerid, name);
+  return g_native_function_manager->Invoke("SetPlayerName", "is", playerid, &name);
 }
 
 int GetPlayerMoney(int playerid) {
@@ -219,9 +219,9 @@ int GetPlayerState(int playerid) {
   return g_native_function_manager->Invoke("GetPlayerState", "i", playerid);
 }
 
-int GetPlayerIp(int playerid, char* name, int len) {
+int GetPlayerIp(int playerid, std::string& name, int len) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("GetPlayerIp", "ici", playerid, name, len);
+  return g_native_function_manager->Invoke("GetPlayerIp", "isi", playerid, &name, len);
 }
 
 int GetPlayerPing(int playerid) {
@@ -239,9 +239,9 @@ int GetPlayerKeys(int playerid, int* keys, int* updown, int* leftright) {
   return g_native_function_manager->Invoke("GetPlayerKeys", "iIII", playerid, keys, updown, leftright);
 }
 
-int GetPlayerName(int playerid, char* name, int len) {
+int GetPlayerName(int playerid, std::string& name, int len) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("GetPlayerName", "ici", playerid, name, len);
+  return g_native_function_manager->Invoke("GetPlayerName", "isi", playerid, &name, len);
 }
 
 int SetPlayerTime(int playerid, int hour, int minute) {
@@ -304,9 +304,9 @@ int PlayCrimeReportForPlayer(int playerid, int suspectid, int crime) {
   return g_native_function_manager->Invoke("PlayCrimeReportForPlayer", "iii", playerid, suspectid, crime);
 }
 
-int PlayAudioStreamForPlayer(int playerid, char* url, double posX, double posY, double posZ, double distance, int usepos) {
+int PlayAudioStreamForPlayer(int playerid, std::string& url, double posX, double posY, double posZ, double distance, int usepos) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("PlayAudioStreamForPlayer", "icffffi", playerid, url, posX, posY, posZ, distance, usepos);
+  return g_native_function_manager->Invoke("PlayAudioStreamForPlayer", "isffffi", playerid, &url, posX, posY, posZ, distance, usepos);
 }
 
 int StopAudioStreamForPlayer(int playerid) {
@@ -314,9 +314,9 @@ int StopAudioStreamForPlayer(int playerid) {
   return g_native_function_manager->Invoke("StopAudioStreamForPlayer", "i", playerid);
 }
 
-int SetPlayerShopName(int playerid, char* shopname) {
+int SetPlayerShopName(int playerid, std::string& shopname) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("SetPlayerShopName", "ic", playerid, shopname);
+  return g_native_function_manager->Invoke("SetPlayerShopName", "is", playerid, &shopname);
 }
 
 int SetPlayerSkillLevel(int playerid, int skill, int level) {
@@ -354,40 +354,40 @@ int IsPlayerAttachedObjectSlotUsed(int playerid, int index) {
   return g_native_function_manager->Invoke("IsPlayerAttachedObjectSlotUsed", "ii", playerid, index);
 }
 
-int SetPVarInt(int playerid, char* varname, int int_value) {
+int SetPVarInt(int playerid, std::string& varname, int int_value) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("SetPVarInt", "ici", playerid, varname, int_value);
+  return g_native_function_manager->Invoke("SetPVarInt", "isi", playerid, &varname, int_value);
 }
 
-int GetPVarInt(int playerid, char* varname) {
+int GetPVarInt(int playerid, std::string& varname) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("GetPVarInt", "ic", playerid, varname);
+  return g_native_function_manager->Invoke("GetPVarInt", "is", playerid, &varname);
 }
 
-int SetPVarString(int playerid, char* varname, char* string_value) {
+int SetPVarString(int playerid, std::string& varname, std::string& string_value) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("SetPVarString", "icc", playerid, varname, string_value);
+  return g_native_function_manager->Invoke("SetPVarString", "iss", playerid, &varname, &string_value);
 }
 
-int GetPVarString(int playerid, char* varname, char* string_return, int len) {
+int GetPVarString(int playerid, std::string& varname, std::string& string_return, int len) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("GetPVarString", "icci", playerid, varname, string_return, len);
+  return g_native_function_manager->Invoke("GetPVarString", "issi", playerid, &varname, &string_return, len);
 }
 
-int SetPVarFloat(int playerid, char* varname, double float_value) {
+int SetPVarFloat(int playerid, std::string& varname, double float_value) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("SetPVarFloat", "icf", playerid, varname, float_value);
+  return g_native_function_manager->Invoke("SetPVarFloat", "isf", playerid, &varname, float_value);
 }
 
-double GetPVarFloat(int playerid, char* varname) {
+double GetPVarFloat(int playerid, std::string& varname) {
   CHECK(g_native_function_manager);
-  int result = g_native_function_manager->Invoke("GetPVarFloat", "ic", playerid, varname);
+  int result = g_native_function_manager->Invoke("GetPVarFloat", "is", playerid, &varname);
   return static_cast<double>(amx_ctof(result));
 }
 
-int DeletePVar(int playerid, char* varname) {
+int DeletePVar(int playerid, std::string& varname) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("DeletePVar", "ic", playerid, varname);
+  return g_native_function_manager->Invoke("DeletePVar", "is", playerid, &varname);
 }
 
 int GetPVarsUpperIndex(int playerid) {
@@ -395,19 +395,19 @@ int GetPVarsUpperIndex(int playerid) {
   return g_native_function_manager->Invoke("GetPVarsUpperIndex", "i", playerid);
 }
 
-int GetPVarNameAtIndex(int playerid, int index, char* ret_varname, int ret_len) {
+int GetPVarNameAtIndex(int playerid, int index, std::string& ret_varname, int ret_len) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("GetPVarNameAtIndex", "iici", playerid, index, ret_varname, ret_len);
+  return g_native_function_manager->Invoke("GetPVarNameAtIndex", "iisi", playerid, index, &ret_varname, ret_len);
 }
 
-int GetPVarType(int playerid, char* varname) {
+int GetPVarType(int playerid, std::string& varname) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("GetPVarType", "ic", playerid, varname);
+  return g_native_function_manager->Invoke("GetPVarType", "is", playerid, &varname);
 }
 
-int SetPlayerChatBubble(int playerid, char* text, int color, double drawdistance, int expiretime) {
+int SetPlayerChatBubble(int playerid, std::string& text, int color, double drawdistance, int expiretime) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("SetPlayerChatBubble", "icifi", playerid, text, color, drawdistance, expiretime);
+  return g_native_function_manager->Invoke("SetPlayerChatBubble", "isifi", playerid, &text, color, drawdistance, expiretime);
 }
 
 int PutPlayerInVehicle(int playerid, int vehicleid, int seatid) {
@@ -440,9 +440,9 @@ int PlayerPlaySound(int playerid, int soundid, double x, double y, double z) {
   return g_native_function_manager->Invoke("PlayerPlaySound", "iifff", playerid, soundid, x, y, z);
 }
 
-int ApplyAnimation(int playerid, char* animlib, char* animname, double fDelta, int loop, int lockx, int locky, int freeze, int time, int forcesync) {
+int ApplyAnimation(int playerid, std::string& animlib, std::string& animname, double fDelta, int loop, int lockx, int locky, int freeze, int time, int forcesync) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("ApplyAnimation", "iccfiiiiii", playerid, animlib, animname, fDelta, loop, lockx, locky, freeze, time, forcesync);
+  return g_native_function_manager->Invoke("ApplyAnimation", "issfiiiiii", playerid, &animlib, &animname, fDelta, loop, lockx, locky, freeze, time, forcesync);
 }
 
 int ClearAnimations(int playerid, int forcesync) {
@@ -455,9 +455,9 @@ int GetPlayerAnimationIndex(int playerid) {
   return g_native_function_manager->Invoke("GetPlayerAnimationIndex", "i", playerid);
 }
 
-int GetAnimationName(int index, char* animlib, int len1, char* animname, int len2) {
+int GetAnimationName(int index, std::string& animlib, int len1, std::string& animname, int len2) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("GetAnimationName", "icici", index, animlib, len1, animname, len2);
+  return g_native_function_manager->Invoke("GetAnimationName", "isisi", index, &animlib, len1, &animname, len2);
 }
 
 int GetPlayerSpecialAction(int playerid) {
@@ -610,9 +610,9 @@ int PlayerSpectateVehicle(int playerid, int targetvehicleid, int mode) {
   return g_native_function_manager->Invoke("PlayerSpectateVehicle", "iii", playerid, targetvehicleid, mode);
 }
 
-int StartRecordingPlayerData(int playerid, int recordtype, char* recordname) {
+int StartRecordingPlayerData(int playerid, int recordtype, std::string& recordname) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("StartRecordingPlayerData", "iic", playerid, recordtype, recordname);
+  return g_native_function_manager->Invoke("StartRecordingPlayerData", "iis", playerid, recordtype, &recordname);
 }
 
 int StopRecordingPlayerData(int playerid) {

@@ -16,6 +16,8 @@
 #ifndef SERVER_BINDINGS_VEHICLES_H_
 #define SERVER_BINDINGS_VEHICLES_H_
 
+#include <string>
+
 // Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.
 namespace samp {
 
@@ -62,7 +64,7 @@ int AttachTrailerToVehicle(int trailerid, int vehicleid);
 int DetachTrailerFromVehicle(int vehicleid);
 int IsTrailerAttachedToVehicle(int vehicleid);
 int GetVehicleTrailer(int vehicleid);
-int SetVehicleNumberPlate(int vehicleid, char* numberplate);
+int SetVehicleNumberPlate(int vehicleid, std::string& numberplate);
 int GetVehicleModel(int vehicleid);
 int GetVehicleComponentInSlot(int vehicleid, int slot);
 int GetVehicleComponentType(int component);

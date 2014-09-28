@@ -16,24 +16,26 @@
 #ifndef SERVER_BINDINGS_STRING_H_
 #define SERVER_BINDINGS_STRING_H_
 
+#include <string>
+
 // Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.
 namespace samp {
 
-int strlen(char* string);
-int strpack(char* dest, char* source, int maxlength);
-int strunpack(char* dest, char* source, int maxlength);
-int strcat(char* dest, char* source, int maxlength);
-int strmid(char* dest, char* source, int start, int end, int maxlength);
-bool strins(char* string, char* substr, int pos, int maxlength);
-bool strdel(char* string, int start, int end);
-int strcmp(char* string1, char* string2, bool ignorecase, int length);
-int strfind(char* string, char* sub, bool ignorecase, int pos);
-int strval(char* string);
-int valstr(char* dest, int value, bool pack);
-bool ispacked(char* string);
-int uudecode(char* dest, char* source, int maxlength);
-int uuencode(char* dest, char* source, int numbytes, int maxlength);
-int memcpy(char* dest, char* source, int index, int numbytes, int maxlength);
+int strlen(std::string& string);
+int strpack(std::string& dest, std::string& source, int maxlength);
+int strunpack(std::string& dest, std::string& source, int maxlength);
+int strcat(std::string& dest, std::string& source, int maxlength);
+int strmid(std::string& dest, std::string& source, int start, int end, int maxlength);
+bool strins(std::string& string, std::string& substr, int pos, int maxlength);
+bool strdel(std::string& string, int start, int end);
+int strcmp(std::string& string1, std::string& string2, bool ignorecase, int length);
+int strfind(std::string& string, std::string& sub, bool ignorecase, int pos);
+int strval(std::string& string);
+int valstr(std::string& dest, int value, bool pack);
+bool ispacked(std::string& string);
+int uudecode(std::string& dest, std::string& source, int maxlength);
+int uuencode(std::string& dest, std::string& source, int numbytes, int maxlength);
+int memcpy(std::string& dest, std::string& source, int index, int numbytes, int maxlength);
 
 }  // namespace samp
 

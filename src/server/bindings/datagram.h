@@ -16,11 +16,13 @@
 #ifndef SERVER_BINDINGS_DATAGRAM_H_
 #define SERVER_BINDINGS_DATAGRAM_H_
 
+#include <string>
+
 // Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.
 namespace samp {
 
-int sendstring(char* message, char* destination);
-int sendpacket(char* packet, int size, char* destination);
+int sendstring(std::string& message, std::string& destination);
+int sendpacket(std::string& packet, int size, std::string& destination);
 int listenport(int port);
 
 }  // namespace samp

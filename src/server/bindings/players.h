@@ -16,6 +16,8 @@
 #ifndef SERVER_BINDINGS_PLAYERS_H_
 #define SERVER_BINDINGS_PLAYERS_H_
 
+#include <string>
+
 // Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.
 namespace samp {
 
@@ -111,14 +113,14 @@ int SetPlayerArmedWeapon(int playerid, int weaponid);
 int GetPlayerWeaponData(int playerid, int slot, int* weapons, int* ammo);
 int GivePlayerMoney(int playerid, int money);
 int ResetPlayerMoney(int playerid);
-int SetPlayerName(int playerid, char* name);
+int SetPlayerName(int playerid, std::string& name);
 int GetPlayerMoney(int playerid);
 int GetPlayerState(int playerid);
-int GetPlayerIp(int playerid, char* name, int len);
+int GetPlayerIp(int playerid, std::string& name, int len);
 int GetPlayerPing(int playerid);
 int GetPlayerWeapon(int playerid);
 int GetPlayerKeys(int playerid, int* keys, int* updown, int* leftright);
-int GetPlayerName(int playerid, char* name, int len);
+int GetPlayerName(int playerid, std::string& name, int len);
 int SetPlayerTime(int playerid, int hour, int minute);
 int GetPlayerTime(int playerid, int* hour, int* minute);
 int TogglePlayerClock(int playerid, int toggle);
@@ -131,9 +133,9 @@ int GetPlayerFightingStyle(int playerid);
 int SetPlayerVelocity(int playerid, double X, double Y, double Z);
 int GetPlayerVelocity(int playerid, double* X, double* Y, double* Z);
 int PlayCrimeReportForPlayer(int playerid, int suspectid, int crime);
-int PlayAudioStreamForPlayer(int playerid, char* url, double posX, double posY, double posZ, double distance, int usepos);
+int PlayAudioStreamForPlayer(int playerid, std::string& url, double posX, double posY, double posZ, double distance, int usepos);
 int StopAudioStreamForPlayer(int playerid);
-int SetPlayerShopName(int playerid, char* shopname);
+int SetPlayerShopName(int playerid, std::string& shopname);
 int SetPlayerSkillLevel(int playerid, int skill, int level);
 int GetPlayerSurfingVehicleID(int playerid);
 int GetPlayerSurfingObjectID(int playerid);
@@ -141,27 +143,27 @@ int RemoveBuildingForPlayer(int playerid, int modelid, double fX, double fY, dou
 int SetPlayerAttachedObject(int playerid, int index, int modelid, int bone, double fOffsetX, double fOffsetY, double fOffsetZ, double fRotX, double fRotY, double fRotZ, double fScaleX, double fScaleY, double fScaleZ);
 int RemovePlayerAttachedObject(int playerid, int index);
 int IsPlayerAttachedObjectSlotUsed(int playerid, int index);
-int SetPVarInt(int playerid, char* varname, int int_value);
-int GetPVarInt(int playerid, char* varname);
-int SetPVarString(int playerid, char* varname, char* string_value);
-int GetPVarString(int playerid, char* varname, char* string_return, int len);
-int SetPVarFloat(int playerid, char* varname, double float_value);
-double GetPVarFloat(int playerid, char* varname);
-int DeletePVar(int playerid, char* varname);
+int SetPVarInt(int playerid, std::string& varname, int int_value);
+int GetPVarInt(int playerid, std::string& varname);
+int SetPVarString(int playerid, std::string& varname, std::string& string_value);
+int GetPVarString(int playerid, std::string& varname, std::string& string_return, int len);
+int SetPVarFloat(int playerid, std::string& varname, double float_value);
+double GetPVarFloat(int playerid, std::string& varname);
+int DeletePVar(int playerid, std::string& varname);
 int GetPVarsUpperIndex(int playerid);
-int GetPVarNameAtIndex(int playerid, int index, char* ret_varname, int ret_len);
-int GetPVarType(int playerid, char* varname);
-int SetPlayerChatBubble(int playerid, char* text, int color, double drawdistance, int expiretime);
+int GetPVarNameAtIndex(int playerid, int index, std::string& ret_varname, int ret_len);
+int GetPVarType(int playerid, std::string& varname);
+int SetPlayerChatBubble(int playerid, std::string& text, int color, double drawdistance, int expiretime);
 int PutPlayerInVehicle(int playerid, int vehicleid, int seatid);
 int GetPlayerVehicleID(int playerid);
 int GetPlayerVehicleSeat(int playerid);
 int RemovePlayerFromVehicle(int playerid);
 int TogglePlayerControllable(int playerid, int toggle);
 int PlayerPlaySound(int playerid, int soundid, double x, double y, double z);
-int ApplyAnimation(int playerid, char* animlib, char* animname, double fDelta, int loop, int lockx, int locky, int freeze, int time, int forcesync);
+int ApplyAnimation(int playerid, std::string& animlib, std::string& animname, double fDelta, int loop, int lockx, int locky, int freeze, int time, int forcesync);
 int ClearAnimations(int playerid, int forcesync);
 int GetPlayerAnimationIndex(int playerid);
-int GetAnimationName(int index, char* animlib, int len1, char* animname, int len2);
+int GetAnimationName(int index, std::string& animlib, int len1, std::string& animname, int len2);
 int GetPlayerSpecialAction(int playerid);
 int SetPlayerSpecialAction(int playerid, int actionid);
 int SetPlayerCheckpoint(int playerid, double x, double y, double z, double size);
@@ -192,7 +194,7 @@ int EnableStuntBonusForAll(int enable);
 int TogglePlayerSpectating(int playerid, int toggle);
 int PlayerSpectatePlayer(int playerid, int targetplayerid, int mode);
 int PlayerSpectateVehicle(int playerid, int targetvehicleid, int mode);
-int StartRecordingPlayerData(int playerid, int recordtype, char* recordname);
+int StartRecordingPlayerData(int playerid, int recordtype, std::string& recordname);
 int StopRecordingPlayerData(int playerid);
 
 }  // namespace samp

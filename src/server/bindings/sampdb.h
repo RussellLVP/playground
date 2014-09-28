@@ -16,19 +16,21 @@
 #ifndef SERVER_BINDINGS_SAMPDB_H_
 #define SERVER_BINDINGS_SAMPDB_H_
 
+#include <string>
+
 // Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.
 namespace samp {
 
-int db_open(char* name);
+int db_open(std::string& name);
 int db_close(int db);
-int db_query(int db, char* query);
+int db_query(int db, std::string& query);
 int db_free_result(int dbresult);
 int db_num_rows(int dbresult);
 int db_next_row(int dbresult);
 int db_num_fields(int dbresult);
-int db_field_name(int dbresult, int field, char* result, int maxlength);
-int db_get_field(int dbresult, int field, char* result, int maxlength);
-int db_get_field_assoc(int dbresult, char* field, char* result, int maxlength);
+int db_field_name(int dbresult, int field, std::string& result, int maxlength);
+int db_get_field(int dbresult, int field, std::string& result, int maxlength);
+int db_get_field_assoc(int dbresult, std::string& field, std::string& result, int maxlength);
 
 }  // namespace samp
 

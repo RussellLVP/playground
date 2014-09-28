@@ -16,6 +16,8 @@
 #ifndef SERVER_BINDINGS_SAMP_H_
 #define SERVER_BINDINGS_SAMP_H_
 
+#include <string>
+
 // Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.
 namespace samp {
 
@@ -123,28 +125,28 @@ const int KEY_LEFT = (-128);
 const int KEY_RIGHT = (128);
 const int CLICK_SOURCE_SCOREBOARD = 0;
 
-int print(char* string);
-int printf(char* format, ...);
-int format(char* output, int len, char* format, ...);
-int SendClientMessage(int playerid, int color, char* message);
-int SendClientMessageToAll(int color, char* message);
-int SendPlayerMessageToPlayer(int playerid, int senderid, char* message);
-int SendPlayerMessageToAll(int senderid, char* message);
+int print(std::string& string);
+int printf(std::string& format, ...);
+int format(std::string& output, int len, std::string& format, ...);
+int SendClientMessage(int playerid, int color, std::string& message);
+int SendClientMessageToAll(int color, std::string& message);
+int SendPlayerMessageToPlayer(int playerid, int senderid, std::string& message);
+int SendPlayerMessageToAll(int senderid, std::string& message);
 int SendDeathMessage(int killer, int killee, int weapon);
-int GameTextForAll(char* string, int time, int style);
-int GameTextForPlayer(int playerid, char* string, int time, int style);
-int SetTimer(char* funcname, int interval, int repeating);
-int SetTimerEx(char* funcname, int interval, int repeating, char* format, ...);
+int GameTextForAll(std::string& string, int time, int style);
+int GameTextForPlayer(int playerid, std::string& string, int time, int style);
+int SetTimer(std::string& funcname, int interval, int repeating);
+int SetTimerEx(std::string& funcname, int interval, int repeating, std::string& format, ...);
 int KillTimer(int timerid);
 int GetTickCount();
 int GetMaxPlayers();
-int CallRemoteFunction(char* function, char* format, ...);
-int CallLocalFunction(char* function, char* format, ...);
+int CallRemoteFunction(std::string& function, std::string& format, ...);
+int CallLocalFunction(std::string& function, std::string& format, ...);
 double asin(double value);
 double acos(double value);
 double atan(double value);
 double atan2(double x, double y);
-int SetGameModeText(char* string);
+int SetGameModeText(std::string& string);
 int SetTeamCount(int count);
 int AddPlayerClass(int modelid, double spawn_x, double spawn_y, double spawn_z, double z_angle, int weapon1, int weapon1_ammo, int weapon2, int weapon2_ammo, int weapon3, int weapon3_ammo);
 int AddPlayerClassEx(int teamid, int modelid, double spawn_x, double spawn_y, double spawn_z, double z_angle, int weapon1, int weapon1_ammo, int weapon2, int weapon2_ammo, int weapon3, int weapon3_ammo);
@@ -157,7 +159,7 @@ int ShowNameTags(int show);
 int ShowPlayerMarkers(int mode);
 int GameModeExit();
 int SetWorldTime(int hour);
-int GetWeaponName(int weaponid, char* weapon, int len);
+int GetWeaponName(int weaponid, std::string& weapon, int len);
 int EnableTirePopping(int enable);
 int AllowInteriorWeapons(int allow);
 int SetWeather(int weatherid);
@@ -173,29 +175,29 @@ int SetNameTagDrawDistance(double distance);
 int DisableNameTagLOS();
 int LimitGlobalChatRadius(double chat_radius);
 int LimitPlayerMarkerRadius(double marker_radius);
-int ConnectNPC(char* name, char* script);
+int ConnectNPC(std::string& name, std::string& script);
 int IsPlayerNPC(int playerid);
 int IsPlayerAdmin(int playerid);
 int Kick(int playerid);
 int Ban(int playerid);
-int BanEx(int playerid, char* reason);
-int SendRconCommand(char* command);
-int GetServerVarAsString(char* varname, char* buffer, int len);
-int GetServerVarAsInt(char* varname);
-int GetServerVarAsBool(char* varname);
-int GetPlayerNetworkStats(int playerid, char* retstr, int retstr_size);
-int GetNetworkStats(char* retstr, int retstr_size);
-int CreateMenu(char* title, int columns, double x, double y, double col1width, double col2width);
+int BanEx(int playerid, std::string& reason);
+int SendRconCommand(std::string& command);
+int GetServerVarAsString(std::string& varname, std::string& buffer, int len);
+int GetServerVarAsInt(std::string& varname);
+int GetServerVarAsBool(std::string& varname);
+int GetPlayerNetworkStats(int playerid, std::string& retstr, int retstr_size);
+int GetNetworkStats(std::string& retstr, int retstr_size);
+int CreateMenu(std::string& title, int columns, double x, double y, double col1width, double col2width);
 int DestroyMenu(int menuid);
-int AddMenuItem(int menuid, int column, char* menutext);
-int SetMenuColumnHeader(int menuid, int column, char* columnheader);
+int AddMenuItem(int menuid, int column, std::string& menutext);
+int SetMenuColumnHeader(int menuid, int column, std::string& columnheader);
 int ShowMenuForPlayer(int menuid, int playerid);
 int HideMenuForPlayer(int menuid, int playerid);
 int IsValidMenu(int menuid);
 int DisableMenu(int menuid);
 int DisableMenuRow(int menuid, int row);
 int GetPlayerMenu(int playerid);
-int TextDrawCreate(double x, double y, char* text);
+int TextDrawCreate(double x, double y, std::string& text);
 int TextDrawDestroy(int text);
 int TextDrawLetterSize(int text, double x, double y);
 int TextDrawTextSize(int text, double x, double y);
@@ -212,7 +214,7 @@ int TextDrawShowForPlayer(int playerid, int text);
 int TextDrawHideForPlayer(int playerid, int text);
 int TextDrawShowForAll(int text);
 int TextDrawHideForAll(int text);
-int TextDrawSetString(int text, char* string);
+int TextDrawSetString(int text, std::string& string);
 int GangZoneCreate(double minx, double miny, double maxx, double maxy);
 int GangZoneDestroy(int zone);
 int GangZoneShowForPlayer(int playerid, int zone, int color);
@@ -223,15 +225,15 @@ int GangZoneFlashForPlayer(int playerid, int zone, int flashcolor);
 int GangZoneFlashForAll(int zone, int flashcolor);
 int GangZoneStopFlashForPlayer(int playerid, int zone);
 int GangZoneStopFlashForAll(int zone);
-int Create3DTextLabel(char* text, int color, double X, double Y, double Z, double DrawDistance, int virtualworld, int testLOS);
+int Create3DTextLabel(std::string& text, int color, double X, double Y, double Z, double DrawDistance, int virtualworld, int testLOS);
 int Delete3DTextLabel(int id);
 int Attach3DTextLabelToPlayer(int id, int playerid, double OffsetX, double OffsetY, double OffsetZ);
 int Attach3DTextLabelToVehicle(int id, int vehicleid, double OffsetX, double OffsetY, double OffsetZ);
-int Update3DTextLabelText(int id, int color, char* text);
-int CreatePlayer3DTextLabel(int playerid, char* text, int color, double X, double Y, double Z, double DrawDistance, int attachedplayer, int attachedvehicle, int testLOS);
+int Update3DTextLabelText(int id, int color, std::string& text);
+int CreatePlayer3DTextLabel(int playerid, std::string& text, int color, double X, double Y, double Z, double DrawDistance, int attachedplayer, int attachedvehicle, int testLOS);
 int DeletePlayer3DTextLabel(int playerid, int id);
-int UpdatePlayer3DTextLabelText(int playerid, int id, int color, char* text);
-int ShowPlayerDialog(int playerid, int dialogid, int style, char* caption, char* info, char* button1, char* button2);
+int UpdatePlayer3DTextLabelText(int playerid, int id, int color, std::string& text);
+int ShowPlayerDialog(int playerid, int dialogid, int style, std::string& caption, std::string& info, std::string& button1, std::string& button2);
 
 }  // namespace samp
 

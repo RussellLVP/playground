@@ -23,14 +23,14 @@ extern NativeFunctionManager* g_native_function_manager;
 // Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.
 namespace samp {
 
-int sendstring(char* message, char* destination) {
+int sendstring(std::string& message, std::string& destination) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("sendstring", "cc", message, destination);
+  return g_native_function_manager->Invoke("sendstring", "ss", &message, &destination);
 }
 
-int sendpacket(char* packet, int size, char* destination) {
+int sendpacket(std::string& packet, int size, std::string& destination) {
   CHECK(g_native_function_manager);
-  return g_native_function_manager->Invoke("sendpacket", "cic", packet, size, destination);
+  return g_native_function_manager->Invoke("sendpacket", "sis", &packet, size, &destination);
 }
 
 int listenport(int port) {
