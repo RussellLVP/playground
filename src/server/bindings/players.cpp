@@ -20,8 +20,7 @@
 
 extern NativeFunctionManager* g_native_function_manager;
 
-// Generated on 2014-09-28.
-// Do not modify by hand, instead, look at /scripts/write_bindings.py.
+// Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.
 namespace samp {
 
 int SetSpawnInfo(int playerid, int team, int skin, double x, double y, double z, double rotation, int weapon1, int weapon1_ammo, int weapon2, int weapon2_ammo, int weapon3, int weapon3_ammo) {
@@ -67,7 +66,7 @@ int IsPlayerInRangeOfPoint(int playerid, double range, double x, double y, doubl
 double GetPlayerDistanceFromPoint(int playerid, double X, double Y, double Z) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("GetPlayerDistanceFromPoint", "ifff", playerid, X, Y, Z);
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 int IsPlayerStreamedIn(int playerid, int forplayerid) {
@@ -383,7 +382,7 @@ int SetPVarFloat(int playerid, char* varname, double float_value) {
 double GetPVarFloat(int playerid, char* varname) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("GetPVarFloat", "ic", playerid, varname);
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 int DeletePVar(int playerid, char* varname) {

@@ -20,50 +20,49 @@
 
 extern NativeFunctionManager* g_native_function_manager;
 
-// Generated on 2014-09-28.
-// Do not modify by hand, instead, look at /scripts/write_bindings.py.
+// Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.
 namespace samp {
 
 double _float(int value) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("_float", "i", value);
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 double floatstr(char* string) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("floatstr", "c", string);
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 double floatmul(double oper1, double oper2) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("floatmul", "ff", oper1, oper2);
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 double floatdiv(double dividend, double divisor) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("floatdiv", "ff", dividend, divisor);
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 double floatadd(double oper1, double oper2) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("floatadd", "ff", oper1, oper2);
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 double floatsub(double oper1, double oper2) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("floatsub", "ff", oper1, oper2);
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 double floatfract(double value) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("floatfract", "f", value);
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 int floatround(double value, floatround_method method) {
@@ -79,43 +78,43 @@ int floatcmp(double oper1, double oper2) {
 double floatsqroot(double value) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("floatsqroot", "f", value);
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 double floatpower(double value, double exponent) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("floatpower", "ff", value, exponent);
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 double floatlog(double value, double base) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("floatlog", "ff", value, base);
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 double floatsin(double value, anglemode mode) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("floatsin", "fi", value, static_cast<int>(mode));
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 double floatcos(double value, anglemode mode) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("floatcos", "fi", value, static_cast<int>(mode));
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 double floattan(double value, anglemode mode) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("floattan", "fi", value, static_cast<int>(mode));
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 double floatabs(double value) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("floatabs", "f", value);
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 }  // namespace samp

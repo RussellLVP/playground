@@ -27,7 +27,6 @@ import argparse
 import os
 import re
 import sys
-import time
 
 from collections import deque
 from string import maketrans
@@ -339,8 +338,7 @@ def WriteBindingsHeader(header_file, contents):
     lines.append('#define %s' % header_guard)
     lines.append('')
 
-    lines.append('// Generated on %s.' % time.strftime('%Y-%m-%d'))
-    lines.append('// Do not modify by hand, instead, look at /scripts/write_bindings.py.')
+    lines.append('// Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.')
     lines.append('namespace samp {')
     lines.append('')
 
@@ -389,8 +387,7 @@ def WriteBindingsImplementation(implementation_file, header_file, contents):
     lines.append('extern NativeFunctionManager* g_native_function_manager;')
     lines.append('')
 
-    lines.append('// Generated on %s.' % time.strftime('%Y-%m-%d'))
-    lines.append('// Do not modify by hand, instead, look at /scripts/write_bindings.py.')
+    lines.append('// Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.')
     lines.append('namespace samp {')
     lines.append('')
 
@@ -412,7 +409,7 @@ def WriteBindingsImplementation(implementation_file, header_file, contents):
             lines.append('  return %s;' % call)
         elif native['type'] == 'Float':
             lines.append('  int result = %s;' % call)
-            lines.append('  return (double) amx_ctof(result);')
+            lines.append('  return static_cast<double>(amx_ctof(result));')
         else:
             lines.append('  int result = %s;' % call)
             lines.append('  return * (%s*) &result;' % CPP_TYPE_FOR_PAWN_TYPE[native['type'].lower()])

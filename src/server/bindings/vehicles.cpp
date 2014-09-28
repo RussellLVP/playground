@@ -20,8 +20,7 @@
 
 extern NativeFunctionManager* g_native_function_manager;
 
-// Generated on 2014-09-28.
-// Do not modify by hand, instead, look at /scripts/write_bindings.py.
+// Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.
 namespace samp {
 
 int CreateVehicle(int vehicletype, double x, double y, double z, double rotation, int color1, int color2, int respawn_delay) {
@@ -62,7 +61,7 @@ int GetVehicleRotationQuat(int vehicleid, double* w, double* x, double* y, doubl
 double GetVehicleDistanceFromPoint(int vehicleid, double X, double Y, double Z) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("GetVehicleDistanceFromPoint", "ifff", vehicleid, X, Y, Z);
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 int SetVehicleZAngle(int vehicleid, double z_angle) {

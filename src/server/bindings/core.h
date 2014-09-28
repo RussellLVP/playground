@@ -16,8 +16,7 @@
 #ifndef SERVER_BINDINGS_CORE_H_
 #define SERVER_BINDINGS_CORE_H_
 
-// Generated on 2014-09-27.
-// Do not modify by hand, instead, look at /scripts/write_bindings.py.
+// Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.
 namespace samp {
 
 int heapspace();

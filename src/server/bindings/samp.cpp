@@ -20,8 +20,7 @@
 
 extern NativeFunctionManager* g_native_function_manager;
 
-// Generated on 2014-09-28.
-// Do not modify by hand, instead, look at /scripts/write_bindings.py.
+// Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.
 namespace samp {
 
 int print(char* string) {
@@ -117,25 +116,25 @@ int CallLocalFunction(char* function, char* format, ...) {
 double asin(double value) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("asin", "f", value);
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 double acos(double value) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("acos", "f", value);
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 double atan(double value) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("atan", "f", value);
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 double atan2(double x, double y) {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("atan2", "ff", x, y);
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 int SetGameModeText(char* string) {
@@ -231,7 +230,7 @@ int SetGravity(double gravity) {
 double GetGravity() {
   CHECK(g_native_function_manager);
   int result = g_native_function_manager->Invoke("GetGravity", "");
-  return (double) amx_ctof(result);
+  return static_cast<double>(amx_ctof(result));
 }
 
 int AllowAdminTeleport(int allow) {

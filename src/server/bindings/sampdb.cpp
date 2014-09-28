@@ -20,8 +20,7 @@
 
 extern NativeFunctionManager* g_native_function_manager;
 
-// Generated on 2014-09-27.
-// Do not modify by hand, instead, look at /scripts/write_bindings.py.
+// Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.
 namespace samp {
 
 int db_open(char* name) {

@@ -16,8 +16,7 @@
 #ifndef SERVER_BINDINGS_VEHICLES_H_
 #define SERVER_BINDINGS_VEHICLES_H_
 
-// Generated on 2014-09-28.
-// Do not modify by hand, instead, look at /scripts/write_bindings.py.
+// Do not modify this file by hand. Instead, look at /scripts/write_bindings.py.
 namespace samp {
 
 const int CARMODTYPE_SPOILER = 0;
