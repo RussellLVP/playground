@@ -30,8 +30,8 @@ typedef int AMXAPI (*amx_Exec_t)(AMX *amx, cell *retval, int index);
 }  // namespace
 
 NativeCallbackInterceptor::NativeCallbackInterceptor(void* amx_exports) {
-  amx_FindPublic_t amx_FindPublic = static_cast<amx_FindPublic_t*>(amx_exports)[PLUGIN_AMX_EXPORT_Exec];
-  amx_Exec_t amx_Exec = static_cast<amx_Exec_t*>(amx_exports)[15];
+  amx_FindPublic_t amx_FindPublic = static_cast<amx_FindPublic_t*>(amx_exports)[PLUGIN_AMX_EXPORT_FindPublic];
+  amx_Exec_t amx_Exec = static_cast<amx_Exec_t*>(amx_exports)[PLUGIN_AMX_EXPORT_Exec];
 
   // TODO(Russell): Install the amx_FindPublic and amx_Exec hooks.
 }
