@@ -6,3 +6,4 @@ EXPORTS
 	AmxLoad
 	AmxUnload
 	ProcessTick
+	CreateTestController

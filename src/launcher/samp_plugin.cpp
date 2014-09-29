@@ -64,6 +64,7 @@ typedef int(PLUGIN_CALL_TYPE * PluginAmxLoadCall)(AMX* amx);
 typedef int(PLUGIN_CALL_TYPE * PluginAmxUnloadCall)(AMX* amx);
 typedef unsigned int(PLUGIN_CALL_TYPE * PluginSupportsCall)();
 typedef void(PLUGIN_CALL_TYPE * PluginProcessTickCall)();
+typedef TestController*(PLUGIN_CALL_TYPE * PluginCreateTestControllerCall)();
 
 SampPlugin::SampPlugin()
     : plugin_load_addr_(nullptr),
@@ -72,6 +73,7 @@ SampPlugin::SampPlugin()
       plugin_amx_unload_addr_(nullptr),
       plugin_supports_addr_(nullptr),
       plugin_process_tick_addr_(nullptr),
+      plugin_create_test_controller_addr_(nullptr),
       module_(NULL) {
 }
 
@@ -106,6 +108,8 @@ bool SampPlugin::LoadPlugin(const char* module_file) {
   plugin_amx_load_addr_ = GetModuleFunctionAddr(module_, "AmxLoad");
   plugin_amx_unload_addr_ = GetModuleFunctionAddr(module_, "AmxUnload");
   plugin_process_tick_addr_ = GetModuleFunctionAddr(module_, "ProcessTick");
+  plugin_create_test_controller_addr_ =
+      GetModuleFunctionAddr(module_, "CreateTestController");
   return true;
 }
 
@@ -150,4 +154,11 @@ int SampPlugin::AmxUnload(AMX* amx) {
 void SampPlugin::ProcessTick() {
   if (plugin_process_tick_addr_)
     ((PluginProcessTickCall)plugin_process_tick_addr_)();
+}
+
+TestController* SampPlugin::CreateTestController() {
+  if (plugin_create_test_controller_addr_)
+    ((PluginCreateTestControllerCall)plugin_create_test_controller_addr_)();
+
+  return nullptr;
 }

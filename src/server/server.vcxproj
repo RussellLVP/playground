@@ -100,6 +100,8 @@
     <ClInclude Include="sdk\sclinux.h" />
     <ClInclude Include="server_interface.h" />
     <ClInclude Include="server_interface_impl.h" />
+    <ClInclude Include="testing\test_controller.h" />
+    <ClInclude Include="testing\test_controller_impl.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bindings\core.cpp" />
@@ -121,6 +123,7 @@
     <ClCompile Include="native_function_manager.cpp" />
     <ClCompile Include="sdk\amxplugin.cpp" />
     <ClCompile Include="server_interface_impl.cpp" />
+    <ClCompile Include="testing\test_controller_impl.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

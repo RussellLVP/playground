@@ -20,6 +20,8 @@
 #include <Windows.h>
 #endif
 
+class TestController;
+
 // TODO(Russell): Replace this with some minimalistic but real AMX runtime.
 typedef struct AMX AMX;
 
@@ -67,6 +69,10 @@ class SampPlugin {
   // do work in here, but any work of significance will decrease performance of the server itself.
   void ProcessTick();
 
+  // The Las Venturas Playground gamemode has an additional export, which allows us to get the
+  // test controller. This controller may be used to drive tests on the gamemode.
+  TestController* CreateTestController();
+
  private:
   // Addresses of the functions read from the library.
   void* plugin_load_addr_;
@@ -75,6 +81,7 @@ class SampPlugin {
   void* plugin_amx_unload_addr_;
   void* plugin_supports_addr_;
   void* plugin_process_tick_addr_;
+  void* plugin_create_test_controller_addr_;
 
   // Handle to the module itself. The type of this member is dependant on the host OS.
 #if defined(WINDOWS)

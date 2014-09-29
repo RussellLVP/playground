@@ -13,38 +13,18 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <memory>
-#include <stdio.h>
+#ifndef SERVER_TESTING_TEST_CONTROLLER_IMPL_H_
+#define SERVER_TESTING_TEST_CONTROLLER_IMPL_H_
 
-#include "launcher/samp_plugin.h"
 #include "server/testing/test_controller.h"
 
-#if defined(WINDOWS)
-#define MODULE_NAME "playground.dll"
-#else // !defined(WINDOWS)
-#define MODULE_NAME "playground.so"
-#endif
+class TestControllerImpl : public TestController {
+ public:
+  TestControllerImpl();
+  ~TestControllerImpl();
 
-int main() {
-  SampPlugin plugin;
-  if (!plugin.LoadPlugin(MODULE_NAME))
-    return 1;
+  // TestController implementation.
 
-  std::unique_ptr<TestController> test_controller;
-  test_controller.reset(plugin.CreateTestController());
+};
 
-  // TODO(Russell): Set up the test environment here.
-
-  if (!plugin.Load())
-    return 1;
-
-  // TODO(Russell): Do something useful here.
-
-  plugin.Unload();
-
-#if defined(WINDOWS)
-  system("PAUSE");
-#endif
-
-  return 0;
-}
+#endif  // SERVER_TESTING_TEST_CONTROLLER_IMPL_H_

@@ -13,38 +13,18 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <memory>
-#include <stdio.h>
+#ifndef SERVER_TESTING_TEST_CONTROLLER_H_
+#define SERVER_TESTING_TEST_CONTROLLER_H_
 
-#include "launcher/samp_plugin.h"
-#include "server/testing/test_controller.h"
+// The test controller allows the laucher to drive parts of the Playground plugin, making the entire
+// gamemode testable with either scenario-tests or smaller unit-tests.
+class TestController {
+ public:
+  // Creates a new implementation of the TestController class. The caller takes ownership of the
+  // new instance. This method is implemented in test_controller_impl.cpp.
+  static TestController* Create();
 
-#if defined(WINDOWS)
-#define MODULE_NAME "playground.dll"
-#else // !defined(WINDOWS)
-#define MODULE_NAME "playground.so"
-#endif
+  
+};
 
-int main() {
-  SampPlugin plugin;
-  if (!plugin.LoadPlugin(MODULE_NAME))
-    return 1;
-
-  std::unique_ptr<TestController> test_controller;
-  test_controller.reset(plugin.CreateTestController());
-
-  // TODO(Russell): Set up the test environment here.
-
-  if (!plugin.Load())
-    return 1;
-
-  // TODO(Russell): Do something useful here.
-
-  plugin.Unload();
-
-#if defined(WINDOWS)
-  system("PAUSE");
-#endif
-
-  return 0;
-}
+#endif  // SERVER_TESTING_TEST_CONTROLLER_H_

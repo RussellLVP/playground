@@ -19,6 +19,7 @@
 #include "playground/playground.h"
 #include "server/sdk/plugincommon.h"
 #include "server/server_interface.h"
+#include "server/testing/test_controller.h"
 
 // Global ServerInterface and Playground instances. The lifetime of these objects is controlled by
 // the exported module functions, which will be called by the SA-MP server.
@@ -67,4 +68,8 @@ PLUGIN_EXPORT void PLUGIN_CALL ProcessTick() {
   CHECK(g_playground);
 
   g_playground->ProcessTick();
+}
+
+PLUGIN_EXPORT TestController* PLUGIN_CALL CreateTestController() {
+  return TestController::Create();
 }
