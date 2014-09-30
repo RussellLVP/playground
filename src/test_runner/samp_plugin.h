@@ -13,8 +13,8 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef LAUNCHER_SAMP_PLUGIN_LOADER_H_
-#define LAUNCHER_SAMP_PLUGIN_LOADER_H_
+#ifndef TEST_RUNNER_SAMP_PLUGIN_LOADER_H_
+#define TEST_RUNNER_SAMP_PLUGIN_LOADER_H_
 
 #if defined(WINDOWS)
 #include <Windows.h>

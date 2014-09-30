@@ -17,8 +17,8 @@
 #include <stdio.h>
 
 #include "base/logging.h"
-#include "launcher/samp_plugin.h"
-#include "launcher/server/native_function_delegate_impl.h"
+#include "test_runner/samp_plugin.h"
+#include "test_runner/server/native_function_delegate_impl.h"
 #include "server/testing/test_controller.h"
 
 #if defined(WINDOWS)

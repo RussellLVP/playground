@@ -15,7 +15,7 @@
 
 #include <stdio.h>
 
-#include "launcher/samp_plugin.h"
+#include "test_runner/samp_plugin.h"
 
 namespace {
 

@@ -13,7 +13,7 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "launcher/server/native_function_delegate_impl.h"
+#include "test_runner/server/native_function_delegate_impl.h"
 
 #include "base/logging.h"
 
