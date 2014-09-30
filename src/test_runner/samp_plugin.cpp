@@ -114,9 +114,8 @@ bool SampPlugin::LoadPlugin(const char* module_file) {
 }
 
 bool SampPlugin::Load() {
-  // TODO(Russell): We should ASSERT here instead.
-  // TODO(Russell): We need to pass some sane array for |data|.
-  void* data[] = { nullptr };
+  // There should be enough nullptrs to cover the PLUGIN_DATA_TYPE enumeration.
+  void* data[] = { nullptr, nullptr, nullptr, nullptr };
 
   if (plugin_load_addr_)
     return ((PluginLoadCall)plugin_load_addr_)(data);

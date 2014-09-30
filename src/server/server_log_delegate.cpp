@@ -19,11 +19,13 @@ using logging::LogMessage;
 
 ServerLogDelegate::ServerLogDelegate(logprintf_t logprintf)
     : logprintf_(logprintf) {
-  LogMessage::SetDelegate(this);
+  if (logprintf_)
+    LogMessage::SetDelegate(this);
 }
 
 ServerLogDelegate::~ServerLogDelegate() {
-  LogMessage::SetDelegate(nullptr);
+  if (logprintf_)
+    LogMessage::SetDelegate(nullptr);
 }
 
 bool ServerLogDelegate::WriteMessage(const std::string& message) {
