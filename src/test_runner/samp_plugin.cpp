@@ -13,9 +13,11 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "test_runner/samp_plugin.h"
+
 #include <stdio.h>
 
-#include "test_runner/samp_plugin.h"
+#include "base/logging.h"
 
 namespace {
 
@@ -93,6 +95,7 @@ bool SampPlugin::LoadPlugin(const char* module_file) {
   }
 
   plugin_load_addr_ = GetModuleFunctionAddr(module_, "Load");
+
   if (!plugin_load_addr_) {
     printf("The module (%s) must specify a Load() export.\n", module_file);
     return false;
@@ -117,10 +120,8 @@ bool SampPlugin::Load() {
   // There should be enough nullptrs to cover the PLUGIN_DATA_TYPE enumeration.
   void* data[] = { nullptr, nullptr, nullptr, nullptr };
 
-  if (plugin_load_addr_)
-    return ((PluginLoadCall)plugin_load_addr_)(data);
-
-  return false;
+  CHECK(plugin_amx_load_addr_);
+  return ((PluginLoadCall)plugin_load_addr_)(data);
 }
 
 void SampPlugin::Unload() {
@@ -129,11 +130,8 @@ void SampPlugin::Unload() {
 }
 
 unsigned int SampPlugin::Supports() {
-  // TODO(Russell): We should ASSERT here instead.
-  if (plugin_supports_addr_)
-    return ((PluginSupportsCall)plugin_supports_addr_)();
-
-  return 0;
+  CHECK(plugin_supports_addr_);
+  return ((PluginSupportsCall)plugin_supports_addr_)();
 }
 
 int SampPlugin::AmxLoad(AMX* amx) {
