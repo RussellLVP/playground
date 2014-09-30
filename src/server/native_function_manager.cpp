@@ -21,6 +21,7 @@
 #include "base/logging.h"
 #include "server/native_arguments.h"
 #include "server/sdk/amx.h"
+#include "server/testing/test_controller_impl.h"
 
 namespace {
 
@@ -133,6 +134,16 @@ void NativeFunctionManager::ProvideNativeFunction(const std::string& name, const
 // -------------------------------------------------------------------------------------------------
 
 int NativeFunctionManager::Invoke(const char* name, const char* format, ...) {
+  TestControllerImpl* test_controller = TestControllerImpl::GetInstance();
+  if (test_controller && test_controller->native_function_delegate()) {
+    // Forward the call to the native function delegate specified to the test controller. This will
+    // allow the embedder to handle any Pawn function instead of delegating to the scripting engine.
+    va_list arguments;
+    va_start(arguments, format);
+
+    return test_controller->native_function_delegate()->Invoke(name, arguments);
+  }
+
   AMX_NATIVE native = GetNative(name);
   if (!native) {
     LOG(ERROR) << "Unable to invoke " << name << ": function has not been registered.";

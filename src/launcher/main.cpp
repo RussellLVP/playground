@@ -16,7 +16,9 @@
 #include <memory>
 #include <stdio.h>
 
+#include "base/logging.h"
 #include "launcher/samp_plugin.h"
+#include "launcher/server/native_function_delegate_impl.h"
 #include "server/testing/test_controller.h"
 
 #if defined(WINDOWS)
@@ -30,8 +32,11 @@ int main() {
   if (!plugin.LoadPlugin(MODULE_NAME))
     return 1;
 
-  std::unique_ptr<TestController> test_controller;
-  test_controller.reset(plugin.CreateTestController());
+  std::unique_ptr<TestController> test_controller(plugin.CreateTestController());
+  CHECK(test_controller);
+
+  NativeFunctionDelegateImpl native_function_delegate_;
+  test_controller->SetNativeFunctionDelegate(&native_function_delegate_);
 
   // TODO(Russell): Set up the test environment here.
 

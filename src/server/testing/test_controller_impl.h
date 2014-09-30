@@ -18,13 +18,25 @@
 
 #include "server/testing/test_controller.h"
 
-class TestControllerImpl : public TestController {
+class TestControllerImpl final : public TestController {
  public:
   TestControllerImpl();
   ~TestControllerImpl();
 
-  // TestController implementation.
+  // Returns the active instance of the TestControllerImpl. This is what code in //server should use
+  // when functionality may be influenced by the external test-runner.
+  static TestControllerImpl* GetInstance();
 
+  // Returns the native function delegate to which Pawn native calls should be forwarded.
+  NativeFunctionDelegate* native_function_delegate() const {
+    return native_function_delegate_;
+  }
+
+  // TestController implementation.
+  virtual void SetNativeFunctionDelegate(NativeFunctionDelegate* delegate) override;
+
+ private:
+  NativeFunctionDelegate* native_function_delegate_;
 };
 
 #endif  // SERVER_TESTING_TEST_CONTROLLER_IMPL_H_

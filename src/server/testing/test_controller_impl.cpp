@@ -17,6 +17,14 @@
 
 #include "base/logging.h"
 
+namespace {
+
+// The TestControllerImpl instance is owned by the embedder, but we hold on to a weak reference
+// allowing code in //server to interact with the controller.
+TestControllerImpl* g_test_controller_instance_ = nullptr;
+
+}  // namespace
+
 // -------------------------------------------------------------------------------------------------
 
 // Static. Declared in /server/testing/test_controller.h.
@@ -26,6 +34,21 @@ TestController* TestController::Create() {
 
 // -------------------------------------------------------------------------------------------------
 
-TestControllerImpl::TestControllerImpl() {}
+TestControllerImpl::TestControllerImpl()
+    : native_function_delegate_(nullptr) {
+  CHECK(!g_test_controller_instance_) << "There may only be a single TestController at any given time.";
+  g_test_controller_instance_ = this;
+}
 
-TestControllerImpl::~TestControllerImpl() {}
+TestControllerImpl::~TestControllerImpl() {
+  g_test_controller_instance_ = nullptr;
+}
+
+// static
+TestControllerImpl* TestControllerImpl::GetInstance() {
+  return g_test_controller_instance_;
+}
+
+void TestControllerImpl::SetNativeFunctionDelegate(NativeFunctionDelegate* delegate) {
+  native_function_delegate_ = delegate;
+}

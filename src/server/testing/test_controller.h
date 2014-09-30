@@ -16,6 +16,8 @@
 #ifndef SERVER_TESTING_TEST_CONTROLLER_H_
 #define SERVER_TESTING_TEST_CONTROLLER_H_
 
+#include <varargs.h>
+
 // The test controller allows the laucher to drive parts of the Playground plugin, making the entire
 // gamemode testable with either scenario-tests or smaller unit-tests.
 class TestController {
@@ -24,7 +26,16 @@ class TestController {
   // new instance. This method is implemented in test_controller_impl.cpp.
   static TestController* Create();
 
-  
+  // Can be injected using SetNativeFunctionDelegate to forward all Pawn native function invocations
+  // to the given method, instead of dispatching them on the AMX runtime. When registered, we will
+  // never hit AMX runtime in NativeFunctionManager::Invoke.
+  class NativeFunctionDelegate {
+   public:
+    virtual int Invoke(const char* name, va_list arguments) = 0;
+  };
+
+  // Registers a delegate to handle the native function invocations.
+  virtual void SetNativeFunctionDelegate(NativeFunctionDelegate* delegate) = 0;
 };
 
 #endif  // SERVER_TESTING_TEST_CONTROLLER_H_

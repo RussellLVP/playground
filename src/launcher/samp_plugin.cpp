@@ -158,7 +158,7 @@ void SampPlugin::ProcessTick() {
 
 TestController* SampPlugin::CreateTestController() {
   if (plugin_create_test_controller_addr_)
-    ((PluginCreateTestControllerCall)plugin_create_test_controller_addr_)();
+    return ((PluginCreateTestControllerCall)plugin_create_test_controller_addr_)();
 
   return nullptr;
 }
