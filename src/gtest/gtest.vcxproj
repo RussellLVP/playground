@@ -11,19 +11,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{B7A52C24-0139-4688-A096-1AD83F7262C4}</ProjectGuid>
-    <RootNamespace>launcher</RootNamespace>
-    <ProjectName>test_runner</ProjectName>
+    <ProjectGuid>{7F064044-878A-42A4-ACC2-4AF1BD1D4311}</ProjectGuid>
+    <RootNamespace>gtest</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -53,7 +52,6 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_MBCS;WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -67,7 +65,6 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_MBCS;WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -76,23 +73,36 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="samp_plugin.cpp" />
-    <ClCompile Include="server\native_function_delegate_impl.cpp" />
-    <ClCompile Include="server\native_function_delegate_impl_unittest.cpp" />
+    <ClInclude Include="gtest-death-test.h" />
+    <ClInclude Include="gtest-internal-inl.h" />
+    <ClInclude Include="gtest-message.h" />
+    <ClInclude Include="gtest-param-test.h" />
+    <ClInclude Include="gtest-printers.h" />
+    <ClInclude Include="gtest-spi.h" />
+    <ClInclude Include="gtest-test-part.h" />
+    <ClInclude Include="gtest-typed-test.h" />
+    <ClInclude Include="gtest.h" />
+    <ClInclude Include="gtest_pred_impl.h" />
+    <ClInclude Include="gtest_prod.h" />
+    <ClInclude Include="internal\gtest-death-test-internal.h" />
+    <ClInclude Include="internal\gtest-filepath.h" />
+    <ClInclude Include="internal\gtest-internal.h" />
+    <ClInclude Include="internal\gtest-linked_ptr.h" />
+    <ClInclude Include="internal\gtest-param-util-generated.h" />
+    <ClInclude Include="internal\gtest-param-util.h" />
+    <ClInclude Include="internal\gtest-port.h" />
+    <ClInclude Include="internal\gtest-string.h" />
+    <ClInclude Include="internal\gtest-tuple.h" />
+    <ClInclude Include="internal\gtest-type-util.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="samp_plugin.h" />
-    <ClInclude Include="server\native_function_delegate_impl.h" />
-    <ClInclude Include="server\native_function_delegate_impl_internal.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\base\base.vcxproj">
-      <Project>{dc7ba198-5b47-4d2e-b1ff-83819244a048}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\gtest\gtest.vcxproj">
-      <Project>{7f064044-878a-42a4-acc2-4af1bd1d4311}</Project>
-    </ProjectReference>
+    <ClCompile Include="gtest-death-test.cc" />
+    <ClCompile Include="gtest-filepath.cc" />
+    <ClCompile Include="gtest-port.cc" />
+    <ClCompile Include="gtest-printers.cc" />
+    <ClCompile Include="gtest-test-part.cc" />
+    <ClCompile Include="gtest-typed-test.cc" />
+    <ClCompile Include="gtest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
