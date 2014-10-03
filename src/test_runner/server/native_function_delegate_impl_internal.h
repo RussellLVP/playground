@@ -35,8 +35,7 @@ struct make_integer_sequence : make_integer_sequence<T, N - 1, N - 1, Is...> {};
 template<class T, int... Is>
 struct make_integer_sequence<T, 0, Is...> : integer_sequence<T, Is...> {};
 
-class ArgumentValue {
- public:
+struct ArgumentValue {
   explicit ArgumentValue(int value)
       : type_(Integer) { primitive_.i = value; }
   explicit ArgumentValue(double value)
@@ -44,7 +43,6 @@ class ArgumentValue {
   explicit ArgumentValue(std::string* value)
       : type_(String) { primitive_.s = value; }
 
- private:
   enum Type { Integer, Double, String };
   Type type_;
 
@@ -58,8 +56,20 @@ class ArgumentValue {
 
 template <typename... Arguments>
 struct ArgumentForwarder {
- public:
+  using tuple_t = std::tuple<Arguments...>;
 
+ public:
+  ArgumentForwarder(va_list argument_list)
+      : argument_list_(argument_list) {}
+
+  template <unsigned int Index>
+  ArgumentValue ReadArgument() {
+    using result_type = typename std::tuple_element<Index, tuple_t>::type;
+    return ArgumentValue(va_arg(argument_list_, std::decay_t<result_type>));
+  }
+
+private:
+  va_list argument_list_;
 };
 
 }  // namespace internal
@@ -85,11 +95,14 @@ class NativeFunction : public NativeFunctionBase {
 
  private:
   template <unsigned int... Indices>
-  int InvokeImpl(NativeFunctionDelegateImpl* instance, va_list argument_list, internal::integer_sequence<unsigned int, Indices...>) const {
-    std::vector<internal::ArgumentValue> arguments;
+  int InvokeImpl(NativeFunctionDelegateImpl* instance, va_list argument_list, internal::integer_sequence<unsigned int, Indices...> sequence) const {
+    internal::ArgumentForwarder<Arguments...> forwarder(argument_list);
+    std::vector<internal::ArgumentValue> arguments{ forwarder.ReadArgument<Indices>()... };
 
     return 0;
   }
+
+
 
   FunctionType method_;
 };
