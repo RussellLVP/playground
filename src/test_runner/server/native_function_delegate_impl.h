@@ -17,9 +17,11 @@
 #define TEST_RUNNER_SERVER_NATIVE_FUNCTION_DELEGATE_IMPL_H_
 
 #include <map>
+#include <memory>
 #include <string>
 
 #include "server/testing/test_controller.h"
+#include "test_runner/server/native_function_delegate_impl_internal.h"
 
 // Implements the native function delegate and overrides all the SA-MP functions we deem to be
 // useful to have for testing. It emulates the behavior of the real server.
@@ -31,7 +33,9 @@ class NativeFunctionDelegateImpl : public TestController::NativeFunctionDelegate
   virtual int Invoke(const char* name, va_list arguments) override;
 
  private:
-  std::map<std::string, void*> registered_natives_;
+  // Provides the native function |name| which will be handled by |method|.
+  template<typename ...Arguments>
+  void ProvideNative(const std::string& name, int(NativeFunctionDelegateImpl::*method)(Arguments...));
 
   // Implementations of the SA-MP native functions we override for the purposes of testing. They
   // should emulate behavior of the SA-MP natives as closely as possible.
@@ -42,6 +46,8 @@ class NativeFunctionDelegateImpl : public TestController::NativeFunctionDelegate
   int SetWeather(int weather_id);
 
  private:
+  std::map<std::string, std::unique_ptr<NativeFunctionBase>> registered_natives_;
+
   int current_weather_;
 };
 

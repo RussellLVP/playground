@@ -83,6 +83,7 @@
   <ItemGroup>
     <ClInclude Include="samp_plugin.h" />
     <ClInclude Include="server\native_function_delegate_impl.h" />
+    <ClInclude Include="server\native_function_delegate_impl_internal.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\base\base.vcxproj">

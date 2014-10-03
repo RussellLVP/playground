@@ -17,28 +17,26 @@
 
 #include "base/logging.h"
 
-// -------------------------------------------------------------------------------------------------
-
-// TODO: Template magic goes here.
-
-// -------------------------------------------------------------------------------------------------
-
 NativeFunctionDelegateImpl::NativeFunctionDelegateImpl()
     : current_weather_(0) {
-  // a_samp.inc
-  registered_natives_["GetWeather"] = nullptr;
-  registered_natives_["SetWeather"] = nullptr;
+  ProvideNative("GetWeather", &NativeFunctionDelegateImpl::GetWeather);
+  ProvideNative("SetWeather", &NativeFunctionDelegateImpl::SetWeather);
 }
 
 // -------------------------------------------------------------------------------------------------
+
+template<typename ...Arguments>
+void NativeFunctionDelegateImpl::ProvideNative(
+    const std::string& name, int(NativeFunctionDelegateImpl::*method)(Arguments...)) {
+  registered_natives_[name] = std::make_unique<NativeFunction<Arguments...>>(method);
+}
 
 int NativeFunctionDelegateImpl::Invoke(const char* name, va_list arguments) {
   auto& functor = registered_natives_.find(name);
   if (functor == registered_natives_.end())
     return 0;
 
-  // TODO: Call the appropriate native implementation based on |name|.
-  return 0;
+  return functor->second->Invoke(arguments);
 }
 
 // -------------------------------------------------------------------------------------------------

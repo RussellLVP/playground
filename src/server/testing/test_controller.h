@@ -16,7 +16,7 @@
 #ifndef SERVER_TESTING_TEST_CONTROLLER_H_
 #define SERVER_TESTING_TEST_CONTROLLER_H_
 
-#include <varargs.h>
+#include <stdarg.h>
 
 // The test controller allows the laucher to drive parts of the Playground plugin, making the entire
 // gamemode testable with either scenario-tests or smaller unit-tests.
