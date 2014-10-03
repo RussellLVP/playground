@@ -22,6 +22,8 @@
 #include <tuple>
 #include <vector>
 
+#include "base/logging.h"
+
 class NativeFunctionDelegateImpl;
 
 namespace internal {
@@ -42,6 +44,12 @@ struct ArgumentValue {
       : type_(Double) { primitive_.d = value; }
   explicit ArgumentValue(std::string* value)
       : type_(String) { primitive_.s = value; }
+
+  template <typename T> static T Get(const ArgumentValue& value) { CHECK(false) << "Unrecognized argument type."; return T(); }
+
+  template <> static int Get(const ArgumentValue& value) { return value.primitive_.i; }
+  template <> static double Get(const ArgumentValue& value) { return value.primitive_.d; }
+  template <> static std::string* Get(const ArgumentValue& value) { return value.primitive_.s; }
 
   enum Type { Integer, Double, String };
   Type type_;
@@ -66,6 +74,14 @@ struct ArgumentForwarder {
   ArgumentValue ReadArgument() {
     using result_type = typename std::tuple_element<Index, tuple_t>::type;
     return ArgumentValue(va_arg(argument_list_, std::decay_t<result_type>));
+  }
+
+  template <unsigned int Index>
+  typename std::tuple_element<Index, tuple_t>::type Apply(std::vector<internal::ArgumentValue>* arguments) const {
+    CHECK(arguments->size() >= Index);
+
+    using result_type = typename std::tuple_element<Index, tuple_t>::type;
+    return ArgumentValue::Get<std::decay_t<result_type>>(arguments->at(Index));
   }
 
 private:
@@ -99,10 +115,8 @@ class NativeFunction : public NativeFunctionBase {
     internal::ArgumentForwarder<Arguments...> forwarder(argument_list);
     std::vector<internal::ArgumentValue> arguments{ forwarder.ReadArgument<Indices>()... };
 
-    return 0;
+    return (*instance.*method_)(forwarder.Apply<Indices>(&arguments)...);
   }
-
-
 
   FunctionType method_;
 };
