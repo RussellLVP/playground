@@ -21,26 +21,45 @@
 
 class NativeFunctionDelegateImpl;
 
+namespace internal {
+
+template<class T, int... Is>
+struct integer_sequence {};
+
+template<class T, int N, int... Is>
+struct make_integer_sequence : make_integer_sequence<T, N - 1, N - 1, Is...> {};
+
+template<class T, int... Is>
+struct make_integer_sequence<T, 0, Is...> : integer_sequence<T, Is...> {};
+
+}  // namespace internal
+
 class NativeFunctionBase {
  public:
   virtual ~NativeFunctionBase() {}
-  virtual int Invoke(va_list arguments) const = 0;
+  virtual int Invoke(NativeFunctionDelegateImpl* instance, va_list arguments) const = 0;
 };
 
-template<typename ...Arguments>
+template<typename... Arguments>
 class NativeFunction : public NativeFunctionBase {
- public:
-  NativeFunction(int(NativeFunctionDelegateImpl::*method)(Arguments...)) {
+ typedef int(NativeFunctionDelegateImpl::*FunctionType)(Arguments...);
 
-  }
+ public:
+  NativeFunction(FunctionType method)
+      : method_(method) {}
 
   virtual ~NativeFunction() override {}
-  virtual int Invoke(va_list arguments) const override {
-    return 0;
+  virtual int Invoke(NativeFunctionDelegateImpl* instance, va_list arguments) const override {
+    return InvokeImpl(instance, arguments, internal::make_integer_sequence<unsigned int, sizeof...(Arguments)>());
   }
 
  private:
-  std::function<int(Arguments...)> callback_;
+  template <unsigned int... Indices>
+  int InvokeImpl(NativeFunctionDelegateImpl* instance, va_list arguments, internal::integer_sequence<unsigned int, Indices...>) const {
+    return 0;
+  }
+
+  FunctionType method_;
 };
 
 #endif  // TEST_RUNNER_SERVER_NATIVE_FUNCTION_DELEGATE_IMPL_INTERNAL_H_

@@ -36,7 +36,7 @@ int NativeFunctionDelegateImpl::Invoke(const char* name, va_list arguments) {
   if (functor == registered_natives_.end())
     return 0;
 
-  return functor->second->Invoke(arguments);
+  return functor->second->Invoke(this, arguments);
 }
 
 // -------------------------------------------------------------------------------------------------
