@@ -47,7 +47,7 @@ extern ServerInterfaceImpl* g_server_interface_impl;
 
 ServerTest::~ServerTest() {}
 
-int ServerTest::ConnectPlayer(const char* nickname, const char* ip_address) {
+int ServerTest::ConnectPlayer(const std::string& nickname, const std::string& ip_address) {
   return GetTestActionDelegate().ConnectPlayer(nickname, ip_address);
 }
 

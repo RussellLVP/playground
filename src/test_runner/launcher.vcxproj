@@ -80,13 +80,17 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="samp_plugin.cpp" />
+    <ClCompile Include="server\entities\player_manager.cpp" />
     <ClCompile Include="server\native_function_delegate_impl.cpp" />
     <ClCompile Include="server\native_function_delegate_impl_unittest.cpp" />
+    <ClCompile Include="server\server_controller.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="samp_plugin.h" />
+    <ClInclude Include="server\entities\player_manager.h" />
     <ClInclude Include="server\native_function_delegate_impl.h" />
     <ClInclude Include="server\native_function_delegate_impl_internal.h" />
+    <ClInclude Include="server\server_controller.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\base\base.vcxproj">

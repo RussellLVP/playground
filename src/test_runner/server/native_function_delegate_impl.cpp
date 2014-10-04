@@ -17,8 +17,9 @@
 
 #include "base/logging.h"
 
-NativeFunctionDelegateImpl::NativeFunctionDelegateImpl()
-    : current_weather_(0) {
+NativeFunctionDelegateImpl::NativeFunctionDelegateImpl(ServerController* server_controller)
+    : server_controller_(server_controller),
+      current_weather_(0) {
   ProvideNative("GetWeather", &NativeFunctionDelegateImpl::GetWeather);
   ProvideNative("SetWeather", &NativeFunctionDelegateImpl::SetWeather);
 }

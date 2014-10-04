@@ -16,6 +16,8 @@
 #ifndef SERVER_TESTING_SERVER_TEST_H_
 #define SERVER_TESTING_SERVER_TEST_H_
 
+#include <string>
+
 #include "gtest/gtest.h"
 
 // Server tests are large tests which will have an entirely new server environment set up for them.
@@ -26,7 +28,8 @@ class ServerTest : public ::testing::Test {
   virtual ~ServerTest();
 
   // Connects a new player named |nickname| from |ip_address|. Their Id will be returned.
-  int ConnectPlayer(const char* nickname, const char* ip_address = nullptr);
+  int ConnectPlayer(const std::string& nickname,
+                    const std::string& ip_address = "127.0.0.1");
 
   // Disconnects |player_id| from the server.
   void DisconnectPlayer(int player_id);

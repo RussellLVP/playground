@@ -19,7 +19,7 @@
 #include "base/logging.h"
 #include "gtest/gtest.h"
 #include "test_runner/samp_plugin.h"
-#include "test_runner/server/native_function_delegate_impl.h"
+#include "test_runner/server/server_controller.h"
 #include "server/testing/test_controller.h"
 
 #if defined(WINDOWS)
@@ -36,8 +36,7 @@ int main(int argc, char** argv) {
   std::unique_ptr<TestController> test_controller(plugin.CreateTestController());
   CHECK(test_controller);
 
-  NativeFunctionDelegateImpl native_function_delegate_;
-  test_controller->SetNativeFunctionDelegate(&native_function_delegate_);
+  ServerController server_controller(test_controller.get());
 
   ::testing::InitGoogleTest(&argc, argv);
 

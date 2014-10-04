@@ -17,6 +17,7 @@
 #define SERVER_TESTING_TEST_CONTROLLER_H_
 
 #include <stdarg.h>
+#include <string>
 
 namespace samp { class EventListener; }
 
@@ -45,7 +46,7 @@ class TestController {
   // tests in the gamemode that may modify the state of the game, e.g. connecting a player.
   class TestActionDelegate {
    public:
-    virtual int ConnectPlayer(const char* nickname, const char* ip_address) = 0;
+    virtual int ConnectPlayer(const std::string& nickname, const std::string& ip_address) = 0;
     virtual void DisconnectPlayer(int player_id) = 0;
   };
 
