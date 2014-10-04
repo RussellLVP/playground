@@ -15,8 +15,8 @@
 
 #include "server/testing/server_test.h"
 
-class PlayerManagerTest : public ServerTest {};
+class PlayerManagerServerTest : public ServerTest {};
 
-TEST_F(PlayerManagerTest, MustSucceed) {
+TEST_F(PlayerManagerServerTest, MustSucceed) {
   ASSERT_EQ(0, 1);
 }

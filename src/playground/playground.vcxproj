@@ -12,7 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="entities\player_manager.cpp" />
-    <ClCompile Include="entities\player_manager_test.cpp" />
+    <ClCompile Include="entities\player_manager_servertest.cpp" />
     <ClCompile Include="playground.cpp" />
     <ClCompile Include="plugin.cpp" />
   </ItemGroup>
