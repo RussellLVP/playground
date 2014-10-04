@@ -35,6 +35,9 @@ class PlayerManager {
   // Inserts a new player named |nickname| in the manager, using the next available Id.
   int Connect(const std::string& nickname, const std::string& ip_address);
 
+  // Returns the player who is connected using Id |player_id|. May return a nullptr.
+  Player* Get(int player_id);
+
   // Removes the player with Id |player_id| from the manager.
   void Disconnect(int player_id);
 

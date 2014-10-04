@@ -16,6 +16,8 @@
 #ifndef PLAYGROUND_ENTITIES_PLAYER_MANAGER_H_
 #define PLAYGROUND_ENTITIES_PLAYER_MANAGER_H_
 
+#include <map>
+#include <memory>
 #include <string>
 
 #include "playground/entities/entity_manager.h"
@@ -38,9 +40,13 @@ class PlayerManager final : public EntityManager<Player>,
   virtual Player* Get(int player_id) override;
   virtual int GetCount() const override;
 
+ private:
   // PlayerEventListener implementation.
   virtual void OnPlayerConnect(int player_id) override;
   virtual void OnPlayerDisconnect(int player_id, int reason) override;
+
+ private:
+  std::map<int, std::unique_ptr<Player>> players_;
 };
 
 #endif  // PLAYGROUND_ENTITIES_PLAYER_MANAGER_H_

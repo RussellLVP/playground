@@ -16,12 +16,17 @@
 #include "test_runner/server/native_function_delegate_impl.h"
 
 #include "base/logging.h"
+#include "test_runner/server/entities/player_manager.h"
+#include "test_runner/server/server_controller.h"
 
 NativeFunctionDelegateImpl::NativeFunctionDelegateImpl(ServerController* server_controller)
     : server_controller_(server_controller),
       current_weather_(0) {
   ProvideNative("GetWeather", &NativeFunctionDelegateImpl::GetWeather);
   ProvideNative("SetWeather", &NativeFunctionDelegateImpl::SetWeather);
+
+  ProvideNative("GetPlayerName", &NativeFunctionDelegateImpl::GetPlayerName);
+  ProvideNative("GetPlayerIp", &NativeFunctionDelegateImpl::GetPlayerIp);
 }
 
 NativeFunctionDelegateImpl::~NativeFunctionDelegateImpl() {}
@@ -36,8 +41,10 @@ void NativeFunctionDelegateImpl::ProvideNative(
 
 int NativeFunctionDelegateImpl::Invoke(const char* name, va_list arguments) {
   auto& functor = registered_natives_.find(name);
-  if (functor == registered_natives_.end())
+  if (functor == registered_natives_.end()) {
+    LOG(ERROR) << "The native " << name << " has not been overridden in the NativeFunctionDelegateImpl.";
     return 0;
+  }
 
   return functor->second->Invoke(this, arguments);
 }
@@ -51,4 +58,24 @@ int NativeFunctionDelegateImpl::GetWeather() {
 int NativeFunctionDelegateImpl::SetWeather(int weather_id) {
   current_weather_ = weather_id;
   return 0;
+}
+
+// -------------------------------------------------------------------------------------------------
+
+int NativeFunctionDelegateImpl::GetPlayerName(int player_id, std::string* name, int length) {
+  Player* player = server_controller_->player_manager().Get(player_id);
+  if (player == nullptr)
+    return 0;
+
+  *name = player->nickname;
+  return 1;
+}
+
+int NativeFunctionDelegateImpl::GetPlayerIp(int player_id, std::string* ip_address, int length) {
+  Player* player = server_controller_->player_manager().Get(player_id);
+  if (player == nullptr)
+    return 0;
+
+  *ip_address = player->ip_address;
+  return 1;
 }

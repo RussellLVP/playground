@@ -18,27 +18,47 @@
 #include <stdio.h>
 
 #include "base/logging.h"
+#include "playground/entities/player.h"
 
 PlayerManager::PlayerManager() {}
 
 PlayerManager::~PlayerManager() {}
 
 Player* PlayerManager::Get(const std::string& name) {
+  for (auto& player : players_) {
+    if (name == player.second->name())
+      return player.second.get();
+  }
+
   return nullptr;
 }
 
 Player* PlayerManager::Get(int player_id) {
-  return nullptr;
+  auto& iterator = players_.find(player_id);
+  if (iterator == players_.end())
+    return nullptr;
+
+  return iterator->second.get();
 }
 
 int PlayerManager::GetCount() const {
-  return 0;
+  return players_.size();
 }
 
 void PlayerManager::OnPlayerConnect(int player_id) {
-  LOG(INFO) << "Player " << player_id << " has connected.";
+  if (Get(player_id) != nullptr) {
+    LOG(ERROR) << "The player with Id " << player_id << " has already connected to the server.";
+    return;
+  }
+
+  players_[player_id] = std::make_unique<Player>(player_id);
 }
 
 void PlayerManager::OnPlayerDisconnect(int player_id, int reason) {
-  LOG(INFO) << "Player " << player_id << " has connected.";
+  if (Get(player_id) == nullptr) {
+    LOG(ERROR) << "The player with Id " << player_id << " is not connected to the server.";
+    return;
+  }
+
+  players_.erase(player_id);
 }

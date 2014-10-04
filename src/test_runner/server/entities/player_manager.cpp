@@ -30,6 +30,14 @@ int PlayerManager::Connect(const std::string& nickname, const std::string& ip_ad
   return player_id;
 }
 
+Player* PlayerManager::Get(int player_id) {
+  auto& iterator = players_.find(player_id);
+  if (iterator == players_.end())
+    return nullptr;
+
+  return iterator->second.get();
+}
+
 void PlayerManager::Disconnect(int player_id) {
   players_.erase(player_id);
 }

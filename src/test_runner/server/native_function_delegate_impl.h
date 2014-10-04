@@ -48,6 +48,10 @@ class NativeFunctionDelegateImpl : public TestController::NativeFunctionDelegate
   int GetWeather();
   int SetWeather(int weather_id);
 
+  // a_players.inc
+  int GetPlayerName(int player_id, std::string* name, int length);
+  int GetPlayerIp(int player_id, std::string* ip_address, int length);
+
  private:
   ServerController* server_controller_;
   std::map<std::string, std::unique_ptr<NativeFunctionBase<NativeFunctionDelegateImpl>>>
