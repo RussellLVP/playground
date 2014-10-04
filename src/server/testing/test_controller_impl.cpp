@@ -22,11 +22,9 @@ namespace {
 
 // The TestControllerImpl instance is owned by the embedder, but we hold on to a weak reference
 // allowing code in //server to interact with the controller.
-TestControllerImpl* g_test_controller_instance_ = nullptr;
+TestControllerImpl* g_test_controller_impl = nullptr;
 
 }  // namespace
-
-// -------------------------------------------------------------------------------------------------
 
 // Static. Declared in /server/testing/test_controller.h.
 TestController* TestController::Create() {
@@ -36,22 +34,27 @@ TestController* TestController::Create() {
 // -------------------------------------------------------------------------------------------------
 
 TestControllerImpl::TestControllerImpl()
-    : native_function_delegate_(nullptr) {
-  CHECK(!g_test_controller_instance_) << "There may only be a single TestController at any given time.";
-  g_test_controller_instance_ = this;
+    : native_function_delegate_(nullptr),
+      test_action_delegate_(nullptr) {
+  CHECK(!g_test_controller_impl) << "There must only be a single TestController at any given time.";
+  g_test_controller_impl = this;
 }
 
 TestControllerImpl::~TestControllerImpl() {
-  g_test_controller_instance_ = nullptr;
+  g_test_controller_impl = nullptr;
 }
 
 // static
 TestControllerImpl* TestControllerImpl::GetInstance() {
-  return g_test_controller_instance_;
+  return g_test_controller_impl;
 }
 
 void TestControllerImpl::SetNativeFunctionDelegate(NativeFunctionDelegate* delegate) {
   native_function_delegate_ = delegate;
+}
+
+void TestControllerImpl::SetTestActionDelegate(TestActionDelegate* delegate) {
+  test_action_delegate_ = delegate;
 }
 
 int TestControllerImpl::RunTests(int* argc, char** argv) {

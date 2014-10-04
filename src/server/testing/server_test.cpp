@@ -18,6 +18,7 @@
 #include "base/logging.h"
 #include "server/sdk/plugincommon.h"
 #include "server/server_interface_impl.h"
+#include "server/testing/test_controller_impl.h"
 
 namespace {
 
@@ -30,6 +31,16 @@ PLUGIN_EXPORT void PLUGIN_CALL Unload();
 // Data passed to the Load() function, which //server should be able to initialize itself with.
 void* g_load_data[] = { nullptr, nullptr, nullptr, nullptr };
 
+// Returns the test action delegate, which is provided by the test runner to allow us to interact
+// with the embedding server environment.
+TestController::TestActionDelegate& GetTestActionDelegate() {
+  TestController::TestActionDelegate* action_delegate =
+      TestControllerImpl::GetInstance()->test_action_delegate();
+  CHECK(action_delegate) << "Interacting with the server required a test action delegate.";
+
+  return *action_delegate;
+}
+
 }  // namespace
 
 extern ServerInterfaceImpl* g_server_interface_impl;
@@ -37,12 +48,11 @@ extern ServerInterfaceImpl* g_server_interface_impl;
 ServerTest::~ServerTest() {}
 
 int ServerTest::ConnectPlayer(const char* nickname, const char* ip_address) {
-  // TODO(Russell): Implement this method.
-  return 0;
+  return GetTestActionDelegate().ConnectPlayer(nickname, ip_address);
 }
 
 void ServerTest::DisconnectPlayer(int player_id) {
-  // TODO(Russell): Implement this method.
+  GetTestActionDelegate().DisconnectPlayer(player_id);
 }
 
 void ServerTest::SetUp() {

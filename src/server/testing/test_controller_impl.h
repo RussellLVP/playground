@@ -32,12 +32,19 @@ class TestControllerImpl final : public TestController {
     return native_function_delegate_;
   }
 
+  // Returns the test action delegate, provided by the test runner, which will deal with our actions.
+  TestActionDelegate* test_action_delegate() const {
+    return test_action_delegate_;
+  }
+
   // TestController implementation.
   virtual void SetNativeFunctionDelegate(NativeFunctionDelegate* delegate) override;
+  virtual void SetTestActionDelegate(TestActionDelegate* delegate) override;
   virtual int RunTests(int* argc, char** argv) override;
 
  private:
   NativeFunctionDelegate* native_function_delegate_;
+  TestActionDelegate* test_action_delegate_;
 };
 
 #endif  // SERVER_TESTING_TEST_CONTROLLER_IMPL_H_

@@ -39,6 +39,17 @@ class TestController {
   // Registers a delegate to handle the native function invocations.
   virtual void SetNativeFunctionDelegate(NativeFunctionDelegate* delegate) = 0;
 
+  // Can be injected using SetTestActionDelegate. It will receive events which were triggered by
+  // tests in the gamemode that may modify the state of the game, e.g. connecting a player.
+  class TestActionDelegate {
+   public:
+    virtual int ConnectPlayer(const char* nickname, const char* ip_address) = 0;
+    virtual void DisconnectPlayer(int player_id) = 0;
+  };
+
+  // Registers a delegate to be used for all test actions.
+  virtual void SetTestActionDelegate(TestActionDelegate* delegate) = 0;
+
   // Runs all the tests which have been defined in the Playground module.
   virtual int RunTests(int* argc, char** argv) = 0;
 };
