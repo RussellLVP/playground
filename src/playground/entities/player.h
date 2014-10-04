@@ -28,12 +28,17 @@ class Player final : public Entity {
   // Returns the nickname this player has connecting with.
   const std::string& name() const;
 
+  // Returns the IP address which the player is connecting with.
+  const std::string& ip_address() const;
+
   // Entity implementation.
   virtual int id() const override;
 
  private:
   int player_id_;
+
   std::string name_;
+  std::string ip_address_;
 };
 
 #endif  // PLAYGROUND_ENTITIES_PLAYER_H_

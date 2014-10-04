@@ -41,6 +41,7 @@ TEST_F(PlayerManagerServerTest, SimpleConnectDisconnect) {
 
   EXPECT_EQ(player_id, player->id());
   EXPECT_EQ("CJ", player->name());
+  EXPECT_EQ("127.0.0.1", player->ip_address());
 
   Player* player2 = player_manager()->Get("CJ");
   EXPECT_EQ(player, player2);

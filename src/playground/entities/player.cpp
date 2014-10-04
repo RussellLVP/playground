@@ -15,14 +15,23 @@
 
 #include "playground/entities/player.h"
 
+#include "server/bindings/players.h"
+#include "server/bindings/samp.h"
+
 Player::Player(int player_id)
     : player_id_(player_id) {
+  samp::GetPlayerName(player_id, name_, samp::MAX_PLAYER_NAME);
+  samp::GetPlayerIp(player_id, ip_address_, 16);
 }
 
 Player::~Player() {}
 
 const std::string& Player::name() const {
   return name_;
+}
+
+const std::string& Player::ip_address() const {
+  return ip_address_;
 }
 
 int Player::id() const {
