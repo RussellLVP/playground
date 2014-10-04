@@ -38,6 +38,9 @@ class TestController {
 
   // Registers a delegate to handle the native function invocations.
   virtual void SetNativeFunctionDelegate(NativeFunctionDelegate* delegate) = 0;
+
+  // Runs all the tests which have been defined in the Playground module.
+  virtual int RunTests(int* argc, char** argv) = 0;
 };
 
 #endif  // SERVER_TESTING_TEST_CONTROLLER_H_

@@ -17,6 +17,7 @@
 #include <stdio.h>
 
 #include "base/logging.h"
+#include "gtest/gtest.h"
 #include "test_runner/samp_plugin.h"
 #include "test_runner/server/native_function_delegate_impl.h"
 #include "server/testing/test_controller.h"
@@ -27,7 +28,7 @@
 #define MODULE_NAME "playground.so"
 #endif
 
-int main() {
+int main(int argc, char** argv) {
   SampPlugin plugin;
   if (!plugin.LoadPlugin(MODULE_NAME))
     return 1;
@@ -38,18 +39,11 @@ int main() {
   NativeFunctionDelegateImpl native_function_delegate_;
   test_controller->SetNativeFunctionDelegate(&native_function_delegate_);
 
-  // TODO(Russell): Set up the test environment here.
+  ::testing::InitGoogleTest(&argc, argv);
 
-  if (!plugin.Load())
-    return 1;
+  int return_value = RUN_ALL_TESTS();
+  if (return_value == 0 /** no errors **/)
+    return_value = test_controller->RunTests(&argc, argv);
 
-  // TODO(Russell): Do something useful here.
-
-  plugin.Unload();
-
-#if defined(WINDOWS)
-  system("PAUSE");
-#endif
-
-  return 0;
+  return return_value;
 }

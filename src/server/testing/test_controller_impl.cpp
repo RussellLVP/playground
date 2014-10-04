@@ -16,6 +16,7 @@
 #include "server/testing/test_controller_impl.h"
 
 #include "base/logging.h"
+#include "gtest/gtest.h"
 
 namespace {
 
@@ -51,4 +52,10 @@ TestControllerImpl* TestControllerImpl::GetInstance() {
 
 void TestControllerImpl::SetNativeFunctionDelegate(NativeFunctionDelegate* delegate) {
   native_function_delegate_ = delegate;
+}
+
+int TestControllerImpl::RunTests(int* argc, char** argv) {
+  ::testing::InitGoogleTest(argc, argv);
+
+  return RUN_ALL_TESTS();
 }

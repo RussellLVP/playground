@@ -68,6 +68,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -100,6 +101,7 @@
     <ClInclude Include="sdk\sclinux.h" />
     <ClInclude Include="server_interface.h" />
     <ClInclude Include="server_interface_impl.h" />
+    <ClInclude Include="testing\server_test.h" />
     <ClInclude Include="testing\test_controller.h" />
     <ClInclude Include="testing\test_controller_impl.h" />
   </ItemGroup>

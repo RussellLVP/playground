@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="entities\player_manager.cpp" />
+    <ClCompile Include="entities\player_manager_test.cpp" />
     <ClCompile Include="playground.cpp" />
     <ClCompile Include="plugin.cpp" />
   </ItemGroup>
@@ -25,6 +26,9 @@
   <ItemGroup>
     <ProjectReference Include="..\base\base.vcxproj">
       <Project>{dc7ba198-5b47-4d2e-b1ff-83819244a048}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\gtest\gtest.vcxproj">
+      <Project>{7f064044-878a-42a4-acc2-4af1bd1d4311}</Project>
     </ProjectReference>
     <ProjectReference Include="..\server\server.vcxproj">
       <Project>{c08eb11f-1b0b-4a1a-a999-00eaaf701ae6}</Project>

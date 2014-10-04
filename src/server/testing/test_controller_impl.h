@@ -34,6 +34,7 @@ class TestControllerImpl final : public TestController {
 
   // TestController implementation.
   virtual void SetNativeFunctionDelegate(NativeFunctionDelegate* delegate) override;
+  virtual int RunTests(int* argc, char** argv) override;
 
  private:
   NativeFunctionDelegate* native_function_delegate_;

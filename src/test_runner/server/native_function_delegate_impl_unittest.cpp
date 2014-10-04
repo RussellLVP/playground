@@ -69,7 +69,7 @@ class NativeFunctionDelegateInternalTest : public ::testing::Test {
   }
 
   int MixedArguments(int a, double b, std::string* c) {
-    return 1000 * a + 100 * b + c->at(0);
+    return 1000 * a + 100 * static_cast<int>(b) + c->at(0);
   }
 
  private:
@@ -106,7 +106,7 @@ TEST_F(NativeFunctionDelegateInternalTest, ReadWriteFloat) {
   value = Call("ReadFloat");
   float_value = *(float*) &value;
 
-  ASSERT_FLOAT_EQ(1234567.8, float_value);
+  ASSERT_FLOAT_EQ(1234567.8f, float_value);
 }
 
 TEST_F(NativeFunctionDelegateInternalTest, ReverseString) {
