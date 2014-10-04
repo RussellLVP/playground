@@ -18,6 +18,8 @@
 
 #include <stdarg.h>
 
+namespace samp { class EventListener; }
+
 // The test controller allows the laucher to drive parts of the Playground plugin, making the entire
 // gamemode testable with either scenario-tests or smaller unit-tests.
 class TestController {
@@ -49,6 +51,9 @@ class TestController {
 
   // Registers a delegate to be used for all test actions.
   virtual void SetTestActionDelegate(TestActionDelegate* delegate) = 0;
+
+  // Returns the event listener in //server which will handle SA-MP's events.
+  virtual samp::EventListener* GetEventListener() = 0;
 
   // Runs all the tests which have been defined in the Playground module.
   virtual int RunTests(int* argc, char** argv) = 0;

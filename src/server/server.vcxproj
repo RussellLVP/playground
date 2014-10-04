@@ -79,6 +79,7 @@
   <ItemGroup>
     <ClInclude Include="bindings\core.h" />
     <ClInclude Include="bindings\datagram.h" />
+    <ClInclude Include="bindings\event_listener.h" />
     <ClInclude Include="bindings\file.h" />
     <ClInclude Include="bindings\float.h" />
     <ClInclude Include="bindings\http.h" />

@@ -39,7 +39,8 @@ class PlayerManager final : public EntityManager<Player>,
   virtual int GetCount() const override;
 
   // PlayerEventListener implementation.
-  virtual void OnPlayerConnect() override;
+  virtual void OnPlayerConnect(int player_id) override;
+  virtual void OnPlayerDisconnect(int player_id, int reason) override;
 };
 
 #endif  // PLAYGROUND_ENTITIES_PLAYER_MANAGER_H_

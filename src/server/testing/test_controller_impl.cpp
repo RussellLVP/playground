@@ -17,6 +17,7 @@
 
 #include "base/logging.h"
 #include "gtest/gtest.h"
+#include "server/server_interface_impl.h"
 
 namespace {
 
@@ -25,6 +26,8 @@ namespace {
 TestControllerImpl* g_test_controller_impl = nullptr;
 
 }  // namespace
+
+extern ServerInterfaceImpl* g_server_interface_impl;
 
 // Static. Declared in /server/testing/test_controller.h.
 TestController* TestController::Create() {
@@ -55,6 +58,10 @@ void TestControllerImpl::SetNativeFunctionDelegate(NativeFunctionDelegate* deleg
 
 void TestControllerImpl::SetTestActionDelegate(TestActionDelegate* delegate) {
   test_action_delegate_ = delegate;
+}
+
+samp::EventListener* TestControllerImpl::GetEventListener() {
+  return g_server_interface_impl;
 }
 
 int TestControllerImpl::RunTests(int* argc, char** argv) {

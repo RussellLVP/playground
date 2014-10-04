@@ -17,6 +17,8 @@
 
 #include <stdio.h>
 
+#include "base/logging.h"
+
 PlayerManager::PlayerManager() {}
 
 PlayerManager::~PlayerManager() {}
@@ -33,6 +35,10 @@ int PlayerManager::GetCount() const {
   return 0;
 }
 
-void PlayerManager::OnPlayerConnect() {
-  printf("A new player has connected!\n");
+void PlayerManager::OnPlayerConnect(int player_id) {
+  LOG(INFO) << "Player " << player_id << " has connected.";
+}
+
+void PlayerManager::OnPlayerDisconnect(int player_id, int reason) {
+  LOG(INFO) << "Player " << player_id << " has connected.";
 }

@@ -18,12 +18,14 @@
 
 #include <list>
 
+#include "server/bindings/event_listener.h"
 #include "server/native_callback_interceptor.h"
 #include "server/native_function_manager.h"
 #include "server/server_interface.h"
 #include "server/server_log_delegate.h"
 
-class ServerInterfaceImpl : public ServerInterface {
+class ServerInterfaceImpl : public ServerInterface,
+                            public samp::EventListener {
  public:
   explicit ServerInterfaceImpl(void** data);
   virtual ~ServerInterfaceImpl();
@@ -34,6 +36,10 @@ class ServerInterfaceImpl : public ServerInterface {
   virtual void RemoveEventListener(samp::PlayerEventListener* player_event_listener) override;
   virtual void DidLoadScript(AMX* amx) override;
   virtual void DidUnloadScript(AMX* amx) override;
+
+  // samp::EventListener implementation.
+  virtual int OnPlayerConnect(int player_id) override;
+  virtual int OnPlayerDisconnect(int player_id, int reason) override;
 
  private:
   NativeCallbackInterceptor native_callback_interceptor_;

@@ -74,3 +74,19 @@ void ServerInterfaceImpl::DidLoadScript(AMX* amx) {
 }
 
 void ServerInterfaceImpl::DidUnloadScript(AMX* amx) {}
+
+// -------------------------------------------------------------------------------------------------
+
+int ServerInterfaceImpl::OnPlayerConnect(int player_id) {
+  for (auto& listener : player_event_listeners_)
+    listener->OnPlayerConnect(player_id);
+
+  return 1;
+}
+
+int ServerInterfaceImpl::OnPlayerDisconnect(int player_id, int reason) {
+  for (auto& listener : player_event_listeners_)
+    listener->OnPlayerDisconnect(player_id, reason);
+
+  return 1;
+}

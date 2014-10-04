@@ -40,6 +40,7 @@ class TestControllerImpl final : public TestController {
   // TestController implementation.
   virtual void SetNativeFunctionDelegate(NativeFunctionDelegate* delegate) override;
   virtual void SetTestActionDelegate(TestActionDelegate* delegate) override;
+  virtual samp::EventListener* GetEventListener() override;
   virtual int RunTests(int* argc, char** argv) override;
 
  private:
