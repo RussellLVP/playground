@@ -24,8 +24,6 @@
 
 #include "base/logging.h"
 
-class NativeFunctionDelegateImpl;
-
 namespace internal {
 
 template<class T, int... Is>
@@ -90,28 +88,29 @@ private:
 
 }  // namespace internal
 
+template <class Provider>
 class NativeFunctionBase {
  public:
   virtual ~NativeFunctionBase() {}
-  virtual int Invoke(NativeFunctionDelegateImpl* instance, va_list arguments) const = 0;
+  virtual int Invoke(Provider* instance, va_list arguments) const = 0;
 };
 
-template<typename... Arguments>
-class NativeFunction : public NativeFunctionBase {
- typedef int(NativeFunctionDelegateImpl::*FunctionType)(Arguments...);
+template<class Provider, typename... Arguments>
+class NativeFunction : public NativeFunctionBase<Provider> {
+ typedef int(Provider::*FunctionType)(Arguments...);
 
  public:
   NativeFunction(FunctionType method)
       : method_(method) {}
 
   virtual ~NativeFunction() override {}
-  virtual int Invoke(NativeFunctionDelegateImpl* instance, va_list argument_list) const override {
+  virtual int Invoke(Provider* instance, va_list argument_list) const override {
     return InvokeImpl(instance, argument_list, internal::make_integer_sequence<unsigned int, sizeof...(Arguments)>());
   }
 
  private:
   template <unsigned int... Indices>
-  int InvokeImpl(NativeFunctionDelegateImpl* instance, va_list argument_list, internal::integer_sequence<unsigned int, Indices...> sequence) const {
+  int InvokeImpl(Provider* instance, va_list argument_list, internal::integer_sequence<unsigned int, Indices...>) const {
     internal::ArgumentForwarder<Arguments...> forwarder(argument_list);
     std::vector<internal::ArgumentValue> arguments{ forwarder.ReadArgument<Indices>()... };
 

@@ -28,6 +28,7 @@
 class NativeFunctionDelegateImpl : public TestController::NativeFunctionDelegate {
  public:
   NativeFunctionDelegateImpl();
+  virtual ~NativeFunctionDelegateImpl();
 
   // TestController::NativeFunctionDelegate implementation.
   virtual int Invoke(const char* name, va_list arguments) override;
@@ -46,7 +47,8 @@ class NativeFunctionDelegateImpl : public TestController::NativeFunctionDelegate
   int SetWeather(int weather_id);
 
  private:
-  std::map<std::string, std::unique_ptr<NativeFunctionBase>> registered_natives_;
+  std::map<std::string, std::unique_ptr<NativeFunctionBase<NativeFunctionDelegateImpl>>>
+      registered_natives_;
 
   int current_weather_;
 };

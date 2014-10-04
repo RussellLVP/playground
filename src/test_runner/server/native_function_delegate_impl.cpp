@@ -23,12 +23,14 @@ NativeFunctionDelegateImpl::NativeFunctionDelegateImpl()
   ProvideNative("SetWeather", &NativeFunctionDelegateImpl::SetWeather);
 }
 
+NativeFunctionDelegateImpl::~NativeFunctionDelegateImpl() {}
+
 // -------------------------------------------------------------------------------------------------
 
 template<typename ...Arguments>
 void NativeFunctionDelegateImpl::ProvideNative(
     const std::string& name, int(NativeFunctionDelegateImpl::*method)(Arguments...)) {
-  registered_natives_[name] = std::make_unique<NativeFunction<Arguments...>>(method);
+  registered_natives_[name] = std::make_unique<NativeFunction<NativeFunctionDelegateImpl, Arguments...>>(method);
 }
 
 int NativeFunctionDelegateImpl::Invoke(const char* name, va_list arguments) {

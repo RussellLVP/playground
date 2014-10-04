@@ -26,6 +26,8 @@ class TestController {
   // new instance. This method is implemented in test_controller_impl.cpp.
   static TestController* Create();
 
+  virtual ~TestController() {}
+
   // Can be injected using SetNativeFunctionDelegate to forward all Pawn native function invocations
   // to the given method, instead of dispatching them on the AMX runtime. When registered, we will
   // never hit AMX runtime in NativeFunctionManager::Invoke.
