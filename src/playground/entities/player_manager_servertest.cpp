@@ -15,8 +15,38 @@
 
 #include "server/testing/server_test.h"
 
-class PlayerManagerServerTest : public ServerTest {};
+#include "playground/entities/player.h"
+#include "playground/entities/player_manager.h"
+#include "playground/playground.h"
 
-TEST_F(PlayerManagerServerTest, MustSucceed) {
-  ASSERT_EQ(0, 1);
+extern Playground* g_playground;
+
+namespace {
+
+class PlayerManagerServerTest : public ServerTest {
+ protected:
+  PlayerManager* player_manager() const {
+    return g_playground->player_manager();
+  }
+};
+
+}  // namespace
+
+TEST_F(PlayerManagerServerTest, SimpleConnectDisconnect) {
+  EXPECT_EQ(0, player_manager()->GetCount());
+
+  int player_id = ConnectPlayer("CJ");
+  ASSERT_EQ(1, player_manager()->GetCount());
+
+  Player* player = player_manager()->Get(player_id);
+  ASSERT_TRUE(player != nullptr);
+
+  EXPECT_EQ(player_id, player->id());
+  EXPECT_EQ("CJ", player->name());
+
+  Player* player2 = player_manager()->Get("CJ");
+  EXPECT_EQ(player, player2);
+
+  DisconnectPlayer(player_id);
+  ASSERT_EQ(0, player_manager()->GetCount());
 }

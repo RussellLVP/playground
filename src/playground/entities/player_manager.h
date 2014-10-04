@@ -16,13 +16,27 @@
 #ifndef PLAYGROUND_ENTITIES_PLAYER_MANAGER_H_
 #define PLAYGROUND_ENTITIES_PLAYER_MANAGER_H_
 
+#include <string>
+
+#include "playground/entities/entity_manager.h"
 #include "server/listeners/player_event_listener.h"
+
+class Player;
 
 // The Player manager keeps track of all the players which are connected to Las Venturas Playground,
 // and receives and delegates events related to them. It provides methods to query the players.
-class PlayerManager : public samp::PlayerEventListener {
+class PlayerManager final : public EntityManager<Player>,
+                            public samp::PlayerEventListener {
  public:
   PlayerManager();
+  virtual ~PlayerManager();
+
+  // Returns the connected player identified by |name|. May return a nullptr if they're not online.
+  Player* Get(const std::string& name);
+
+  // EntityManager implementation.
+  virtual Player* Get(int player_id) override;
+  virtual int GetCount() const override;
 
   // PlayerEventListener implementation.
   virtual void OnPlayerConnect() override;

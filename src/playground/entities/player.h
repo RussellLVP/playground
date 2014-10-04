@@ -13,26 +13,27 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "playground/entities/player_manager.h"
+#ifndef PLAYGROUND_ENTITIES_PLAYER_H_
+#define PLAYGROUND_ENTITIES_PLAYER_H_
 
-#include <stdio.h>
+#include <string>
 
-PlayerManager::PlayerManager() {}
+#include "playground/entities/entity.h"
 
-PlayerManager::~PlayerManager() {}
+class Player final : public Entity {
+ public:
+  explicit Player(int player_id);
+  virtual ~Player();
 
-Player* PlayerManager::Get(const std::string& name) {
-  return nullptr;
-}
+  // Returns the nickname this player has connecting with.
+  const std::string& name() const;
 
-Player* PlayerManager::Get(int player_id) {
-  return nullptr;
-}
+  // Entity implementation.
+  virtual int id() const override;
 
-int PlayerManager::GetCount() const {
-  return 0;
-}
+ private:
+  int player_id_;
+  std::string name_;
+};
 
-void PlayerManager::OnPlayerConnect() {
-  printf("A new player has connected!\n");
-}
+#endif  // PLAYGROUND_ENTITIES_PLAYER_H_

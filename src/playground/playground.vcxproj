@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="entities\player.cpp" />
     <ClCompile Include="entities\player_manager.cpp" />
     <ClCompile Include="entities\player_manager_servertest.cpp" />
     <ClCompile Include="playground.cpp" />
@@ -20,6 +21,9 @@
     <None Include="plugin.def" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="entities\entity.h" />
+    <ClInclude Include="entities\entity_manager.h" />
+    <ClInclude Include="entities\player.h" />
     <ClInclude Include="entities\player_manager.h" />
     <ClInclude Include="playground.h" />
   </ItemGroup>

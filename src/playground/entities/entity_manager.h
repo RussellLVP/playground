@@ -13,26 +13,21 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "playground/entities/player_manager.h"
+#ifndef PLAYGROUND_ENTITIES_ENTITY_MANAGER_H_
+#define PLAYGROUND_ENTITIES_ENTITY_MANAGER_H_
 
-#include <stdio.h>
+// Interface which each entity manager should implement. This ensures that a consistent interface
+// will be provided for each type of interface available on the server.
+template <class EntityType>
+class EntityManager {
+ public:
+  virtual ~EntityManager() {}
 
-PlayerManager::PlayerManager() {}
+  // Returns a pointer to the entity identified by |entity_id|. May return a nullptr.
+  virtual EntityType* Get(int entity_id) = 0;
 
-PlayerManager::~PlayerManager() {}
+  // Returns the number of active entities of this type connected to the server.
+  virtual int GetCount() const = 0;
+};
 
-Player* PlayerManager::Get(const std::string& name) {
-  return nullptr;
-}
-
-Player* PlayerManager::Get(int player_id) {
-  return nullptr;
-}
-
-int PlayerManager::GetCount() const {
-  return 0;
-}
-
-void PlayerManager::OnPlayerConnect() {
-  printf("A new player has connected!\n");
-}
+#endif  // PLAYGROUND_ENTITIES_ENTITY_MANAGER_H_

@@ -36,6 +36,15 @@ extern ServerInterfaceImpl* g_server_interface_impl;
 
 ServerTest::~ServerTest() {}
 
+int ServerTest::ConnectPlayer(const char* nickname, const char* ip_address) {
+  // TODO(Russell): Implement this method.
+  return 0;
+}
+
+void ServerTest::DisconnectPlayer(int player_id) {
+  // TODO(Russell): Implement this method.
+}
+
 void ServerTest::SetUp() {
   CHECK(!g_server_interface_impl);
   Load(g_load_data);

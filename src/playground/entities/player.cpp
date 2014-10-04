@@ -13,26 +13,18 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "playground/entities/player_manager.h"
+#include "playground/entities/player.h"
 
-#include <stdio.h>
-
-PlayerManager::PlayerManager() {}
-
-PlayerManager::~PlayerManager() {}
-
-Player* PlayerManager::Get(const std::string& name) {
-  return nullptr;
+Player::Player(int player_id)
+    : player_id_(player_id) {
 }
 
-Player* PlayerManager::Get(int player_id) {
-  return nullptr;
+Player::~Player() {}
+
+const std::string& Player::name() const {
+  return name_;
 }
 
-int PlayerManager::GetCount() const {
-  return 0;
-}
-
-void PlayerManager::OnPlayerConnect() {
-  printf("A new player has connected!\n");
+int Player::id() const {
+  return player_id_;
 }

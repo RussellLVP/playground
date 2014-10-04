@@ -13,26 +13,17 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "playground/entities/player_manager.h"
+#ifndef PLAYGROUND_ENTITIES_ENTITY_H_
+#define PLAYGROUND_ENTITIES_ENTITY_H_
 
-#include <stdio.h>
+// Interface which each entity should implement, to ensure that common accessors between different
+// types of entities are consistent.
+class Entity {
+ public:
+  virtual ~Entity() {}
 
-PlayerManager::PlayerManager() {}
+  // Returns the unique Id (among the type) this entity can be identified by.
+  virtual int id() const = 0;
+};
 
-PlayerManager::~PlayerManager() {}
-
-Player* PlayerManager::Get(const std::string& name) {
-  return nullptr;
-}
-
-Player* PlayerManager::Get(int player_id) {
-  return nullptr;
-}
-
-int PlayerManager::GetCount() const {
-  return 0;
-}
-
-void PlayerManager::OnPlayerConnect() {
-  printf("A new player has connected!\n");
-}
+#endif  // PLAYGROUND_ENTITIES_ENTITY_H_

@@ -25,6 +25,12 @@ class ServerTest : public ::testing::Test {
  protected:
   virtual ~ServerTest();
 
+  // Connects a new player named |nickname| from |ip_address|. Their Id will be returned.
+  int ConnectPlayer(const char* nickname, const char* ip_address = nullptr);
+
+  // Disconnects |player_id| from the server.
+  void DisconnectPlayer(int player_id);
+
   // The SetUp method will be called before a test runs, whereas the TearDown method will be called
   // after the test. They control the lifetime of the server environment for the test.
   virtual void SetUp() override;
