@@ -125,6 +125,7 @@
     <ClCompile Include="native_function_manager.cpp" />
     <ClCompile Include="sdk\amxplugin.cpp" />
     <ClCompile Include="server_interface_impl.cpp" />
+    <ClCompile Include="testing\server_test.cpp" />
     <ClCompile Include="testing\test_controller_impl.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

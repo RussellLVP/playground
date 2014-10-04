@@ -35,6 +35,8 @@ class ServerInterface {
   // set to whatever the SA-MP server gives us as part of loading the plugin.
   static ServerInterface* Create(void** data);
 
+  virtual ~ServerInterface() {}
+
   // Provides a native called |name| to each of the AMX files which will be loaded in the server.
   virtual void ProvideNativeFunction(const std::string& name, const NativeFunction& implementation) = 0;
 

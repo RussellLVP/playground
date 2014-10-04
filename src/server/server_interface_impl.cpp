@@ -29,15 +29,22 @@ ServerInterface* ServerInterface::Create(void** data) {
 
 // -------------------------------------------------------------------------------------------------
 
+ServerInterfaceImpl* g_server_interface_impl = nullptr;
+
 ServerInterfaceImpl::ServerInterfaceImpl(void** data)
     : native_callback_interceptor_(data[PLUGIN_DATA_AMX_EXPORTS]),
       log_delegate_(static_cast<logprintf_t>(data[PLUGIN_DATA_LOGPRINTF])) {
+  CHECK(!g_server_interface_impl);
+
   pAMXFunctions = data[PLUGIN_DATA_AMX_EXPORTS];
 
   native_callback_interceptor_.RegisterNatives(this);
+  g_server_interface_impl = this;
 }
 
-ServerInterfaceImpl::~ServerInterfaceImpl() {}
+ServerInterfaceImpl::~ServerInterfaceImpl() {
+  g_server_interface_impl = nullptr;
+}
 
 // -------------------------------------------------------------------------------------------------
 

@@ -18,9 +18,17 @@
 
 #include "gtest/gtest.h"
 
-// 
+// Server tests are large tests which will have an entirely new server environment set up for them.
+// Put in different words, the server will be empty, with no players or entities. Tests may rely on
+// certain SA-MP native functions being available (even though there is no SA-MP server).
 class ServerTest : public ::testing::Test {
+ protected:
+  virtual ~ServerTest();
 
+  // The SetUp method will be called before a test runs, whereas the TearDown method will be called
+  // after the test. They control the lifetime of the server environment for the test.
+  virtual void SetUp() override;
+  virtual void TearDown() override;
 };
 
 #endif  // SERVER_TESTING_SERVER_TEST_H_
