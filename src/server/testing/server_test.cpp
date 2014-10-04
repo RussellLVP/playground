@@ -43,6 +43,7 @@ TestController::TestActionDelegate& GetTestActionDelegate() {
 
 }  // namespace
 
+extern Playground* g_playground;
 extern ServerInterfaceImpl* g_server_interface_impl;
 
 ServerTest::~ServerTest() {}
@@ -53,6 +54,10 @@ int ServerTest::ConnectPlayer(const std::string& nickname, const std::string& ip
 
 void ServerTest::DisconnectPlayer(int player_id) {
   GetTestActionDelegate().DisconnectPlayer(player_id);
+}
+
+Playground* ServerTest::playground() const {
+  return g_playground;
 }
 
 void ServerTest::SetUp() {

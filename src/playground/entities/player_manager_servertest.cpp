@@ -24,7 +24,7 @@ namespace {
 class PlayerManagerServerTest : public ServerTest {
  protected:
   PlayerManager* player_manager() const {
-    return g_playground->player_manager();
+    return playground()->player_manager();
   }
 };
 
