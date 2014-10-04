@@ -41,4 +41,8 @@ private:
   PlayerManager player_manager_;
 };
 
+// Stores the instance of the active Playground instance. There will be at most one instance at a
+// time, as is curated by the Playground constructor and destructor. May be a nullptr.
+extern Playground* g_playground;
+
 #endif  // PLAYGROUND_PLAYGROUND_H_

@@ -19,8 +19,6 @@
 #include "playground/entities/player_manager.h"
 #include "playground/playground.h"
 
-extern Playground* g_playground;
-
 namespace {
 
 class PlayerManagerServerTest : public ServerTest {
