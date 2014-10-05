@@ -16,6 +16,7 @@
 #ifndef PLAYGROUND_PLAYGROUND_H_
 #define PLAYGROUND_PLAYGROUND_H_
 
+#include "base/macros.h"
 #include "playground/entities/player_manager.h"
 
 class ServerInterface;
@@ -37,8 +38,11 @@ private:
   // Weak pointer which' lifetime is controlled by the plugin runtime.
   ServerInterface* server_interface_;
 
-  // 
+  // The entity managers owned by the server. Las Venturas Playground keeps track of entities by
+  // itself, without relying on calling SA-MP natives for every bit of data.
   PlayerManager player_manager_;
+
+  DISALLOW_COPY_AND_ASSIGN(Playground);
 };
 
 #endif  // PLAYGROUND_PLAYGROUND_H_

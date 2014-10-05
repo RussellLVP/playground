@@ -20,6 +20,7 @@
 #include <memory>
 #include <string>
 
+#include "base/macros.h"
 #include "playground/entities/entity_manager.h"
 #include "server/listeners/player_event_listener.h"
 
@@ -49,6 +50,8 @@ class PlayerManager final : public EntityManager<Player>,
 
  private:
   std::map<int, std::unique_ptr<Player>> players_;
+
+  DISALLOW_COPY_AND_ASSIGN(PlayerManager);
 };
 
 #endif  // PLAYGROUND_ENTITIES_PLAYER_MANAGER_H_
