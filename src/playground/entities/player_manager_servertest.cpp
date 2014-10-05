@@ -23,7 +23,7 @@ namespace {
 
 class PlayerManagerServerTest : public ServerTest {
  protected:
-  PlayerManager* player_manager() const {
+  PlayerManager& player_manager() const {
     return playground()->player_manager();
   }
 };
@@ -31,21 +31,48 @@ class PlayerManagerServerTest : public ServerTest {
 }  // namespace
 
 TEST_F(PlayerManagerServerTest, SimpleConnectDisconnect) {
-  EXPECT_EQ(0, player_manager()->GetCount());
+  EXPECT_EQ(0, player_manager().size());
 
   int player_id = ConnectPlayer("CJ");
-  ASSERT_EQ(1, player_manager()->GetCount());
+  ASSERT_EQ(1, player_manager().size());
 
-  Player* player = player_manager()->Get(player_id);
+  Player* player = player_manager().Get(player_id);
   ASSERT_TRUE(player != nullptr);
 
   EXPECT_EQ(player_id, player->id());
   EXPECT_EQ("CJ", player->name());
   EXPECT_EQ("127.0.0.1", player->ip_address());
 
-  Player* player2 = player_manager()->Get("CJ");
+  Player* player2 = player_manager().Get("CJ");
   EXPECT_EQ(player, player2);
 
   DisconnectPlayer(player_id);
-  ASSERT_EQ(0, player_manager()->GetCount());
+  ASSERT_EQ(0, player_manager().size());
+}
+
+TEST_F(PlayerManagerServerTest, Iterator) {
+  EXPECT_EQ(0, player_manager().size());
+
+  ConnectPlayer("CJ");
+  ConnectPlayer("Big_Smoke");
+
+  ASSERT_EQ(2, player_manager().size());
+
+  int count = 0, checks = 0;
+  for (const auto& player : player_manager()) {
+    EXPECT_TRUE(player.id() == 0 ||
+                player.id() == 1);
+    ++count;
+  }
+
+  EXPECT_EQ(count, 2);
+  count = 0;
+
+  for (auto& player : player_manager()) {
+    EXPECT_TRUE(player.id() == 0 ||
+                player.id() == 1);
+    ++count;
+  }
+
+  EXPECT_EQ(count, 2);
 }

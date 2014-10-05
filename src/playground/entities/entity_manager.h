@@ -16,6 +16,33 @@
 #ifndef PLAYGROUND_ENTITIES_ENTITY_MANAGER_H_
 #define PLAYGROUND_ENTITIES_ENTITY_MANAGER_H_
 
+#include <iterator>
+#include <map>
+#include <memory>
+
+// Iterator which powers iteration over the entities owned by an EntityManager. Since the storage
+// type for each entity is defined to be an std::map, this iterator only returns the value.
+template <class EntityType>
+class EntityIterator : public std::iterator<std::input_iterator_tag, EntityType> {
+  typedef typename std::map<int, std::unique_ptr<EntityType>>::iterator StorageIterator;
+
+ public:
+  EntityIterator(StorageIterator iter)
+      : iter_(iter) {}
+
+  // std::input_iterator_tag implementation.
+  reference operator*() const { return *(iter_->second.get()); }
+  pointer operator->() const { return iter_->second.get(); }
+
+  EntityIterator<EntityType>& operator++() { ++iter_; return *this; }
+  bool operator!=(EntityIterator<EntityType> const& other) {
+    return iter_ != other.iter_;
+  }
+
+ private:
+  StorageIterator iter_;
+};
+
 // Interface which each entity manager should implement. This ensures that a consistent interface
 // will be provided for each type of interface available on the server.
 template <class EntityType>
@@ -27,7 +54,14 @@ class EntityManager {
   virtual EntityType* Get(int entity_id) = 0;
 
   // Returns the number of active entities of this type connected to the server.
-  virtual int GetCount() const = 0;
+  virtual int size() const = 0;
+
+  typedef typename EntityIterator<EntityType> iterator;
+
+  // Allows consumers of one of the managers to iterate over the entities owned by it. The players
+  // will be ordered by their player Id in the iteration.
+  virtual iterator begin() = 0;
+  virtual iterator end() = 0;
 };
 
 #endif  // PLAYGROUND_ENTITIES_ENTITY_MANAGER_H_

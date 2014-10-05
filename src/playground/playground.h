@@ -30,8 +30,8 @@ class Playground {
   // Called when the server's main thread has finished its event loop.
   void ProcessTick();
 
-  // Returns weak references to the managers owned by this class.
-  PlayerManager* player_manager() { return &player_manager_; }
+  // Returns a references to the managers owned by this class.
+  PlayerManager& player_manager() { return player_manager_; }
 
 private:
   // Weak pointer which' lifetime is controlled by the plugin runtime.

@@ -13,35 +13,13 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PLAYGROUND_ENTITIES_PLAYER_H_
-#define PLAYGROUND_ENTITIES_PLAYER_H_
+#ifndef BASE_MACROS_H_
+#define BASE_MACROS_H_
 
-#include <string>
+// Disallows both the copy constructor and the assignment operator.
+#define DISALLOW_COPY_AND_ASSIGN(Type) \
+ private: \
+  Type(const Type&) = delete; \
+  void operator=(const Type&) = delete;
 
-#include "base/macros.h"
-#include "playground/entities/entity.h"
-
-class Player final : public Entity {
- public:
-  explicit Player(int player_id);
-  virtual ~Player();
-
-  // Returns the nickname this player has connecting with.
-  const std::string& name() const;
-
-  // Returns the IP address which the player is connecting with.
-  const std::string& ip_address() const;
-
-  // Entity implementation.
-  virtual int id() const override;
-
- private:
-  int player_id_;
-
-  std::string name_;
-  std::string ip_address_;
-
-  DISALLOW_COPY_AND_ASSIGN(Player);
-};
-
-#endif  // PLAYGROUND_ENTITIES_PLAYER_H_
+#endif  // BASE_MACROS_H_

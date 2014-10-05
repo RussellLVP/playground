@@ -38,7 +38,9 @@ class PlayerManager final : public EntityManager<Player>,
 
   // EntityManager implementation.
   virtual Player* Get(int player_id) override;
-  virtual int GetCount() const override;
+  virtual int size() const override;
+  virtual iterator begin() override { return iterator(players_.begin()); }
+  virtual iterator end() override { return iterator(players_.end()); }
 
  private:
   // PlayerEventListener implementation.

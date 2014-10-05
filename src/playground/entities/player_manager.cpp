@@ -41,7 +41,7 @@ Player* PlayerManager::Get(int player_id) {
   return iterator->second.get();
 }
 
-int PlayerManager::GetCount() const {
+int PlayerManager::size() const {
   return players_.size();
 }
 
