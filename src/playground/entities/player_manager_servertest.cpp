@@ -30,7 +30,7 @@ class PlayerManagerServerTest : public ServerTest {
 
 }  // namespace
 
-TEST_F(PlayerManagerServerTest, SimpleConnectDisconnect) {
+TEST_F(PlayerManagerServerTest, ConnectDisconnect) {
   EXPECT_EQ(0, player_manager().size());
 
   int player_id = ConnectPlayer("CJ");
