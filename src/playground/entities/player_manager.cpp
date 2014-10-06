@@ -24,6 +24,19 @@ PlayerManager::PlayerManager() {}
 
 PlayerManager::~PlayerManager() {}
 
+bool PlayerManager::IsConnected(int player_id) const {
+  return players_.find(player_id) != players_.end();
+}
+
+bool PlayerManager::IsConnected(const std::string& name) const {
+  for (auto& player : players_) {
+    if (name == player.second->name())
+      return true;
+  }
+
+  return false;
+}
+
 Player* PlayerManager::Get(const std::string& name) {
   for (auto& player : players_) {
     if (name == player.second->name())

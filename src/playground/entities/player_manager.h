@@ -34,6 +34,10 @@ class PlayerManager final : public EntityManager<Player>,
   PlayerManager();
   virtual ~PlayerManager();
 
+  // Returns whether the player with Id |player_id| or name |name| is connected to the server.
+  bool IsConnected(int player_id) const;
+  bool IsConnected(const std::string& name) const;
+
   // Returns the connected player identified by |name|. May return a nullptr if they're not online.
   Player* Get(const std::string& name);
 

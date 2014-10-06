@@ -34,7 +34,10 @@ TEST_F(PlayerManagerServerTest, ConnectDisconnect) {
   EXPECT_EQ(0, player_manager().size());
 
   int player_id = ConnectPlayer("CJ");
-  ASSERT_EQ(1, player_manager().size());
+  EXPECT_EQ(1, player_manager().size());
+
+  EXPECT_TRUE(player_manager().IsConnected(player_id));
+  EXPECT_TRUE(player_manager().IsConnected("CJ"));
 
   Player* player = player_manager().Get(player_id);
   ASSERT_TRUE(player != nullptr);
@@ -47,21 +50,23 @@ TEST_F(PlayerManagerServerTest, ConnectDisconnect) {
   EXPECT_EQ(player, player2);
 
   DisconnectPlayer(player_id);
-  ASSERT_EQ(0, player_manager().size());
+  EXPECT_EQ(0, player_manager().size());
 }
 
 TEST_F(PlayerManagerServerTest, Iterator) {
   EXPECT_EQ(0, player_manager().size());
 
-  ConnectPlayer("CJ");
-  ConnectPlayer("Big_Smoke");
+  int cj_id = ConnectPlayer("CJ");
+  int big_smoke_id = ConnectPlayer("Big_Smoke");
 
-  ASSERT_EQ(2, player_manager().size());
+  EXPECT_EQ(2, player_manager().size());
+  EXPECT_TRUE(player_manager().IsConnected("CJ"));
+  EXPECT_TRUE(player_manager().IsConnected("Big_Smoke"));
 
   int count = 0, checks = 0;
   for (const auto& player : player_manager()) {
-    EXPECT_TRUE(player.id() == 0 ||
-                player.id() == 1);
+    EXPECT_TRUE(player.id() == cj_id ||
+                player.id() == big_smoke_id);
     ++count;
   }
 
@@ -69,8 +74,8 @@ TEST_F(PlayerManagerServerTest, Iterator) {
   count = 0;
 
   for (auto& player : player_manager()) {
-    EXPECT_TRUE(player.id() == 0 ||
-                player.id() == 1);
+    EXPECT_TRUE(player.id() == cj_id ||
+                player.id() == big_smoke_id);
     ++count;
   }
 
