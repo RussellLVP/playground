@@ -36,6 +36,26 @@ const std::string& Player::ip_address() const {
   return ip_address_;
 }
 
+double Player::GetHealth() const {
+  double health = 0.0;
+  samp::GetPlayerHealth(player_id_, &health);
+  return health;
+}
+
+void Player::SetHealth(double health) {
+  samp::SetPlayerHealth(player_id_, health);
+}
+
+double Player::GetArmour() const {
+  double armour = 0.0;
+  samp::GetPlayerArmour(player_id_, &armour);
+  return armour;
+}
+
+void Player::SetArmour(double armour) {
+  samp::SetPlayerArmour(player_id_, armour);
+}
+
 int Player::id() const {
   return player_id_;
 }

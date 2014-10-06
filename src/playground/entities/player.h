@@ -21,6 +21,8 @@
 #include "base/macros.h"
 #include "playground/entities/entity.h"
 
+// Each player connected to Las Venturas Playground, both human and NPC, will be represented by a
+// Player object. This class allows convenient interaction with their state and settings.
 class Player final : public Entity {
  public:
   explicit Player(int player_id);
@@ -31,6 +33,20 @@ class Player final : public Entity {
 
   // Returns the IP address which the player is connecting with.
   const std::string& ip_address() const;
+
+  // Returns the health of this player. The value will be in the range of [0, 255].
+  double GetHealth() const;
+
+  // Setting the health to zero or lower will kill the player. Health in the range of [1, 100] will
+  // be reflected on their health bar. Values above 98303 will make their health bar flash.
+  void SetHealth(double health);
+
+  // Returns the armour of this player. The value will be in the range of [0, 100].
+  double GetArmour() const;
+
+  // Sets the armour this player has. Values between [0, 100] will be reflected in their armour bar,
+  // whereas values above 100 don't have special visual behavior.
+  void SetArmour(double armour);
 
   // Entity implementation.
   virtual int id() const override;
