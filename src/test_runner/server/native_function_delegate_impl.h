@@ -49,8 +49,18 @@ class NativeFunctionDelegateImpl : public TestController::NativeFunctionDelegate
   int SetWeather(int weather_id);
 
   // a_players.inc
+  int SetPlayerPos(int player_id, double x, double y, double z);
+  int GetPlayerPos(int player_id, double* x, double* y, double* z);
+  int SetPlayerInterior(int player_id, int interior_id);
+  int GetPlayerInterior(int player_id);
+  int SetPlayerHealth(int player_id, double health);
+  int GetPlayerHealth(int player_id, double* health);
+  int SetPlayerArmour(int player_id, double armour);
+  int GetPlayerArmour(int player_id, double* armour);
   int GetPlayerName(int player_id, std::string* name, int length);
   int GetPlayerIp(int player_id, std::string* ip_address, int length);
+  int SetPlayerVirtualWorld(int player_id, int world_id);
+  int GetPlayerVirtualWorld(int player_id);
 
  private:
   ServerController* server_controller_;

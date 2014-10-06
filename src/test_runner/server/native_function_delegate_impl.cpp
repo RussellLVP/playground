@@ -25,8 +25,18 @@ NativeFunctionDelegateImpl::NativeFunctionDelegateImpl(ServerController* server_
   ProvideNative("GetWeather", &NativeFunctionDelegateImpl::GetWeather);
   ProvideNative("SetWeather", &NativeFunctionDelegateImpl::SetWeather);
 
+  ProvideNative("SetPlayerPos", &NativeFunctionDelegateImpl::SetPlayerPos);
+  ProvideNative("GetPlayerPos", &NativeFunctionDelegateImpl::GetPlayerPos);
+  ProvideNative("SetPlayerInterior", &NativeFunctionDelegateImpl::SetPlayerInterior);
+  ProvideNative("GetPlayerInterior", &NativeFunctionDelegateImpl::GetPlayerInterior);
+  ProvideNative("SetPlayerHealth", &NativeFunctionDelegateImpl::SetPlayerHealth);
+  ProvideNative("GetPlayerHealth", &NativeFunctionDelegateImpl::GetPlayerHealth);
+  ProvideNative("SetPlayerArmour", &NativeFunctionDelegateImpl::SetPlayerArmour);
+  ProvideNative("GetPlayerArmour", &NativeFunctionDelegateImpl::GetPlayerArmour);
   ProvideNative("GetPlayerName", &NativeFunctionDelegateImpl::GetPlayerName);
   ProvideNative("GetPlayerIp", &NativeFunctionDelegateImpl::GetPlayerIp);
+  ProvideNative("SetPlayerVirtualWorld", &NativeFunctionDelegateImpl::SetPlayerVirtualWorld);
+  ProvideNative("GetPlayerVirtualWorld", &NativeFunctionDelegateImpl::GetPlayerVirtualWorld);
 }
 
 NativeFunctionDelegateImpl::~NativeFunctionDelegateImpl() {}
@@ -62,20 +72,91 @@ int NativeFunctionDelegateImpl::SetWeather(int weather_id) {
 
 // -------------------------------------------------------------------------------------------------
 
+#define GET_PLAYER_OR_RETURN(player, player_id) \
+  Player* player = server_controller_->player_manager().Get(player_id); \
+  if (player == nullptr) return 0;
+
+int NativeFunctionDelegateImpl::SetPlayerPos(int player_id, double x, double y, double z) {
+  GET_PLAYER_OR_RETURN(player, player_id);
+
+  player->position = Vector3D(x, y, z);
+  return 0;
+}
+
+int NativeFunctionDelegateImpl::GetPlayerPos(int player_id, double* x, double* y, double* z) {
+  GET_PLAYER_OR_RETURN(player, player_id);
+  CHECK(x && y && z);
+
+  *x = player->position.x;
+  *y = player->position.y;
+  *z = player->position.z;
+  return 1;
+}
+
+int NativeFunctionDelegateImpl::SetPlayerInterior(int player_id, int interior_id) {
+  GET_PLAYER_OR_RETURN(player, player_id);
+
+  player->interior_id = interior_id;
+  return 0;
+}
+
+int NativeFunctionDelegateImpl::GetPlayerInterior(int player_id) {
+  GET_PLAYER_OR_RETURN(player, player_id);
+
+  return player->interior_id;
+}
+
+int NativeFunctionDelegateImpl::SetPlayerHealth(int player_id, double health) {
+  GET_PLAYER_OR_RETURN(player, player_id);
+
+  player->health = health;
+  return 0;
+}
+
+int NativeFunctionDelegateImpl::GetPlayerHealth(int player_id, double* health) {
+  GET_PLAYER_OR_RETURN(player, player_id);
+
+  *health = player->health;
+  return 1;
+}
+
+int NativeFunctionDelegateImpl::SetPlayerArmour(int player_id, double armour) {
+  GET_PLAYER_OR_RETURN(player, player_id);
+
+  player->armour = armour;
+  return 0;
+}
+
+int NativeFunctionDelegateImpl::GetPlayerArmour(int player_id, double* armour) {
+  GET_PLAYER_OR_RETURN(player, player_id);
+
+  *armour = player->armour;
+  return 1;
+}
+
 int NativeFunctionDelegateImpl::GetPlayerName(int player_id, std::string* name, int length) {
-  Player* player = server_controller_->player_manager().Get(player_id);
-  if (player == nullptr)
-    return 0;
+  GET_PLAYER_OR_RETURN(player, player_id);
 
   *name = player->nickname;
   return 1;
 }
 
 int NativeFunctionDelegateImpl::GetPlayerIp(int player_id, std::string* ip_address, int length) {
-  Player* player = server_controller_->player_manager().Get(player_id);
-  if (player == nullptr)
-    return 0;
+  GET_PLAYER_OR_RETURN(player, player_id);
 
   *ip_address = player->ip_address;
   return 1;
+}
+
+int NativeFunctionDelegateImpl::SetPlayerVirtualWorld(int player_id, int world_id) {
+  GET_PLAYER_OR_RETURN(player, player_id);
+
+  player->virtual_world = world_id;
+  return 1;
+}
+
+int NativeFunctionDelegateImpl::GetPlayerVirtualWorld(int player_id) {
+  GET_PLAYER_OR_RETURN(player, player_id);
+
+  return player->virtual_world;
 }

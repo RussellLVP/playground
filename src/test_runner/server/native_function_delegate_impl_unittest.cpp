@@ -27,6 +27,7 @@ class NativeFunctionDelegateInternalTest : public ::testing::Test {
     ProvideNative("ReadInteger", &NativeFunctionDelegateInternalTest::ReadInteger);
     ProvideNative("WriteInteger", &NativeFunctionDelegateInternalTest::WriteInteger);
     ProvideNative("ReadFloat", &NativeFunctionDelegateInternalTest::ReadFloat);
+    ProvideNative("ReadFloatRef", &NativeFunctionDelegateInternalTest::ReadFloatRef);
     ProvideNative("WriteFloat", &NativeFunctionDelegateInternalTest::WriteFloat);
     ProvideNative("ReverseString", &NativeFunctionDelegateInternalTest::ReverseString);
     ProvideNative("ArgumentOrder", &NativeFunctionDelegateInternalTest::ArgumentOrder);
@@ -59,6 +60,8 @@ class NativeFunctionDelegateInternalTest : public ::testing::Test {
   int ReadFloat() { return *(int*) &float_value_; }
   int WriteFloat(double value) { float_value_ = static_cast<float>(value); return 0; }
 
+  int ReadFloatRef(double* value) { *value = static_cast<double>(float_value_); return 0; }
+
   int ReverseString(std::string* value) {
     std::reverse(value->begin(), value->end());
     return 0;
@@ -90,37 +93,43 @@ class NativeFunctionDelegateInternalTest : public ::testing::Test {
 }  // namespace
 
 TEST_F(NativeFunctionDelegateInternalTest, ReadWriteInteger) {
-  ASSERT_EQ(0, Call("ReadInteger"));
+  EXPECT_EQ(0, Call("ReadInteger"));
   Call("WriteInteger", 123456789);
-  ASSERT_EQ(123456789, Call("ReadInteger"));
+  EXPECT_EQ(123456789, Call("ReadInteger"));
 }
 
 TEST_F(NativeFunctionDelegateInternalTest, ReadWriteFloat) {
   int value = Call("ReadFloat");
   float float_value = *(float*) &value;
 
-  ASSERT_FLOAT_EQ(0.0, float_value);
+  EXPECT_FLOAT_EQ(0.0, float_value);
 
   Call("WriteFloat", 1234567.8f);
 
   value = Call("ReadFloat");
   float_value = *(float*) &value;
 
-  ASSERT_FLOAT_EQ(1234567.8f, float_value);
+  EXPECT_FLOAT_EQ(1234567.8f, float_value);
+
+  Call("WriteFloat", 654321.625);
+
+  double double_value = 0.0;
+  Call("ReadFloatRef", &double_value);
+  EXPECT_DOUBLE_EQ(654321.625, double_value);
 }
 
 TEST_F(NativeFunctionDelegateInternalTest, ReverseString) {
   std::string text = "Playground";
   Call("ReverseString", &text);
 
-  ASSERT_EQ("dnuorgyalP", text);
+  EXPECT_EQ("dnuorgyalP", text);
 }
 
 TEST_F(NativeFunctionDelegateInternalTest, ArgumentOrder) {
-  ASSERT_EQ(12345, Call("ArgumentOrder", 1, 2, 3, 4, 5));
+  EXPECT_EQ(12345, Call("ArgumentOrder", 1, 2, 3, 4, 5));
 }
 
 TEST_F(NativeFunctionDelegateInternalTest, MixedArguments) {
   std::string text = "P";
-  ASSERT_EQ(1280, Call("MixedArguments", 1, 2.0f, &text));
+  EXPECT_EQ(1280, Call("MixedArguments", 1, 2.0f, &text));
 }

@@ -20,12 +20,20 @@
 #include <memory>
 #include <string>
 
+#include "base/vector3d.h"
+
 // Represents the mocked information available for any individual player.
 struct Player {
   Player(const std::string& nickname, const std::string& ip_address);
 
   std::string nickname;
   std::string ip_address;
+
+  Vector3D position;
+  int interior_id;
+  double health;
+  double armour;
+  int virtual_world;
 };
 
 // When running tests, the player manager is the authorative source of information about which

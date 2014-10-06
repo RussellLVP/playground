@@ -14,6 +14,7 @@
     <ClCompile Include="entities\player.cpp" />
     <ClCompile Include="entities\player_manager.cpp" />
     <ClCompile Include="entities\player_manager_servertest.cpp" />
+    <ClCompile Include="entities\player_servertest.cpp" />
     <ClCompile Include="playground.cpp" />
     <ClCompile Include="plugin.cpp" />
   </ItemGroup>

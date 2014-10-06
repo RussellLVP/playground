@@ -40,6 +40,8 @@ struct ArgumentValue {
       : type_(Integer) { primitive_.i = value; }
   explicit ArgumentValue(double value)
       : type_(Double) { primitive_.d = value; }
+  explicit ArgumentValue(double* reference)
+      : type_(DoubleRef) { primitive_.D = reference; }
   explicit ArgumentValue(std::string* value)
       : type_(String) { primitive_.s = value; }
 
@@ -47,14 +49,16 @@ struct ArgumentValue {
 
   template <> static int Get(const ArgumentValue& value) { return value.primitive_.i; }
   template <> static double Get(const ArgumentValue& value) { return value.primitive_.d; }
+  template <> static double* Get(const ArgumentValue& value) { return value.primitive_.D; }
   template <> static std::string* Get(const ArgumentValue& value) { return value.primitive_.s; }
 
-  enum Type { Integer, Double, String };
+  enum Type { Integer, Double, DoubleRef, String };
   Type type_;
 
   union {
     int i;
     double d;
+    double* D;
     std::string* s;
 
   } primitive_;
