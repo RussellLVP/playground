@@ -34,6 +34,12 @@ class Player final : public Entity {
 
   // Entity implementation.
   virtual int id() const override;
+  virtual void GetPosition(Vector3D* position) const override;
+  virtual void SetPosition(const Vector3D& position) override;
+  virtual int GetInteriorId() const override;
+  virtual void SetInteriorId(int interior_id) override;
+  virtual int GetVirtualWorldId() const override;
+  virtual void SetVirtualWorldId(int virtual_world_id) override;
 
  private:
   int player_id_;

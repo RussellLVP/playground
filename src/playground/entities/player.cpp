@@ -15,6 +15,8 @@
 
 #include "playground/entities/player.h"
 
+#include "base/logging.h"
+#include "base/vector3d.h"
 #include "server/bindings/players.h"
 #include "server/bindings/samp.h"
 
@@ -36,4 +38,29 @@ const std::string& Player::ip_address() const {
 
 int Player::id() const {
   return player_id_;
+}
+
+void Player::GetPosition(Vector3D* position) const {
+  CHECK(position) << "A position vector must be supplied.";
+  samp::GetPlayerPos(player_id_, &position->x, &position->y, &position->z);
+}
+
+void Player::SetPosition(const Vector3D& position) {
+  samp::SetPlayerPos(player_id_, position.x, position.y, position.z);
+}
+
+int Player::GetInteriorId() const {
+  return samp::GetPlayerInterior(player_id_);
+}
+
+void Player::SetInteriorId(int interior_id) {
+  samp::SetPlayerInterior(player_id_, interior_id);
+}
+
+int Player::GetVirtualWorldId() const {
+  return samp::GetPlayerVirtualWorld(player_id_);
+}
+
+void Player::SetVirtualWorldId(int virtual_world_id) {
+  samp::SetPlayerVirtualWorld(player_id_, virtual_world_id);
 }

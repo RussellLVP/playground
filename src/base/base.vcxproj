@@ -80,6 +80,7 @@
   <ItemGroup>
     <ClInclude Include="logging.h" />
     <ClInclude Include="macros.h" />
+    <ClInclude Include="vector3d.h" />
     <ClInclude Include="version.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
