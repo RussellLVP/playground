@@ -24,6 +24,8 @@ PlayerManager::PlayerManager() {}
 
 PlayerManager::~PlayerManager() {}
 
+// -------------------------------------------------------------------------------------------------
+
 bool PlayerManager::IsConnected(int player_id) const {
   return players_.find(player_id) != players_.end();
 }
@@ -36,6 +38,8 @@ bool PlayerManager::IsConnected(const std::string& name) const {
 
   return false;
 }
+
+// -------------------------------------------------------------------------------------------------
 
 Player* PlayerManager::Get(const std::string& name) {
   for (auto& player : players_) {
@@ -57,6 +61,8 @@ Player* PlayerManager::Get(int player_id) {
 int PlayerManager::size() const {
   return players_.size();
 }
+
+// -------------------------------------------------------------------------------------------------
 
 void PlayerManager::OnPlayerConnect(int player_id) {
   if (Get(player_id) != nullptr) {
