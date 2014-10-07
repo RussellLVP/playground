@@ -13,21 +13,17 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef FEATURES_REACTION_TEST_REACTION_TEST_H_ 
-#define FEATURES_REACTION_TEST_REACTION_TEST_H_
+#ifndef PLAYGROUND_SERVICES_SERVICE_MACROS_H_
+#define PLAYGROUND_SERVICES_SERVICE_MACROS_H_
 
-#include <string>
+// Defines the required machinery in the service's header file required for it to work well. Right
+// now we define a the base class as a friend, allowing the constructor to be non-public.
+#define DECLARE_SERVICE(Implementation) \
+  friend class Service<Implementation>;
 
-#include "playground/services/service.h"
+// Defines service |Name| which is implemented in the |Implementation| class. This will create a
+// static initializer that will register the service with the service manager.
+#define DEFINE_SERVICE(Implementation, Name) \
+  ServiceRegistrationImpl<Implementation> registration(#Name);
 
-// The reaction test feature sends an occasional puzzle to the connected players, a valid answer to
-// which will make them some money. The puzzle can be of repetitive nature ("copy this string") or
-// of mathematical nature ("calculate (60 - 15) * 2").
-class ReactionTest : public Service<ReactionTest> {
-  DECLARE_SERVICE(ReactionTest);
-
- protected:
-  explicit ReactionTest(Playground* playground);
-};
-
-#endif  // FEATURES_REACTION_TEST_REACTION_TEST_H_
+#endif  // PLAYGROUND_SERVICES_SERVICE_MACROS_H_

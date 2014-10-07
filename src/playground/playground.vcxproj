@@ -17,6 +17,8 @@
     <ClCompile Include="entities\player_servertest.cpp" />
     <ClCompile Include="playground.cpp" />
     <ClCompile Include="plugin.cpp" />
+    <ClCompile Include="services\service.cpp" />
+    <ClCompile Include="services\service_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="plugin.def" />
@@ -28,6 +30,8 @@
     <ClInclude Include="entities\player_manager.h" />
     <ClInclude Include="playground.h" />
     <ClInclude Include="services\service.h" />
+    <ClInclude Include="services\service_macros.h" />
+    <ClInclude Include="services\service_manager.h" />
     <ClInclude Include="services\service_test.h" />
   </ItemGroup>
   <ItemGroup>

@@ -18,6 +18,7 @@
 
 #include "base/macros.h"
 #include "playground/entities/player_manager.h"
+#include "playground/services/service_manager.h"
 
 class ServerInterface;
 
@@ -31,12 +32,19 @@ class Playground {
   // Called when the server's main thread has finished its event loop.
   void ProcessTick();
 
+  // Returns the service manager. This may be used to interact with the components and features that
+  // are running as part of Las Venturas Playground.
+  ServiceManager& service_manager() { return service_manager_; }
+
   // Returns a references to the managers owned by this class.
   PlayerManager& player_manager() { return player_manager_; }
 
 private:
   // Weak pointer which' lifetime is controlled by the plugin runtime.
   ServerInterface* server_interface_;
+
+  // The service manager owns all components and features running on the server.
+  ServiceManager service_manager_;
 
   // The entity managers owned by the server. Las Venturas Playground keeps track of entities by
   // itself, without relying on calling SA-MP natives for every bit of data.

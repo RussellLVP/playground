@@ -13,12 +13,25 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "features/reaction_test/reaction_test.h"
-
 #include "playground/services/service_manager.h"
 
-DEFINE_SERVICE(ReactionTest, reaction_test);
+#include "base/logging.h"
 
-ReactionTest::ReactionTest(Playground* playground)
-    : Service<ReactionTest>(playground) {
+std::unordered_map<const char*, ServiceRegistration*> ServiceManager::s_registered_services_;
+
+// static
+void ServiceManager::RegisterService(const char* name, ServiceRegistration* registration) {
+  CHECK(s_registered_services_.find(name) == s_registered_services_.end())
+      << "Duplicate service definition found for service " << name << ".";
+
+  s_registered_services_[name] = registration;
+}
+
+void ServiceManager::Initialize(Playground* playground) {
+  for (auto& service : s_registered_services_) {
+    if (services_.find(service.first) != services_.end())
+      continue;
+
+    services_[service.first] = std::unique_ptr<ServiceBase>(service.second->Create(playground));
+  }
 }

@@ -16,12 +16,37 @@
 #ifndef PLAYGROUND_SERVICES_SERVICE_H_
 #define PLAYGROUND_SERVICES_SERVICE_H_
 
+#include "playground/services/service_macros.h"
+
+class Playground;
+template <class ServiceImpl> struct ServiceRegistrationImpl;
+
+// Base class using which services can be identified.
+class ServiceBase {
+ public:
+  virtual ~ServiceBase() {}
+};
+
 // A service is the base class of any component or feature in Las Venturas Playground. It provides
 // the necessary tools to enable dependency management, mock injection, event propagation and object
 // lifetime management. Services are owned by the ServiceManager.
 template <class ServiceImpl>
-class Service {
+class Service : public ServiceBase {
+ protected:
+  explicit Service(Playground* playground)
+      : playground_(playground) {}
+  virtual ~Service() {}
 
+private:
+  // Initializes a new instance of the Service, based on |playground| as the runtime environment for
+  // Las Venturas Playground. Must only be called by the ServiceRegistration for this service.
+  static ServiceImpl* Create(Playground* playground) {
+    return new ServiceImpl(playground);
+  }
+
+  Playground* playground_;
+
+  friend struct ServiceRegistrationImpl<ServiceImpl>;
 };
 
 #endif  // PLAYGROUND_SERVICES_SERVICE_H_

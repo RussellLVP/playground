@@ -20,6 +20,8 @@
 Playground::Playground(ServerInterface* server_interface)
     : server_interface_(server_interface) {
   server_interface_->AttachEventListener(&player_manager_);
+
+  service_manager_.Initialize(this);
 }
 
 Playground::~Playground() {}
