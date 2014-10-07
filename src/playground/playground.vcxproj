@@ -27,6 +27,8 @@
     <ClInclude Include="entities\player.h" />
     <ClInclude Include="entities\player_manager.h" />
     <ClInclude Include="playground.h" />
+    <ClInclude Include="services\service.h" />
+    <ClInclude Include="services\service_test.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\base\base.vcxproj">
@@ -34,12 +36,27 @@
     </ProjectReference>
     <ProjectReference Include="..\components\components.vcxproj">
       <Project>{1f322872-b537-427c-96a3-96fe17fe5010}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\features\features.vcxproj">
       <Project>{1c906add-7500-4d42-84d3-538329f40a18}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\gtest\gtest.vcxproj">
       <Project>{7f064044-878a-42a4-acc2-4af1bd1d4311}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\server\server.vcxproj">
       <Project>{c08eb11f-1b0b-4a1a-a999-00eaaf701ae6}</Project>
@@ -94,6 +111,9 @@
       <ModuleDefinitionFile>plugin.def</ModuleDefinitionFile>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ProjectReference>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

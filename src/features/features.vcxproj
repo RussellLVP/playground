@@ -75,7 +75,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="reaction_test\reaction_test.cpp" />
+    <ClCompile Include="reaction_test\reaction_test_servertest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="reaction_test\reaction_test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
