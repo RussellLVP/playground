@@ -16,10 +16,11 @@
 #include "playground/services/service_test.h"
 
 #include "base/logging.h"
+#include "features/reaction_test/reaction_test.h"
 
 namespace {
 
-class ReactionTestServiceTest : public ServiceTest {};
+class ReactionTestServiceTest : public ServiceTest<ReactionTest> {};
 
 }  // namespace
 

@@ -16,6 +16,7 @@
 #include "playground/services/service_manager.h"
 
 #include "base/logging.h"
+#include "base/temporary_change.h"
 
 std::unordered_map<const char*, ServiceRegistration*> ServiceManager::s_registered_services_;
 
@@ -27,11 +28,31 @@ void ServiceManager::RegisterService(const char* name, ServiceRegistration* regi
   s_registered_services_[name] = registration;
 }
 
+ServiceManager::ServiceManager()
+    : playground_(nullptr) {}
+
 void ServiceManager::Initialize(Playground* playground) {
+  TemporaryChange<Playground*>(&playground_, playground);
   for (auto& service : s_registered_services_) {
     if (services_.find(service.first) != services_.end())
       continue;
 
     services_[service.first] = std::unique_ptr<ServiceBase>(service.second->Create(playground));
   }
+}
+
+ServiceBase* ServiceManager::GetService(const char* name) {
+  auto& created_iterator = services_.find(name);
+  if (created_iterator != services_.end())
+    return created_iterator->second.get();
+
+  auto& declared_iterator = s_registered_services_.find(name);
+  if (declared_iterator != s_registered_services_.end()) {
+    CHECK(playground_) << "The Playground instance is not available at this time (odd service initialization order).";
+
+    services_[name] = std::unique_ptr<ServiceBase>(declared_iterator->second->Create(playground_));
+    return services_[name].get();
+  }
+
+  return nullptr;
 }

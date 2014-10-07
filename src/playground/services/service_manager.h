@@ -29,6 +29,8 @@ struct ServiceRegistration;
 // we end up with the appropriate instance of a service (e.g. the mock for testing).
 class ServiceManager {
  public:
+  ServiceManager();
+
   // Registers a service called |name| provided by |registration|.
   static void RegisterService(const char* name, ServiceRegistration* registration);
 
@@ -36,12 +38,20 @@ class ServiceManager {
   // constructor as we can't guarantee a fully initialized Playground instance there.
   void Initialize(Playground* playground);
 
+  // Returns the service identified by |name|. A nullptr will be returned if the service does
+  // not exist. The service will be initialized if it's defined, but has not been created yet.
+  ServiceBase* GetService(const char* name);
+
  private:
   // Contains the services registered for Las Venturas Playground.
   static std::unordered_map<const char*, ServiceRegistration*> s_registered_services_;
 
   // Contains the active services for the current Las Venturas Playground instance.
   std::unordered_map<const char*, std::unique_ptr<ServiceBase>> services_;
+
+  // Instance of the Playground class which owns this manager. This member will only be set during
+  // service initialization, to allow for 
+  Playground* playground_;
 };
 
 // Helper structure which can be used as a static initializer to register a service with the service

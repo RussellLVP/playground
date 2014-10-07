@@ -13,12 +13,25 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "features/reaction_test/reaction_test.h"
+#ifndef BASE_TEMPORARY_CHANGE_H_
+#define BASE_TEMPORARY_CHANGE_H_
 
-#include "playground/services/service_manager.h"
+template <typename Type>
+class TemporaryChange {
+ public:
+  TemporaryChange(Type* address, Type value)
+      : address_(address) {
+     original_value_ = *address;
+     *address = value;
+   }
 
-DEFINE_SERVICE(ReactionTest);
+  ~TemporaryChange() {
+    *address_ = original_value_;
+  }
 
-ReactionTest::ReactionTest(Playground* playground)
-    : Service<ReactionTest>(playground) {
-}
+ private:
+  Type original_value_;
+  Type* address_;
+};
+
+#endif  // BASE_TEMPORARY_CHANGE_H_

@@ -16,13 +16,23 @@
 #ifndef PLAYGROUND_SERVICES_SERVICE_TEST_H_
 #define PLAYGROUND_SERVICES_SERVICE_TEST_H_
 
+#include "base/logging.h"
+#include "playground/playground.h"
+#include "playground/services/service_manager.h"
 #include "server/testing/server_test.h"
 
 // A service test is a service test optimized to be used for services (features and components). It
 // provides a convenient accessor to the service being tested, on top of the functionality already
 // available for server tests.
+template <class ServiceImpl>
 class ServiceTest : public ServerTest {
-  // TODO(Russell): Implement an accessor to the service.
+ protected:
+  ServiceImpl& service() {
+    ServiceBase* service = playground()->service_manager().GetService(ServiceImpl::GetName());
+    CHECK(service) << "The " << ServiceImpl::GetName() << " service has not been defined.";
+
+    return *dynamic_cast<ServiceImpl*>(service);
+  }
 };
 
 #endif  // PLAYGROUND_SERVICES_SERVICE_TEST_H_
