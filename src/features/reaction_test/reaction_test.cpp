@@ -17,12 +17,8 @@
 
 #include "playground/services/service_manager.h"
 
-#include "playground/entities/player_manager.h"
-
 DEFINE_SERVICE(ReactionTest);
 
 ReactionTest::ReactionTest(Playground* playground)
-    : Service<ReactionTest>(playground) {
-    
-      GetPlayerManager().IsConnected("Peter");
-    }
+    : Service(playground) {
+}

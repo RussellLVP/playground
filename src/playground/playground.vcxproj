@@ -33,6 +33,7 @@
     <ClInclude Include="services\service.h" />
     <ClInclude Include="services\service_macros.h" />
     <ClInclude Include="services\service_manager.h" />
+    <ClInclude Include="services\service_registration.h" />
     <ClInclude Include="services\service_test.h" />
   </ItemGroup>
   <ItemGroup>

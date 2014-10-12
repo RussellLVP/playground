@@ -40,35 +40,19 @@ class ServiceManager {
 
   // Returns the service identified by |name|. A nullptr will be returned if the service does
   // not exist. The service will be initialized if it's defined, but has not been created yet.
-  ServiceBase* GetService(const char* name);
+  Service* GetService(const char* name);
 
  private:
-  // Contains the services registered for Las Venturas Playground.
+  // Contains the services registered for Las Venturas Playground. Registered services will still
+  // have to be initialized at this point.
   static std::unordered_map<const char*, ServiceRegistration*> s_registered_services_;
 
   // Contains the active services for the current Las Venturas Playground instance.
-  std::unordered_map<const char*, std::shared_ptr<ServiceBase>> services_;
+  std::unordered_map<const char*, std::shared_ptr<Service>> services_;
 
   // Instance of the Playground class which owns this manager. This member will only be set during
-  // service initialization, to allow for 
+  // service initialization, to allow for a service declaring its dependencies.
   Playground* playground_;
-};
-
-// Helper structure which can be used as a static initializer to register a service with the service
-// manager, ensuring that it can be initialized by the service manager when required.
-struct ServiceRegistration {
-  virtual ServiceBase* Create(Playground* playground) = 0;
-};
-
-template <class ServiceImpl>
-struct ServiceRegistrationImpl : public ServiceRegistration {
-  explicit ServiceRegistrationImpl(const char* name) {
-    ServiceManager::RegisterService(name, this);
-  }
-
-  virtual ServiceBase* Create(Playground* playground) override {
-    return ServiceImpl::Create(playground);
-  }
 };
 
 #endif  // PLAYGROUND_SERVICES_SERVICE_MANAGER_H_
