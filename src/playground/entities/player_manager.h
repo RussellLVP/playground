@@ -25,10 +25,11 @@
 #include "server/listeners/player_event_listener.h"
 
 class Player;
+class PlayerEventListener;
 
 // The Player manager keeps track of all the players which are connected to Las Venturas Playground,
 // and receives and delegates events related to them. It provides methods to query the players.
-class PlayerManager final : public EntityManager<Player>,
+class PlayerManager final : public EntityManager<Player, PlayerEventListener>,
                             public samp::PlayerEventListener {
  public:
   PlayerManager();
@@ -43,6 +44,7 @@ class PlayerManager final : public EntityManager<Player>,
 
   // EntityManager implementation.
   virtual Player* Get(int player_id) override;
+  virtual void AttachEventListener(EventListener* listener) override;
   virtual int size() const override;
   virtual iterator begin() override { return iterator(players_.begin()); }
   virtual iterator end() override { return iterator(players_.end()); }

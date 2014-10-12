@@ -47,7 +47,7 @@ class ServiceManager {
   static std::unordered_map<const char*, ServiceRegistration*> s_registered_services_;
 
   // Contains the active services for the current Las Venturas Playground instance.
-  std::unordered_map<const char*, std::unique_ptr<ServiceBase>> services_;
+  std::unordered_map<const char*, std::shared_ptr<ServiceBase>> services_;
 
   // Instance of the Playground class which owns this manager. This member will only be set during
   // service initialization, to allow for 

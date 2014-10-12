@@ -37,7 +37,7 @@ void ServiceManager::Initialize(Playground* playground) {
     if (services_.find(service.first) != services_.end())
       continue;
 
-    services_[service.first] = std::unique_ptr<ServiceBase>(service.second->Create(playground));
+    services_[service.first] = std::shared_ptr<ServiceBase>(service.second->Create(playground));
   }
 }
 
@@ -50,7 +50,7 @@ ServiceBase* ServiceManager::GetService(const char* name) {
   if (declared_iterator != s_registered_services_.end()) {
     CHECK(playground_) << "The Playground instance is not available at this time (odd service initialization order).";
 
-    services_[name] = std::unique_ptr<ServiceBase>(declared_iterator->second->Create(playground_));
+    services_[name] = std::shared_ptr<ServiceBase>(declared_iterator->second->Create(playground_));
     return services_[name].get();
   }
 

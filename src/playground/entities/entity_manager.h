@@ -45,13 +45,20 @@ class EntityIterator : public std::iterator<std::input_iterator_tag, EntityType>
 
 // Interface which each entity manager should implement. This ensures that a consistent interface
 // will be provided for each type of interface available on the server.
-template <class EntityType>
+template <class EntityType, class EventListenerType>
 class EntityManager {
+ protected:
+  typedef typename EventListenerType EventListener;
+
  public:
   virtual ~EntityManager() {}
 
   // Returns a pointer to the entity identified by |entity_id|. May return a nullptr.
   virtual EntityType* Get(int entity_id) = 0;
+
+  // Registers |listener| as an event listener for any event related to EntityType.
+  // TODO(Russell): Event unregistration should be automatic; make |listener| weak.
+  virtual void AttachEventListener(EventListener* listener) = 0;
 
   // Returns the number of active entities of this type connected to the server.
   virtual int size() const = 0;

@@ -58,6 +58,10 @@ Player* PlayerManager::Get(int player_id) {
   return iterator->second.get();
 }
 
+void PlayerManager::AttachEventListener(EventListener* listener) {
+
+}
+
 int PlayerManager::size() const {
   return players_.size();
 }

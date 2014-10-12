@@ -27,6 +27,7 @@
     <ClInclude Include="entities\entity.h" />
     <ClInclude Include="entities\entity_manager.h" />
     <ClInclude Include="entities\player.h" />
+    <ClInclude Include="entities\player_event_listener.h" />
     <ClInclude Include="entities\player_manager.h" />
     <ClInclude Include="playground.h" />
     <ClInclude Include="services\service.h" />

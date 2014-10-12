@@ -13,13 +13,19 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "playground/services/service_test.h"
+#ifndef PLAYGROUND_ENTITIES_PLAYER_EVENT_LISTENER_H_
+#define PLAYGROUND_ENTITIES_PLAYER_EVENT_LISTENER_H_
 
-#include "features/reaction_test/reaction_test.h"
+class Player;
 
-class ReactionTestServiceTest : public ServiceTest<ReactionTest> {};
+// Contains empty implementations of the events available for players. Classes which register
+// themselves as player event listeners will be able to override any they need.
+class PlayerEventListener {
+ public:
+  virtual ~PlayerEventListener() {}
 
-TEST_F(ReactionTestServiceTest, AlwaysPasses) {
-  
-  EXPECT_TRUE(true);
-}
+  virtual void OnPlayerConnect(Player* player) {}
+  virtual void OnPlayerDisconnect(Player* player) {}
+};
+
+#endif  // PLAYGROUND_ENTITIES_PLAYER_EVENT_LISTENER_H_
