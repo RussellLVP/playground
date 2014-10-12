@@ -16,9 +16,9 @@
 #ifndef PLAYGROUND_SERVICES_SERVICE_H_
 #define PLAYGROUND_SERVICES_SERVICE_H_
 
+#include "playground/playground.h"
 #include "playground/services/service_macros.h"
 
-class Playground;
 template <class ServiceImpl> struct ServiceRegistrationImpl;
 
 // Base class using which services can be identified.
@@ -37,7 +37,10 @@ class Service : public ServiceBase {
       : playground_(playground) {}
   virtual ~Service() {}
 
-private:
+  // Returns the player manager owned by the Playground instance.
+  PlayerManager& GetPlayerManager() const { return playground_->player_manager(); }
+
+ private:
   // Initializes a new instance of the Service, based on |playground| as the runtime environment for
   // Las Venturas Playground. Must only be called by the ServiceRegistration for this service.
   static ServiceImpl* Create(Playground* playground) {

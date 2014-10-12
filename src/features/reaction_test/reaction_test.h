@@ -18,20 +18,16 @@
 
 #include <string>
 
-#include "playground/entities/player_event_listener.h"
 #include "playground/services/service.h"
 
 // The reaction test feature sends an occasional puzzle to the connected players, a valid answer to
 // which will make them some money. The puzzle can be of repetitive nature ("copy this string") or
 // of mathematical nature ("calculate (60 - 15) * 2").
-class ReactionTest : public Service<ReactionTest>,
-                     public PlayerEventListener {
+class ReactionTest : public Service<ReactionTest> {
   DECLARE_SERVICE(ReactionTest);
 
  protected:
   explicit ReactionTest(Playground* playground);
-
-
 };
 
 #endif  // FEATURES_REACTION_TEST_REACTION_TEST_H_

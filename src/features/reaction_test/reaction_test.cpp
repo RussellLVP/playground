@@ -15,13 +15,14 @@
 
 #include "features/reaction_test/reaction_test.h"
 
-#include "playground/playground.h"
-#include "playground/entities/player_manager.h"
 #include "playground/services/service_manager.h"
+
+#include "playground/entities/player_manager.h"
 
 DEFINE_SERVICE(ReactionTest);
 
 ReactionTest::ReactionTest(Playground* playground)
     : Service<ReactionTest>(playground) {
-  playground->player_manager().AttachEventListener(this);
-}
+    
+      GetPlayerManager().IsConnected("Peter");
+    }
