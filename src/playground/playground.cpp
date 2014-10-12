@@ -15,13 +15,17 @@
 
 #include "playground/playground.h"
 
+#include "playground/entities/player_manager.h"
+#include "playground/services/service_manager.h"
 #include "server/server_interface.h"
 
 Playground::Playground(ServerInterface* server_interface)
-    : server_interface_(server_interface) {
-  server_interface_->AttachEventListener(&player_manager_);
+    : server_interface_(server_interface),
+      service_manager_(new ServiceManager()),
+      player_manager_(new PlayerManager()) {
+  server_interface_->AttachEventListener(player_manager_.get());
 
-  service_manager_.Initialize(this);
+  service_manager_->Initialize(this);
 }
 
 Playground::~Playground() {}
