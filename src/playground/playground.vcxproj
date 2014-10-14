@@ -39,6 +39,11 @@
   <ItemGroup>
     <ProjectReference Include="..\base\base.vcxproj">
       <Project>{dc7ba198-5b47-4d2e-b1ff-83819244a048}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\components\components.vcxproj">
       <Project>{1f322872-b537-427c-96a3-96fe17fe5010}</Project>

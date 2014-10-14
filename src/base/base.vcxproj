@@ -76,13 +76,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="logging.cpp" />
+    <ClCompile Include="time_span.cpp" />
+    <ClCompile Include="time_span_unittest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="logging.h" />
     <ClInclude Include="macros.h" />
     <ClInclude Include="temporary_change.h" />
+    <ClInclude Include="time_span.h" />
     <ClInclude Include="vector3d.h" />
     <ClInclude Include="version.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\gtest\gtest.vcxproj">
+      <Project>{7f064044-878a-42a4-acc2-4af1bd1d4311}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
