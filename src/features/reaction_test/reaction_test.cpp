@@ -19,6 +19,4 @@
 
 DEFINE_SERVICE(ReactionTest);
 
-ReactionTest::ReactionTest(Playground* playground)
-    : Service(playground) {
-}
+void ReactionTest::OnServiceInstalled() {}

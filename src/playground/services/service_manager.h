@@ -43,6 +43,9 @@ class ServiceManager {
   Service* GetService(const char* name);
 
  private:
+  // Initializes an individual service and registers it in |services_|.
+  void InitializeService(const char* name, ServiceRegistration* registration);
+
   // Contains the services registered for Las Venturas Playground. Registered services will still
   // have to be initialized at this point.
   static std::unordered_map<const char*, ServiceRegistration*> s_registered_services_;

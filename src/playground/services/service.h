@@ -32,12 +32,19 @@ class Service {
   explicit Service(Playground* playground)
       : playground_(playground) {}
 
+  // Called when the service has been installed, and should be used to register the service with
+  // event listeners and activate timers. This should not be done in the constructor, as it won't
+  // be possible to create a weak pointer based on the service yet at that point.
+  virtual void OnServiceInstalled() {}
+
   // Returns the player manager owned by the Playground instance.
   PlayerManager& GetPlayerManager() const { return playground_->player_manager(); }
 
  private:
   // Weak reference to the Playground instance that owns this service.
   Playground* playground_;
+
+  friend class ServiceManager;
 };
 
 #endif  // PLAYGROUND_SERVICES_SERVICE_H_

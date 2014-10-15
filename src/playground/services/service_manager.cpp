@@ -37,7 +37,7 @@ void ServiceManager::Initialize(Playground* playground) {
     if (services_.find(service.first) != services_.end())
       continue;
 
-    services_[service.first] = std::shared_ptr<Service>(service.second->Create(playground));
+    InitializeService(service.first, service.second);
   }
 }
 
@@ -50,9 +50,16 @@ Service* ServiceManager::GetService(const char* name) {
   if (declared_iterator != s_registered_services_.end()) {
     CHECK(playground_) << "The Playground instance is not available at this time (odd service initialization order).";
 
-    services_[name] = std::shared_ptr<Service>(declared_iterator->second->Create(playground_));
+    InitializeService(name, declared_iterator->second);
     return services_[name].get();
   }
 
   return nullptr;
+}
+
+void ServiceManager::InitializeService(const char* name, ServiceRegistration* registration) {
+  std::shared_ptr<Service> instance = std::shared_ptr<Service>(registration->Create(playground_));
+  instance->OnServiceInstalled();
+
+  services_[name] = instance;
 }

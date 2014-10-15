@@ -27,7 +27,11 @@ class ReactionTest : public Service {
   DECLARE_SERVICE(ReactionTest);
 
  protected:
-  explicit ReactionTest(Playground* playground);
+  explicit ReactionTest(Playground* playground)
+      : Service(playground) {}
+
+  // Called when the reaction test service has been installed.
+  virtual void OnServiceInstalled() override;
 };
 
 #endif  // FEATURES_REACTION_TEST_REACTION_TEST_H_
