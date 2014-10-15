@@ -76,13 +76,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="logging.cpp" />
+    <ClCompile Include="time.cpp" />
     <ClCompile Include="time_span.cpp" />
     <ClCompile Include="time_span_unittest.cpp" />
+    <ClCompile Include="time_unittest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="logging.h" />
     <ClInclude Include="macros.h" />
     <ClInclude Include="temporary_change.h" />
+    <ClInclude Include="time.h" />
     <ClInclude Include="time_span.h" />
     <ClInclude Include="vector3d.h" />
     <ClInclude Include="version.h" />

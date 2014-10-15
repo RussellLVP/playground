@@ -20,9 +20,9 @@
 
 // The TimeSpan structure represents a certain duration of time. It can be initialized either based
 // on another TimeSpan instance, empty or based on a duration in a specific unit of time. TimeSpan
-// structures should only be stack allocated, and are immutable once created.
+// structures should only be stack allocated.
 class TimeSpan {
-public:
+ public:
   // Initializes a new TimeSpan covering the indicated unit.
   static TimeSpan FromHours(uint64_t hours);
   static TimeSpan FromMinutes(uint64_t value);
@@ -71,7 +71,7 @@ public:
   bool operator<(const TimeSpan& other) const { return duration_ < other.duration_; }
   bool operator<=(const TimeSpan& other) const { return duration_ <= other.duration_; }
 
-private:
+ private:
   explicit TimeSpan(uint64_t duration) : duration_(duration) {}
 
   uint64_t duration_;
