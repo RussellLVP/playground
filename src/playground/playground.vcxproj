@@ -19,6 +19,9 @@
     <ClCompile Include="plugin.cpp" />
     <ClCompile Include="services\service.cpp" />
     <ClCompile Include="services\service_manager.cpp" />
+    <ClCompile Include="services\timers\thread_timer_manager.cpp" />
+    <ClCompile Include="services\timers\timer.cpp" />
+    <ClCompile Include="services\timers\timer_unittest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="plugin.def" />
@@ -35,6 +38,8 @@
     <ClInclude Include="services\service_manager.h" />
     <ClInclude Include="services\service_registration.h" />
     <ClInclude Include="services\service_test.h" />
+    <ClInclude Include="services\timers\thread_timer_manager.h" />
+    <ClInclude Include="services\timers\timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\base\base.vcxproj">
