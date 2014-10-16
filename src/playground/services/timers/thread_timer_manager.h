@@ -16,6 +16,8 @@
 #ifndef PLAYGROUND_SERVICES_TIMERS_THREAD_TIMER_MANAGER_H_
 #define PLAYGROUND_SERVICES_TIMERS_THREAD_TIMER_MANAGER_H_
 
+#include <queue>
+
 class Timer;
 
 // Each thread in Las Venturas Playground has its own timer manager, and it is the responsibility of
@@ -30,17 +32,25 @@ class ThreadTimerManager {
   void Shutdown();
 
   // Registers |timer| as a new timer with the manager, causing it to be invoked in due course.
-  void RegisterTimer(const Timer& timer);
+  void RegisterTimer(Timer* timer);
 
   // Removes |timer| from the list of timers maintained by this manager. It will no longer be
   // functional until it re-registers itself.
-  void RemoveTimer(const Timer& timer);
+  void RemoveTimer(Timer* timer);
 
   // Processes all timers currently in the queue for this thread.
   void ProcessTimers();
 
  private:
   ThreadTimerManager();
+
+  // Merges the timers stored in |new_timers_| in to the |active_timers_| queue. We need to
+  // maintain two separate queues because invocating a timer could immediately queue another
+  // timer, which means we could end up in a (near-)infinite loop when processing them.
+  void MergeTimerQueues();
+
+  std::priority_queue<Timer*> active_timers_;
+  std::queue<Timer*> new_timers_;
 };
 
 #endif  // PLAYGROUND_SERVICES_TIMERS_THREAD_TIMER_MANAGER_H_

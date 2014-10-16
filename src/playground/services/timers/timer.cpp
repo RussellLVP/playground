@@ -20,7 +20,7 @@
 Timer::Timer(const CallbackType& callback)
     : callback_(callback),
       is_repeating_(false),
-      is_active_(true) {}
+      is_active_(false) {}
 
 Timer::~Timer() {
   if (is_active_)
@@ -36,13 +36,21 @@ void Timer::Start(TimeSpan interval, bool repeating) {
   is_repeating_ = repeating;
   is_active_ = true;
 
-  ThreadTimerManager::InstanceForThread()->RegisterTimer(*this);
+  ThreadTimerManager::InstanceForThread()->RegisterTimer(this);
 }
 
 void Timer::Stop() {
   if (!is_active_)
     return;
 
-  ThreadTimerManager::InstanceForThread()->RemoveTimer(*this);
+  ThreadTimerManager::InstanceForThread()->RemoveTimer(this);
   is_active_ = false;
+}
+
+void Timer::Invoke() {
+  callback_();
+
+  is_active_ = false;
+  if (is_repeating_)
+    Start(invocation_interval_, true);
 }

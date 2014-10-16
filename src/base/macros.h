@@ -22,4 +22,10 @@
   Type(const Type&) = delete; \
   void operator=(const Type&) = delete;
 
+#if defined(WINDOWS)
+#define THREAD_LOCAL __declspec(thread)
+#else
+#define THREAD_LOCAL thread_local
+#endif
+
 #endif  // BASE_MACROS_H_

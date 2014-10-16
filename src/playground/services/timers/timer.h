@@ -22,6 +22,8 @@
 #include "base/time.h"
 #include "base/time_span.h"
 
+class ThreadTimerManager;
+
 // A timer allows for once or repeated invocation of a function after a given delay.
 //
 // Any service is able to register a timer which will be invoked after the given TimeSpan has
@@ -50,12 +52,22 @@ class Timer {
   bool is_repeating() const { return is_repeating_; }
 
  private:
+  // Called by the ThreadTimerManager when it has shut down, meaning that this timer has been
+  // deactivated and won't result in further invocations.
+  void DidRemoveFromManager() { is_active_ = false; }
+
+  // Called by the ThreadTimerManager when it's time to invoke the callback associated with
+  // this timer. The timer will re-register itself if it's a repeating timer.
+  void Invoke();
+
   CallbackType callback_;
 
   Time next_invocation_time_;
   TimeSpan invocation_interval_;
   bool is_repeating_;
   bool is_active_;
+
+  friend class ThreadTimerManager;
 
   DISALLOW_COPY_AND_ASSIGN(Timer);
 };

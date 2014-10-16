@@ -15,29 +15,76 @@
 
 #include "playground/services/timers/thread_timer_manager.h"
 
+#include "base/logging.h"
 #include "playground/services/timers/timer.h"
+
+namespace {
+// Thread-specific instance of the Timer Manager.
+THREAD_LOCAL ThreadTimerManager* g_thread_local_instance = nullptr;
+}
 
 // static
 ThreadTimerManager* ThreadTimerManager::InstanceForThread() {
-  return nullptr;
+  if (!g_thread_local_instance)
+    g_thread_local_instance = new ThreadTimerManager();
+
+  return g_thread_local_instance;
 }
 
-ThreadTimerManager::ThreadTimerManager() {
-
-}
+ThreadTimerManager::ThreadTimerManager() {}
 
 void ThreadTimerManager::Shutdown() {
+  MergeTimerQueues();
+  while (active_timers_.size()) {
+    Timer* active_timer = active_timers_.top();
+    active_timers_.pop();
 
+    active_timer->DidRemoveFromManager();
+  }
+
+  DCHECK(g_thread_local_instance);
+  delete g_thread_local_instance;
+  g_thread_local_instance = nullptr;
 }
 
-void ThreadTimerManager::RegisterTimer(const Timer& timer) {
-
+void ThreadTimerManager::RegisterTimer(Timer* timer) {
+  new_timers_.push(timer);
 }
 
-void ThreadTimerManager::RemoveTimer(const Timer& timer) {
+void ThreadTimerManager::RemoveTimer(Timer* timer) {
+  MergeTimerQueues();
 
+  std::priority_queue<Timer*> new_active_timers;
+  while (active_timers_.size()) {
+    Timer* active_timer = active_timers_.top();
+    active_timers_.pop();
+
+    if (active_timer == timer)
+      continue;
+
+    new_active_timers.push(active_timer);
+  }
+
+  active_timers_.swap(new_active_timers);
 }
 
 void ThreadTimerManager::ProcessTimers() {
+  MergeTimerQueues();
 
+  Time current_time = Time::Now();
+  while (active_timers_.size()) {
+    Timer* timer = active_timers_.top();
+    if (timer->next_invocation_time() > current_time)
+      break;
+
+    active_timers_.pop();
+    timer->Invoke();
+  }
+}
+
+void ThreadTimerManager::MergeTimerQueues() {
+  while (new_timers_.size()) {
+    active_timers_.push(new_timers_.front());
+    new_timers_.pop();
+  }
 }
