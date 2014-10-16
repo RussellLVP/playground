@@ -17,6 +17,7 @@
 
 #include "playground/entities/player_manager.h"
 #include "playground/services/service_manager.h"
+#include "playground/services/timers/thread_timer_manager.h"
 #include "server/server_interface.h"
 
 Playground::Playground(ServerInterface* server_interface)
@@ -28,6 +29,10 @@ Playground::Playground(ServerInterface* server_interface)
   service_manager_->Initialize(this);
 }
 
-Playground::~Playground() {}
+Playground::~Playground() {
+  ThreadTimerManager::InstanceForThread()->Shutdown();
+}
 
-void Playground::ProcessTick() {}
+void Playground::ProcessTick() {
+  ThreadTimerManager::InstanceForThread()->ProcessTimers();
+}
