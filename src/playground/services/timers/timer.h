@@ -41,7 +41,7 @@ class Timer {
   void Stop();
 
   // Returns whether the timer is currently waiting for a next invocation.
-  bool IsActive() const;
+  bool is_active() const { return is_active_; }
 
   // Returns the time at which the fire should next be invoked.
   const Time& next_invocation_time() const { return next_invocation_time_; }
@@ -49,16 +49,13 @@ class Timer {
   // Returns whether this timer is a repeating timer or a one-shot.
   bool is_repeating() const { return is_repeating_; }
 
-  // Returns whether this timer is an orphan (not associated with any thread timer manager).
-  bool is_orphan() const { return is_orphan_; }
-
  private:
   CallbackType callback_;
 
   Time next_invocation_time_;
   TimeSpan invocation_interval_;
   bool is_repeating_;
-  bool is_orphan_;
+  bool is_active_;
 
   DISALLOW_COPY_AND_ASSIGN(Timer);
 };

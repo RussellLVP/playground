@@ -47,10 +47,10 @@ class TimerTest : public testing::Test {
 
 TEST_F(TimerTest, ImmediateOneShotTimer) {
   Timer timer(std::bind(&TimerTest::PrimaryCounter, this));
-  EXPECT_FALSE(timer.IsActive());
+  EXPECT_FALSE(timer.is_active());
   timer.Start(TimeSpan::FromMicroseconds(0), false);
   EXPECT_FALSE(timer.is_repeating());
-  EXPECT_TRUE(timer.IsActive());
+  EXPECT_TRUE(timer.is_active());
 
   EXPECT_EQ(0, primary_invocation_count());
   ThreadTimerManager::InstanceForThread()->ProcessTimers();
@@ -131,11 +131,27 @@ TEST_F(TimerTest, MultipleTimers) {
   EXPECT_EQ(1, secondary_invocation_count());
 }
 
-TEST_F(TimerTest, OrphanedTimer) {
+TEST_F(TimerTest, ActiveTimer) {
   Timer timer(std::bind(&TimerTest::PrimaryCounter, this));
+  EXPECT_FALSE(timer.is_active());
   timer.Start(TimeSpan::FromMicroseconds(0), true);
-
-  EXPECT_EQ(timer.is_orphan(), false);
+  EXPECT_TRUE(timer.is_active());
   ThreadTimerManager::InstanceForThread()->Shutdown();
-  EXPECT_EQ(timer.is_orphan(), true);
+  EXPECT_FALSE(timer.is_active());
+
+  ThreadTimerManager::InstanceForThread()->ProcessTimers();
+  EXPECT_EQ(0, primary_invocation_count());
+
+  timer.Start(TimeSpan::FromMicroseconds(0), true);
+  EXPECT_TRUE(timer.is_active());
+
+  ThreadTimerManager::InstanceForThread()->ProcessTimers();
+  EXPECT_TRUE(timer.is_active());
+  EXPECT_EQ(1, primary_invocation_count());
+
+  timer.Stop();
+  EXPECT_FALSE(timer.is_active());
+
+  ThreadTimerManager::InstanceForThread()->ProcessTimers();
+  EXPECT_EQ(1, primary_invocation_count());
 }
