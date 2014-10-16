@@ -45,6 +45,20 @@ class TimerTest : public testing::Test {
 
 // -------------------------------------------------------------------------------------------------
 
+static void SecondThreadTimerTest(TimerTest* instance) {
+  Timer timer(std::bind(&TimerTest::SecondaryCounter, instance));
+  timer.Start(TimeSpan::FromMicroseconds(0), false);
+
+  EXPECT_EQ(0, instance->secondary_invocation_count());
+  ThreadTimerManager::InstanceForThread()->ProcessTimers();
+  EXPECT_EQ(1, instance->secondary_invocation_count());
+
+  ThreadTimerManager::InstanceForThread()->Shutdown();
+}
+
+// -------------------------------------------------------------------------------------------------
+
+
 TEST_F(TimerTest, ImmediateOneShotTimer) {
   Timer timer(std::bind(&TimerTest::PrimaryCounter, this));
   EXPECT_FALSE(timer.is_active());
@@ -128,6 +142,21 @@ TEST_F(TimerTest, MultipleTimers) {
   ThreadTimerManager::InstanceForThread()->ProcessTimers();
 
   EXPECT_EQ(3, primary_invocation_count());
+  EXPECT_EQ(1, secondary_invocation_count());
+}
+
+TEST_F(TimerTest, MultipleThreads) {
+  Timer timer(std::bind(&TimerTest::PrimaryCounter, this));
+  timer.Start(TimeSpan::FromMicroseconds(0), true);
+
+  EXPECT_TRUE(timer.is_active());
+  EXPECT_EQ(0, primary_invocation_count());
+  
+  std::thread thread(SecondThreadTimerTest, this);
+  thread.join();
+
+  EXPECT_TRUE(timer.is_active());
+  EXPECT_EQ(0, primary_invocation_count());
   EXPECT_EQ(1, secondary_invocation_count());
 }
 
