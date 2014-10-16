@@ -49,7 +49,15 @@ class ThreadTimerManager {
   // timer, which means we could end up in a (near-)infinite loop when processing them.
   void MergeTimerQueues();
 
-  std::priority_queue<Timer*> active_timers_;
+  // Makes sure that timers in the active timer queue are sorted based on their intended
+  // execution time. Timers which have to fire soonest must come first in the queue.
+  struct TimerInvocationTimeComperator {
+    bool operator()(const Timer* left, const Timer* right);
+  };
+
+  typedef std::priority_queue<Timer*, std::vector<Timer*>, TimerInvocationTimeComperator> ActiveTimerQueue;
+  ActiveTimerQueue active_timers_;
+
   std::queue<Timer*> new_timers_;
 };
 

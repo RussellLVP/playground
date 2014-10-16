@@ -54,7 +54,7 @@ void ThreadTimerManager::RegisterTimer(Timer* timer) {
 void ThreadTimerManager::RemoveTimer(Timer* timer) {
   MergeTimerQueues();
 
-  std::priority_queue<Timer*> new_active_timers;
+  ActiveTimerQueue new_active_timers;
   while (active_timers_.size()) {
     Timer* active_timer = active_timers_.top();
     active_timers_.pop();
@@ -87,4 +87,8 @@ void ThreadTimerManager::MergeTimerQueues() {
     active_timers_.push(new_timers_.front());
     new_timers_.pop();
   }
+}
+
+bool ThreadTimerManager::TimerInvocationTimeComperator::operator()(const Timer* left, const Timer* right) {
+  return left->next_invocation_time() > right->next_invocation_time();
 }
