@@ -15,8 +15,22 @@
 
 #include "features/reaction_test/reaction_test.h"
 
+#include "base/random.h"
 #include "playground/services/service_manager.h"
 
 DEFINE_SERVICE(ReactionTest);
 
-void ReactionTest::OnServiceInstalled() {}
+ReactionTest::ReactionTest(Playground* playground)
+    : Service(playground),
+      timer_(std::bind(&ReactionTest::Start, this)) {
+  timer_.Start(TimeSpan::FromSeconds(30), false);
+}
+
+void ReactionTest::Start() {
+  // TODO(Russell): Actually start a new reaction test.
+  timer_.Start(GetNextReactionTestDelay(), false);
+}
+
+TimeSpan ReactionTest::GetNextReactionTestDelay() {
+  return TimeSpan::FromSeconds(Random::Next(120, 300));
+}

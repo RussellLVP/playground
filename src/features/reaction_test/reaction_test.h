@@ -19,19 +19,27 @@
 #include <string>
 
 #include "playground/services/service.h"
+#include "playground/services/timers/timer.h"
 
 // The reaction test feature sends an occasional puzzle to the connected players, a valid answer to
 // which will make them some money. The puzzle can be of repetitive nature ("copy this string") or
 // of mathematical nature ("calculate (60 - 15) * 2").
 class ReactionTest : public Service {
   DECLARE_SERVICE(ReactionTest);
+ public:
+  // Starts a new reaction test by inviting all players to answer to a puzzle. The test will not be
+  // started if there are no players in-game.
+  void Start();
 
  protected:
-  explicit ReactionTest(Playground* playground)
-      : Service(playground) {}
+  explicit ReactionTest(Playground* playground);
 
-  // Called when the reaction test service has been installed.
-  virtual void OnServiceInstalled() override;
+  // Returns a number of seconds before the next reaction test should start. This is a random amount
+  // of time between 2 and 5 minutes, preventing players from knowing when the next test starts.
+  TimeSpan GetNextReactionTestDelay();
+
+ private:
+  Timer timer_;
 };
 
 #endif  // FEATURES_REACTION_TEST_REACTION_TEST_H_
