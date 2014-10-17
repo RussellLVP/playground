@@ -76,6 +76,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="logging.cpp" />
+    <ClCompile Include="random.cpp" />
+    <ClCompile Include="random_unittest.cpp" />
     <ClCompile Include="time.cpp" />
     <ClCompile Include="time_span.cpp" />
     <ClCompile Include="time_span_unittest.cpp" />
@@ -84,6 +86,7 @@
   <ItemGroup>
     <ClInclude Include="logging.h" />
     <ClInclude Include="macros.h" />
+    <ClInclude Include="random.h" />
     <ClInclude Include="temporary_change.h" />
     <ClInclude Include="time.h" />
     <ClInclude Include="time_span.h" />
