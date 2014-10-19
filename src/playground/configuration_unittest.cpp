@@ -43,6 +43,7 @@ class ConfigurationTest : public testing::Test {
 // A string containing valid configuration in a variety of data formats.
 const char kValidConfigurationString[] = R"json(
   {
+    // This is a comment. In JSON. Fantastic.
     "string": "Hello, world",
     "number": 1234,
     "double": 12.5,
