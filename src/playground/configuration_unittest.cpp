@@ -45,12 +45,8 @@ class ConfigurationTest : public testing::Test {
 TEST_F(ConfigurationTest, InvalidConstructors) {
   EXPECT_EQ(nullptr, Configuration::FromString(nullptr));
   EXPECT_EQ(nullptr, Configuration::FromString(""));
+  EXPECT_EQ(nullptr, Configuration::FromString("LVP"));
   EXPECT_EQ(nullptr, Configuration::FromFile(nullptr));
   EXPECT_EQ(nullptr, Configuration::FromFile(""));
   EXPECT_EQ(nullptr, Configuration::FromFile("RANDOM_NON_EXISTENT_FILE"));
-
-  {
-    std::unique_ptr<Configuration> configuration = Configuration::FromString("LVP");
-    EXPECT_FALSE(configuration->IsValid());
-  }
 }

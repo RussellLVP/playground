@@ -28,7 +28,11 @@ std::unique_ptr<Configuration> Configuration::FromString(const char* data) {
   std::stringstream stream;
   stream << data;
 
-  return std::unique_ptr<Configuration>(new Configuration(stream));
+  auto configuration = std::unique_ptr<Configuration>(new Configuration(stream));
+  if (!configuration->IsValid())
+    return nullptr;
+
+  return configuration;
 }
 
 // static
@@ -40,7 +44,11 @@ std::unique_ptr<Configuration> Configuration::FromFile(const char* filename) {
   if (!stream.is_open())
     return nullptr;
 
-  return std::unique_ptr<Configuration>(new Configuration(stream));
+  auto configuration = std::unique_ptr<Configuration>(new Configuration(stream));
+  if (!configuration->IsValid())
+    return nullptr;
+
+  return configuration;
 }
 
 Configuration::Configuration(std::istream& stream) {
