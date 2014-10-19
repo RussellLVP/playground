@@ -17,7 +17,10 @@
     <ClCompile Include="entities\player_servertest.cpp" />
     <ClCompile Include="playground.cpp" />
     <ClCompile Include="plugin.cpp" />
+    <ClCompile Include="configuration.cpp" />
+    <ClCompile Include="configuration_unittest.cpp" />
     <ClCompile Include="services\service.cpp" />
+    <ClCompile Include="services\service_configuration.cpp" />
     <ClCompile Include="services\service_manager.cpp" />
     <ClCompile Include="services\timers\thread_timer_manager.cpp" />
     <ClCompile Include="services\timers\timer.cpp" />
@@ -33,6 +36,8 @@
     <ClInclude Include="entities\player_event_listener.h" />
     <ClInclude Include="entities\player_manager.h" />
     <ClInclude Include="playground.h" />
+    <ClInclude Include="configuration.h" />
+    <ClInclude Include="services\service_configuration.h" />
     <ClInclude Include="services\service.h" />
     <ClInclude Include="services\service_macros.h" />
     <ClInclude Include="services\service_manager.h" />

@@ -34,11 +34,11 @@ class ReactionTest : public Service {
  protected:
   explicit ReactionTest(Playground* playground);
 
+ private:
   // Returns a number of seconds before the next reaction test should start. This is a random amount
   // of time between 2 and 5 minutes, preventing players from knowing when the next test starts.
   TimeSpan GetNextReactionTestDelay();
 
- private:
   Timer timer_;
 };
 
