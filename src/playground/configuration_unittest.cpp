@@ -40,13 +40,65 @@ class ConfigurationTest : public testing::Test {
   int previous_log_level_;
 };
 
+// A string containing valid configuration in a variety of data formats.
+const char kValidConfigurationString[] = R"json(
+  {
+    "string": "Hello, world",
+    "number": 1234,
+    "double": 12.5,
+    "array": [0, 1, 2],
+    "void": null
+  })json";
+
 }  // namespace
 
 TEST_F(ConfigurationTest, InvalidConstructors) {
   EXPECT_EQ(nullptr, Configuration::FromString(nullptr));
   EXPECT_EQ(nullptr, Configuration::FromString(""));
-  EXPECT_EQ(nullptr, Configuration::FromString("LVP"));
   EXPECT_EQ(nullptr, Configuration::FromFile(nullptr));
   EXPECT_EQ(nullptr, Configuration::FromFile(""));
   EXPECT_EQ(nullptr, Configuration::FromFile("RANDOM_NON_EXISTENT_FILE"));
+}
+
+TEST_F(ConfigurationTest, InvalidData) {
+  EXPECT_EQ(nullptr, Configuration::FromString("LVP"));
+  EXPECT_EQ(nullptr, Configuration::FromString("[0, 1, 2]"));
+  EXPECT_EQ(nullptr, Configuration::FromString("null"));
+  EXPECT_EQ(nullptr, Configuration::FromString("0"));
+  EXPECT_EQ(nullptr, Configuration::FromString("\"text\""));
+}
+
+TEST_F(ConfigurationTest, ReadRawValues) {
+  auto configuration = Configuration::FromString(kValidConfigurationString);
+  ASSERT_TRUE(configuration->IsValid());
+
+  EXPECT_EQ("Hello, world", configuration->Get("string").asString());
+  EXPECT_THROW(configuration->Get("string").asInt(), std::runtime_error);
+  EXPECT_THROW(configuration->Get("string").asDouble(), std::runtime_error);
+  EXPECT_THROW(configuration->Get("string").asBool(), std::runtime_error);
+  EXPECT_EQ(0, configuration->Get("string").size());
+
+  EXPECT_EQ("1234", configuration->Get("number").asString());
+  EXPECT_EQ(1234, configuration->Get("number").asInt());
+  EXPECT_DOUBLE_EQ(1234, configuration->Get("number").asDouble());
+  EXPECT_TRUE(configuration->Get("number").asBool());
+  EXPECT_EQ(0, configuration->Get("number").size());
+
+  EXPECT_EQ("12.5", configuration->Get("double").asString());
+  EXPECT_EQ(12, configuration->Get("double").asInt());
+  EXPECT_DOUBLE_EQ(12.5, configuration->Get("double").asDouble());
+  EXPECT_TRUE(configuration->Get("double").asBool());
+  EXPECT_EQ(0, configuration->Get("double").size());
+
+  EXPECT_THROW(configuration->Get("array").asString(), std::runtime_error);
+  EXPECT_THROW(configuration->Get("array").asInt(), std::runtime_error);
+  EXPECT_THROW(configuration->Get("array").asDouble(), std::runtime_error);
+  EXPECT_THROW(configuration->Get("array").asBool(), std::runtime_error);
+  EXPECT_EQ(3, configuration->Get("array").size());
+
+  EXPECT_EQ("", configuration->Get("void").asString());
+  EXPECT_EQ(0, configuration->Get("void").asInt());
+  EXPECT_DOUBLE_EQ(0, configuration->Get("void").asDouble());
+  EXPECT_FALSE(configuration->Get("void").asBool());
+  EXPECT_EQ(0, configuration->Get("void").size());
 }

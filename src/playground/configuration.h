@@ -20,6 +20,8 @@
 #include <memory>
 
 #include "base/json/json.h"
+#include "base/macros.h"
+#include "gtest/gtest_prod.h"
 
 // Provides read-only access to the data contained in a JSON structure, either passed in as a string
 // or loaded through a file. Values can be read in any format.
@@ -39,10 +41,18 @@ class Configuration {
  private:
   explicit Configuration(std::istream& stream);
 
+  // Returns the entry in |configuration_| identified by |name|. The value may be a Json::null value
+  // in case it has not been defined in the configuration file. The Get() function is not exposed to
+  // consumers, because we won't use C++ exceptions anywhere in this plugin.
+  const Json::Value& Get(const std::string& name) const;
+
   // Contains the JSON root node of the configuration tree.
   Json::Value configuration_;
 
   bool valid_;
+
+  FRIEND_TEST(ConfigurationTest, ReadRawValues);
+  DISALLOW_COPY_AND_ASSIGN(Configuration);
 };
 
 #endif  // PLAYGROUND_CONFIGURATION_H_

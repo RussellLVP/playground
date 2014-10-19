@@ -62,3 +62,9 @@ Configuration::~Configuration() {}
 bool Configuration::IsValid() const {
   return configuration_.isObject();
 }
+
+const Json::Value& Configuration::Get(const std::string& name) const {
+  DCHECK(IsValid());
+
+  return configuration_[name];
+}
