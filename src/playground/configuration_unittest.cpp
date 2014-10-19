@@ -15,9 +15,42 @@
 
 #include "playground/configuration.h"
 
+#include "base/logging.h"
 #include "gtest/gtest.h"
 
-TEST(ConfigurationTest, AlwaysPasses) {
-  auto configuration = Configuration::FromString("yo");
-  EXPECT_TRUE(configuration == nullptr);
+using namespace logging;
+
+namespace {
+
+// The Configuration class will output warnings when JSON data cannot be read, or properties are
+// being read in wrong data types which cannot be automatically converted. To avoid spamming the
+// console when running unit tests, we surpress these messages here.
+class ConfigurationTest : public testing::Test {
+ public:
+  virtual void SetUp() override {
+    previous_log_level_ = LogMessage::GetMinimumLogSeverity();
+    LogMessage::SetMinimumLogSeverity(LOG_FATAL);
+  }
+
+  virtual void TearDown() override {
+    LogMessage::SetMinimumLogSeverity(previous_log_level_);
+  }
+
+ private:
+  int previous_log_level_;
+};
+
+}  // namespace
+
+TEST_F(ConfigurationTest, InvalidConstructors) {
+  EXPECT_EQ(nullptr, Configuration::FromString(nullptr));
+  EXPECT_EQ(nullptr, Configuration::FromString(""));
+  EXPECT_EQ(nullptr, Configuration::FromFile(nullptr));
+  EXPECT_EQ(nullptr, Configuration::FromFile(""));
+  EXPECT_EQ(nullptr, Configuration::FromFile("RANDOM_NON_EXISTENT_FILE"));
+
+  {
+    std::unique_ptr<Configuration> configuration = Configuration::FromString("LVP");
+    EXPECT_FALSE(configuration->IsValid());
+  }
 }

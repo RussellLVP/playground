@@ -15,20 +15,42 @@
 
 #include "playground/configuration.h"
 
+#include <fstream>
+#include <sstream>
+
+#include "base/logging.h"
+
 // static
 std::unique_ptr<Configuration> Configuration::FromString(const char* data) {
-  return nullptr;
+  if (!data || !strlen(data))
+    return nullptr;
+
+  std::stringstream stream;
+  stream << data;
+
+  return std::unique_ptr<Configuration>(new Configuration(stream));
 }
 
 // static
 std::unique_ptr<Configuration> Configuration::FromFile(const char* filename) {
-  return nullptr;
+  if (!filename || !strlen(filename))
+    return nullptr;
+
+  std::ifstream stream(filename);
+  if (!stream.is_open())
+    return nullptr;
+
+  return std::unique_ptr<Configuration>(new Configuration(stream));
 }
 
-Configuration::Configuration(const char* data) {
-
+Configuration::Configuration(std::istream& stream) {
+  Json::Reader reader;
+  if (!reader.parse(stream, configuration_))
+    LOG(WARNING) << "Unable to parse JSON data: " << reader.getFormattedErrorMessages();
 }
 
-Configuration::~Configuration() {
+Configuration::~Configuration() {}
 
+bool Configuration::IsValid() const {
+  return configuration_.isObject();
 }

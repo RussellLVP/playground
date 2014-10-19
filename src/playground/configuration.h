@@ -16,7 +16,10 @@
 #ifndef PLAYGROUND_CONFIGURATION_H_
 #define PLAYGROUND_CONFIGURATION_H_
 
+#include <iosfwd>
 #include <memory>
+
+#include "base/json/json.h"
 
 // Provides read-only access to the data contained in a JSON structure, either passed in as a string
 // or loaded through a file. Values can be read in any format.
@@ -30,8 +33,16 @@ class Configuration {
 
   ~Configuration();
 
+  // Returns whether this Configuration instance contains any data.
+  bool IsValid() const;
+
  private:
-  explicit Configuration(const char* data);
+  explicit Configuration(std::istream& stream);
+
+  // Contains the JSON root node of the configuration tree.
+  Json::Value configuration_;
+
+  bool valid_;
 };
 
 #endif  // PLAYGROUND_CONFIGURATION_H_
