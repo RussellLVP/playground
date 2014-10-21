@@ -38,6 +38,7 @@ const Value* GetValueOfType(const Value* object, const std::string& key, ValueTy
   return &value;
 }
 
+// Clamps |value| to the valid value range of |Type|, as determined by std::numeric_limits.
 template <typename Type, typename LargeType>
 Type ClampTo(LargeType value) {
   if (value >= std::numeric_limits<Type>::max())
@@ -76,6 +77,7 @@ uint32_t JsonObject::GetUnsignedInteger(const std::string& key, uint32_t default
   return default_value;
 }
 
+// TODO(Russell): Properly handle overflows of 64-bit integer values.
 int64_t JsonObject::GetInteger64(const std::string& key, int64_t default_value) const {
   if (const Value* value = GetValueOfType(object_, key, intValue))
     return ClampTo<int64_t>(value->asLargestInt());
@@ -83,6 +85,7 @@ int64_t JsonObject::GetInteger64(const std::string& key, int64_t default_value) 
   return default_value;
 }
 
+// TODO(Russell): Properly handle overflows of 64-bit integer values.
 uint64_t JsonObject::GetUnsignedInteger64(const std::string& key, uint64_t default_value) const {
   if (const Value* value = GetValueOfType(object_, key, uintValue))
     return ClampTo<uint64_t>(value->asLargestUInt());
