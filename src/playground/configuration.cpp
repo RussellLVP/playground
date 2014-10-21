@@ -51,7 +51,8 @@ std::unique_ptr<Configuration> Configuration::FromFile(const char* filename) {
   return configuration;
 }
 
-Configuration::Configuration(std::istream& stream) {
+Configuration::Configuration(std::istream& stream) 
+    : JsonObject(&configuration_) {
   Json::Reader reader;
   if (!reader.parse(stream, configuration_))
     LOG(WARNING) << "Unable to parse JSON data: " << reader.getFormattedErrorMessages();

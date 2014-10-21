@@ -76,6 +76,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="json\jsoncpp.cpp" />
+    <ClCompile Include="json\json_object.cpp" />
     <ClCompile Include="logging.cpp" />
     <ClCompile Include="random.cpp" />
     <ClCompile Include="random_unittest.cpp" />
@@ -87,6 +88,7 @@
   <ItemGroup>
     <ClInclude Include="json\json-forwards.h" />
     <ClInclude Include="json\json.h" />
+    <ClInclude Include="json\json_object.h" />
     <ClInclude Include="logging.h" />
     <ClInclude Include="macros.h" />
     <ClInclude Include="random.h" />
