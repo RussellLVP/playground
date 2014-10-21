@@ -2060,7 +2060,7 @@ Value::Int Value::asInt() const {
     JSON_ASSERT_MESSAGE(isInt(), "LargestUInt out of Int range");
     return Int(value_.uint_);
   case realValue:
-    JSON_ASSERT_MESSAGE(InRange(value_.real_, minInt, maxInt),
+    JSON_ASSERT_MESSAGE(InRange(value_.real_, minLargestInt, maxLargestInt),
                         "double out of Int range");
     return Int(value_.real_);
   case nullValue:
@@ -2082,7 +2082,7 @@ Value::UInt Value::asUInt() const {
     JSON_ASSERT_MESSAGE(isUInt(), "LargestUInt out of UInt range");
     return UInt(value_.uint_);
   case realValue:
-    JSON_ASSERT_MESSAGE(InRange(value_.real_, 0, maxUInt),
+    JSON_ASSERT_MESSAGE(InRange(value_.real_, 0, maxLargestUInt),
                         "double out of UInt range");
     return UInt(value_.real_);
   case nullValue:
@@ -2228,12 +2228,12 @@ bool Value::isConvertibleTo(ValueType other) const {
            (type_ == objectValue && value_.map_->size() == 0) ||
            type_ == nullValue;
   case intValue:
-    return isInt() ||
-           (type_ == realValue && InRange(value_.real_, minInt, maxInt)) ||
+    return isInt64() ||
+           (type_ == realValue && InRange(value_.real_, minLargestInt, maxLargestInt)) ||
            type_ == booleanValue || type_ == nullValue;
   case uintValue:
-    return isUInt() ||
-           (type_ == realValue && InRange(value_.real_, 0, maxUInt)) ||
+    return isUInt64() ||
+           (type_ == realValue && InRange(value_.real_, 0, maxLargestUInt)) ||
            type_ == booleanValue || type_ == nullValue;
   case realValue:
     return isNumeric() || type_ == booleanValue || type_ == nullValue;

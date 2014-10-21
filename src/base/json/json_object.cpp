@@ -40,16 +40,11 @@ const Value* GetValueOfType(const Value* object, const std::string& key, ValueTy
 
 template <typename Type, typename LargeType>
 Type ClampTo(LargeType value) {
-  LOG(INFO) << "Clamping: " << value;
-  if (value >= std::numeric_limits<Type>::max()) {
-    LOG(INFO) << "Clamping to MAX.";
+  if (value >= std::numeric_limits<Type>::max())
     return std::numeric_limits<Type>::max();
-  }
 
-  if (value <= std::numeric_limits<Type>::min()) {
-    LOG(INFO) << "Clamping to MIN.";
+  if (value <= std::numeric_limits<Type>::min())
     return std::numeric_limits<Type>::min();
-  }
 
   return static_cast<Type>(value);
 }
