@@ -93,6 +93,20 @@ uint64_t JsonObject::GetUnsignedInteger64(const std::string& key, uint64_t defau
   return default_value;
 }
 
+float JsonObject::GetFloat(const std::string& key, float default_value) const {
+  if (const Value* value = GetValueOfType(object_, key, realValue))
+    return value->asFloat();
+
+  return default_value;
+}
+
+double JsonObject::GetDouble(const std::string& key, double default_value) const {
+  if (const Value* value = GetValueOfType(object_, key, realValue))
+    return value->asDouble();
+
+  return default_value;
+}
+
 JsonObject JsonObject::GetObject(const std::string& key) const {
   return JsonObject(GetValueOfType(object_, key, objectValue));
 }

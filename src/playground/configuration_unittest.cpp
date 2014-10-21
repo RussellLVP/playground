@@ -79,6 +79,10 @@ const char kValidConfigurationString[] = R"json(
       "max": 18446744073709551615,
       "overflow": 18446744073709551616,
       "string": "LVP"
+    },
+    "floating_point": {
+      "positive": 123456789.987654321,
+      "negative": -123456789.987654321
     }
   })json";
 
@@ -182,5 +186,14 @@ TEST_F(ConfigurationTest, ReadSafeValues) {
     //EXPECT_EQ(std::numeric_limits<uint64_t>::max(), uint64_object.GetUnsignedInteger64("overflow"));
     EXPECT_EQ(1337, uint64_object.GetUnsignedInteger64("null", 1337));
     EXPECT_EQ(1337, uint64_object.GetUnsignedInteger64("string", 1337));
+  }
+  {
+    JsonObject float_object = configuration->GetObject("floating_point");
+    ASSERT_TRUE(float_object.IsValid());
+
+    EXPECT_FLOAT_EQ(123456789.987654321f, float_object.GetFloat("positive"));
+    EXPECT_FLOAT_EQ(-123456789.987654321f, float_object.GetFloat("negative"));
+    EXPECT_DOUBLE_EQ(123456789.987654321, float_object.GetDouble("positive"));
+    EXPECT_DOUBLE_EQ(-123456789.987654321, float_object.GetDouble("negative"));
   }
 }

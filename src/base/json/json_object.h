@@ -53,6 +53,14 @@ class JsonObject {
   // returned by this method will always be clamped to the range [0, 2^64-1].
   uint64_t GetUnsignedInteger64(const std::string& key, uint64_t default_value = 0) const;
   
+  // Returns the value of |key| when it exists in this object and can be converted to a 32-bit
+  // floating point number. Otherwise, it will return the value in |default_value|.
+  float GetFloat(const std::string& key, float default_value = 0.0) const;
+
+  // Returns the value of |key| when it exists in this object and can be converted to a 64-bit
+  // floating point number. Otherwise, it will return the value in |default_value|.
+  double GetDouble(const std::string& key, double default_value = 0.0) const;
+
   // Returns a new JsonObject instance which wraps the values of |key| when it exists in this
   // object, and is an object indeed. 
   JsonObject GetObject(const std::string& key) const;
