@@ -75,11 +75,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="reaction_test\drivers\calculation_driver.cpp" />
+    <ClCompile Include="reaction_test\drivers\random_string_driver.cpp" />
     <ClCompile Include="reaction_test\reaction_test.cpp" />
     <ClCompile Include="reaction_test\reaction_test_servertest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="reaction_test\drivers\calculation_driver.h" />
+    <ClInclude Include="reaction_test\drivers\random_string_driver.h" />
     <ClInclude Include="reaction_test\reaction_test.h" />
+    <ClInclude Include="reaction_test\reaction_test_driver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

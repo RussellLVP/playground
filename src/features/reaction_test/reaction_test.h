@@ -16,10 +16,14 @@
 #ifndef FEATURES_REACTION_TEST_REACTION_TEST_H_ 
 #define FEATURES_REACTION_TEST_REACTION_TEST_H_
 
+#include <memory>
 #include <string>
+#include <vector>
 
 #include "playground/services/service.h"
 #include "playground/services/timers/timer.h"
+
+class ReactionTestDriver;
 
 // The reaction test feature sends an occasional puzzle to the connected players, a valid answer to
 // which will make them some money. The puzzle can be of repetitive nature ("copy this string") or
@@ -34,11 +38,15 @@ class ReactionTest : public Service {
 
  protected:
   explicit ReactionTest(Playground* playground);
+  virtual ~ReactionTest();
 
  private:
   // Returns a number of seconds before the next reaction test should start. This is a random amount
   // of time between 2 and 5 minutes, preventing players from knowing when the next test starts.
   TimeSpan GetNextReactionTestDelay();
+
+  // Vector of drivers which can produce questions and answers for the reaction tests.
+  std::vector<std::unique_ptr<ReactionTestDriver>> drivers_;
 
   Timer timer_;
 };

@@ -16,6 +16,8 @@
 #include "features/reaction_test/reaction_test.h"
 
 #include "base/random.h"
+#include "features/reaction_test/drivers/calculation_driver.h"
+#include "features/reaction_test/drivers/random_string_driver.h"
 #include "playground/services/service_manager.h"
 
 DEFINE_SERVICE(ReactionTest);
@@ -23,9 +25,14 @@ DEFINE_SERVICE(ReactionTest);
 ReactionTest::ReactionTest(Playground* playground)
     : Service(playground),
       timer_(std::bind(&ReactionTest::Start, this)) {
+  drivers_.push_back(std::make_unique<CalculationDriver>());
+  drivers_.push_back(std::make_unique<RandomStringDriver>());
+
   int start_delay = configuration().GetInteger("start_delay", 30);
   timer_.Start(TimeSpan::FromSeconds(start_delay), false);
 }
+
+ReactionTest::~ReactionTest() {}
 
 void ReactionTest::Start() {
   // TODO(Russell): Actually start a new reaction test.
