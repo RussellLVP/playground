@@ -22,8 +22,16 @@
 
 DEFINE_SERVICE(ReactionTest);
 
+namespace {
+
+// Id representing an invalid reaction test driver.
+const int kInvalidDriverId = -1;
+
+}  // namespace
+
 ReactionTest::ReactionTest(Playground* playground)
     : Service(playground),
+      current_driver_id_(kInvalidDriverId),
       timer_(std::bind(&ReactionTest::Start, this)) {
   drivers_.push_back(std::make_unique<CalculationDriver>());
   drivers_.push_back(std::make_unique<RandomStringDriver>());
@@ -35,7 +43,12 @@ ReactionTest::ReactionTest(Playground* playground)
 ReactionTest::~ReactionTest() {}
 
 void ReactionTest::Start() {
-  // TODO(Russell): Actually start a new reaction test.
+  current_driver_id_ = Random::Next(0, drivers_.size() - 1);
+
+  std::string question = drivers_[current_driver_id_]->CreateQuestion();
+  // TODO(Russell): Present |question| to in-game users.
+
+  // Schedule the next reaction test in case no one provides a valid answer.
   timer_.Start(GetNextReactionTestDelay(), false);
 }
 

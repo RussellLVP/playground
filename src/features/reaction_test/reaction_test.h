@@ -48,6 +48,9 @@ class ReactionTest : public Service {
   // Vector of drivers which can produce questions and answers for the reaction tests.
   std::vector<std::unique_ptr<ReactionTestDriver>> drivers_;
 
+  // Id of the driver which is handling the current test, if any. -1 means that no test is active.
+  int current_driver_id_;
+
   Timer timer_;
 };
 
