@@ -36,6 +36,10 @@ int ServerController::ConnectPlayer(const std::string& nickname, const std::stri
   return player_id;
 }
 
+bool ServerController::PlayerSay(int player_id, const std::string& message) {
+  return !!GetEventListener().OnPlayerText(player_id, message);
+}
+
 void ServerController::DisconnectPlayer(int player_id) {
   GetEventListener().OnPlayerDisconnect(player_id, 0);
   player_manager_.Disconnect(player_id);

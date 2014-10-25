@@ -13,23 +13,22 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SERVER_BINDINGS_EVENT_LISTENER_H_
-#define SERVER_BINDINGS_EVENT_LISTENER_H_
+#ifndef SERVER_LISTENERS_CHAT_EVENT_LISTENER_H_
+#define SERVER_LISTENERS_CHAT_EVENT_LISTENER_H_
 
 #include <string>
 
 namespace samp {
 
-// Interface which defines the event listeners that can be provided from a SA-MP environment.
-class EventListener {
+// The chat event listener allows features to listen in to incoming messages in the SA-MP chatbox,
+// as sent by other players. These events are cancellable.
+class ChatEventListener {
  public:
-  virtual ~EventListener() {}
+  virtual ~ChatEventListener() {}
 
-  virtual int OnPlayerConnect(int player_id) = 0;
-  virtual int OnPlayerDisconnect(int player_id, int reason) = 0;
-  virtual int OnPlayerText(int player_id, const std::string& message) = 0;
+  virtual bool OnPlayerText(int player_id, const std::string& message) = 0;
 };
 
 }  // namespace samp
 
-#endif  // SERVER_BINDINGS_EVENT_LISTENER_H_
+#endif  // SERVER_LISTENERS_CHAT_EVENT_LISTENER_H_

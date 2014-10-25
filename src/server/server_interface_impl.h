@@ -32,7 +32,9 @@ class ServerInterfaceImpl : public ServerInterface,
 
   // ServerInterface implementation.
   virtual void ProvideNativeFunction(const std::string& name, const NativeFunction& implementation) override;
+  virtual void AttachEventListener(samp::ChatEventListener* chat_event_listener) override;
   virtual void AttachEventListener(samp::PlayerEventListener* player_event_listener) override;
+  virtual void RemoveEventListener(samp::ChatEventListener* chat_event_listener) override;
   virtual void RemoveEventListener(samp::PlayerEventListener* player_event_listener) override;
   virtual void DidLoadScript(AMX* amx) override;
   virtual void DidUnloadScript(AMX* amx) override;
@@ -41,6 +43,7 @@ class ServerInterfaceImpl : public ServerInterface,
   // samp::EventListener implementation.
   virtual int OnPlayerConnect(int player_id) override;
   virtual int OnPlayerDisconnect(int player_id, int reason) override;
+  virtual int OnPlayerText(int player_id, const std::string& message) override;
 
  private:
   NativeCallbackInterceptor native_callback_interceptor_;
@@ -49,6 +52,7 @@ class ServerInterfaceImpl : public ServerInterface,
 
   bool is_test_;
 
+  std::list<samp::ChatEventListener*> chat_event_listeners_;
   std::list<samp::PlayerEventListener*> player_event_listeners_;
 };
 

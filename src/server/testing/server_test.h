@@ -33,6 +33,10 @@ class ServerTest : public ::testing::Test {
   int ConnectPlayer(const std::string& nickname,
                     const std::string& ip_address = "127.0.0.1");
 
+  // Makes the player with |player_id| say |message|. Returns whether the message was allowed to be
+  // displayed in the chat windows of other players.
+  bool Say(int player_id, const std::string& message);
+
   // Disconnects |player_id| from the server.
   void DisconnectPlayer(int player_id);
 

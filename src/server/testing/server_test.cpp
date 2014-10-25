@@ -52,6 +52,10 @@ int ServerTest::ConnectPlayer(const std::string& nickname, const std::string& ip
   return GetTestActionDelegate().ConnectPlayer(nickname, ip_address);
 }
 
+bool ServerTest::Say(int player_id, const std::string& message) {
+  return GetTestActionDelegate().PlayerSay(player_id, message);
+}
+
 void ServerTest::DisconnectPlayer(int player_id) {
   GetTestActionDelegate().DisconnectPlayer(player_id);
 }

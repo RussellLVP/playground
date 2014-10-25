@@ -21,6 +21,7 @@
 #include "server/native_function.h"
 
 namespace samp {
+class ChatEventListener;
 class PlayerEventListener;
 }
 
@@ -42,9 +43,11 @@ class ServerInterface {
 
   // Attaches a new event listener of type |interface|. Any number of event listeners may be
   // registered for each type, but earlier interfaces get priority when the return value matters.
+  virtual void AttachEventListener(samp::ChatEventListener* chat_event_listener) = 0;
   virtual void AttachEventListener(samp::PlayerEventListener* player_event_listener) = 0;
 
   // Removes |interface| from the list of event listeners for the relevant type.
+  virtual void RemoveEventListener(samp::ChatEventListener* chat_event_listener) = 0;
   virtual void RemoveEventListener(samp::PlayerEventListener* player_event_listener) = 0;
 
   // Events which will be triggered by the plugin, and allow the interface to keep track of the

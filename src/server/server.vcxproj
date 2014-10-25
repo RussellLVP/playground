@@ -84,6 +84,7 @@
     <ClInclude Include="bindings\float.h" />
     <ClInclude Include="bindings\http.h" />
     <ClInclude Include="bindings\internal\mock_amx.h" />
+    <ClInclude Include="listeners\chat_event_listener.h" />
     <ClInclude Include="native_callback_interceptor.h" />
     <ClInclude Include="server_log_delegate.h" />
     <ClInclude Include="bindings\objects.h" />

@@ -47,6 +47,7 @@ class TestController {
   class TestActionDelegate {
    public:
     virtual int ConnectPlayer(const std::string& nickname, const std::string& ip_address) = 0;
+    virtual bool PlayerSay(int player_id, const std::string& message) = 0;
     virtual void DisconnectPlayer(int player_id) = 0;
   };
 

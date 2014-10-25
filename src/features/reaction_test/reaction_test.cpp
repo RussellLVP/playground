@@ -71,7 +71,7 @@ TimeSpan ReactionTest::GetNextReactionTestDelay() const {
 int ReactionTest::GetPrizeMoneyForQuestion(const ReactionTestQuestion& question) const {
   int minimum_prize = configuration().GetInteger("minimum_prize", 7500);
   int maximum_prize = configuration().GetInteger("maximum_prize", 15000);
-  double multiplier;
+  double multiplier = 1.0;
 
   switch (question.complexity) {
   case ReactionTestQuestion::EasyQuestion:

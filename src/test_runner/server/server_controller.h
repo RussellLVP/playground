@@ -30,6 +30,7 @@ class ServerController : public TestController::TestActionDelegate {
 
   // TestController::TestActionDelegate implementation.
   virtual int ConnectPlayer(const std::string& nickname, const std::string& ip_address) override;
+  virtual bool PlayerSay(int player_id, const std::string& message) override;
   virtual void DisconnectPlayer(int player_id) override;
 
  private:

@@ -15,6 +15,7 @@
 
 #include "server/server_interface_impl.h"
 
+#include "server/listeners/chat_event_listener.h"
 #include "server/listeners/player_event_listener.h"
 #include "server/sdk/plugincommon.h"
 
@@ -68,6 +69,7 @@ void ServerInterfaceImpl::ProvideNativeFunction(const std::string& name, const N
     member.remove(listener); \
   }
 
+WRITE_EVENT_LISTENER(ChatEventListener, chat_event_listeners_);
 WRITE_EVENT_LISTENER(PlayerEventListener, player_event_listeners_);
 
 // -------------------------------------------------------------------------------------------------
@@ -96,6 +98,15 @@ int ServerInterfaceImpl::OnPlayerConnect(int player_id) {
 int ServerInterfaceImpl::OnPlayerDisconnect(int player_id, int reason) {
   for (auto& listener : player_event_listeners_)
     listener->OnPlayerDisconnect(player_id, reason);
+
+  return 1;
+}
+
+int ServerInterfaceImpl::OnPlayerText(int player_id, const std::string& message) {
+  for (auto& listener : chat_event_listeners_) {
+    if (!listener->OnPlayerText(player_id, message))
+      return 0;
+  }
 
   return 1;
 }
