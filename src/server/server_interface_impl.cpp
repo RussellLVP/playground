@@ -33,10 +33,13 @@ ServerInterfaceImpl* g_server_interface_impl = nullptr;
 
 ServerInterfaceImpl::ServerInterfaceImpl(void** data)
     : native_callback_interceptor_(data[PLUGIN_DATA_AMX_EXPORTS]),
-      log_delegate_(static_cast<logprintf_t>(data[PLUGIN_DATA_LOGPRINTF])) {
+      log_delegate_(static_cast<logprintf_t>(data[PLUGIN_DATA_LOGPRINTF])),
+      is_test_(false) {
   CHECK(!g_server_interface_impl);
 
   pAMXFunctions = data[PLUGIN_DATA_AMX_EXPORTS];
+  if (!pAMXFunctions)
+    is_test_ = true;
 
   native_callback_interceptor_.RegisterNatives(this);
   g_server_interface_impl = this;
@@ -74,6 +77,12 @@ void ServerInterfaceImpl::DidLoadScript(AMX* amx) {
 }
 
 void ServerInterfaceImpl::DidUnloadScript(AMX* amx) {}
+
+// -------------------------------------------------------------------------------------------------
+
+bool ServerInterfaceImpl::IsRunningTest() const {
+  return is_test_;
+}
 
 // -------------------------------------------------------------------------------------------------
 

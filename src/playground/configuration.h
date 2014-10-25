@@ -26,11 +26,14 @@
 // or loaded through a file. Values can be read in any format.
 class Configuration {
  public:
-  // Creates a new JsonObject instance fed with |data| as the JSON structure.
+  // Creates a new Configuration instance fed with |data| as the JSON structure.
   static std::unique_ptr<Configuration> FromString(const char* data);
 
-  // Creates a new JsonObject instance fed by the contents of |filename|.
+  // Creates a new Configuration instance fed by the contents of |filename|.
   static std::unique_ptr<Configuration> FromFile(const char* filename);
+
+  // Creates a new Configuration instance fed by default settings.
+  static std::unique_ptr<Configuration> FromDefaults();
 
   // Returns a JsonObject instance based on the configuration.
   const JsonObject object() const;

@@ -20,6 +20,8 @@
 
 #include "base/macros.h"
 
+class Configuration;
+class JsonObject;
 class PlayerManager;
 class ServerInterface;
 class ServiceManager;
@@ -38,6 +40,9 @@ class Playground {
   // are running as part of Las Venturas Playground.
   ServiceManager& service_manager() { return *service_manager_; }
 
+  // Returns the root object of the configuration for this instance of LVP.
+  JsonObject configuration() const;
+
   // Returns a references to the managers owned by this class.
   PlayerManager& player_manager() { return *player_manager_; }
 
@@ -45,7 +50,7 @@ private:
   // Weak pointer which' lifetime is controlled by the plugin runtime.
   ServerInterface* server_interface_;
 
-  // The service manager owns all components and features running on the server.
+  std::unique_ptr<Configuration> configuration_;
   std::unique_ptr<ServiceManager> service_manager_;
 
   // The entity managers owned by the server. Las Venturas Playground keeps track of entities by

@@ -51,6 +51,10 @@ class ServerInterface {
   // available scripts on the server.
   virtual void DidLoadScript(AMX* amx) = 0;
   virtual void DidUnloadScript(AMX* amx) = 0;
+
+  // Returns whether this instance of the ServerInstance is owned by the test runner. This method
+  // should only be used to surpress certain warnings which don't make sense there.
+  virtual bool IsRunningTest() const = 0;
 };
 
 #endif  // SERVER_SERVER_INTERFACE_H_

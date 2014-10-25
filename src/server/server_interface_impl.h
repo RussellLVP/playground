@@ -36,6 +36,7 @@ class ServerInterfaceImpl : public ServerInterface,
   virtual void RemoveEventListener(samp::PlayerEventListener* player_event_listener) override;
   virtual void DidLoadScript(AMX* amx) override;
   virtual void DidUnloadScript(AMX* amx) override;
+  virtual bool IsRunningTest() const override;
 
   // samp::EventListener implementation.
   virtual int OnPlayerConnect(int player_id) override;
@@ -45,6 +46,8 @@ class ServerInterfaceImpl : public ServerInterface,
   NativeCallbackInterceptor native_callback_interceptor_;
   NativeFunctionManager native_function_manager_;
   ServerLogDelegate log_delegate_;
+
+  bool is_test_;
 
   std::list<samp::PlayerEventListener*> player_event_listeners_;
 };

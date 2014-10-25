@@ -15,16 +15,34 @@
 
 #include "playground/playground.h"
 
+#include "base/logging.h"
+#include "playground/configuration.h"
 #include "playground/entities/player_manager.h"
 #include "playground/services/service_manager.h"
 #include "playground/services/timers/thread_timer_manager.h"
 #include "server/server_interface.h"
+
+namespace {
+
+// File the configuration for Las Venturas Playground resides in.
+const char kConfigurationFile[] = "playground.json";
+
+}  // namespace
 
 Playground::Playground(ServerInterface* server_interface)
     : server_interface_(server_interface),
       service_manager_(new ServiceManager()),
       player_manager_(new PlayerManager()) {
   server_interface_->AttachEventListener(player_manager_.get());
+
+  configuration_ = Configuration::FromFile(kConfigurationFile);
+  if (!configuration_) {
+    if (!server_interface->IsRunningTest())
+      LOG(ERROR) << "Unable to load the configuration file (" << kConfigurationFile << ").";
+
+    configuration_ = Configuration::FromDefaults();
+    CHECK(configuration_);
+  }
 
   service_manager_->Initialize(this);
 }
@@ -35,4 +53,8 @@ Playground::~Playground() {
 
 void Playground::ProcessTick() {
   ThreadTimerManager::InstanceForThread()->ProcessTimers();
+}
+
+JsonObject Playground::configuration() const {
+  return configuration_->object();
 }

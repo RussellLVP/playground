@@ -20,6 +20,18 @@
 
 #include "base/logging.h"
 
+namespace {
+
+// Default configuration for the Playground instance in case the configuration file could not be
+// loaded. Values should only be added in here in case they're important for the game-play.
+const char kDefaultConfiguration[] = R"json(
+{
+
+
+})json";
+
+}  // namespace
+
 // static
 std::unique_ptr<Configuration> Configuration::FromString(const char* data) {
   if (!data || !strlen(data))
@@ -49,6 +61,11 @@ std::unique_ptr<Configuration> Configuration::FromFile(const char* filename) {
     return nullptr;
 
   return configuration;
+}
+
+// static
+std::unique_ptr<Configuration> Configuration::FromDefaults() {
+  return FromString(kDefaultConfiguration);
 }
 
 Configuration::Configuration(std::istream& stream) {
