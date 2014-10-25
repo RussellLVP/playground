@@ -19,8 +19,8 @@ RandomStringDriver::RandomStringDriver() {}
 
 RandomStringDriver::~RandomStringDriver() {}
 
-std::string RandomStringDriver::CreateQuestion() {
-  return "";
+ReactionTestQuestion RandomStringDriver::CreateQuestion() {
+  return ReactionTestQuestion();
 }
 
 bool RandomStringDriver::IsCorrect(const std::string& answer) const {

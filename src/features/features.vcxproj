@@ -85,6 +85,7 @@
     <ClInclude Include="reaction_test\drivers\random_string_driver.h" />
     <ClInclude Include="reaction_test\reaction_test.h" />
     <ClInclude Include="reaction_test\reaction_test_driver.h" />
+    <ClInclude Include="reaction_test\reaction_test_question.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

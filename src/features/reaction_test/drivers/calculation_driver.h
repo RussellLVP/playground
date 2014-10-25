@@ -26,7 +26,7 @@ class CalculationDriver : public ReactionTestDriver {
   virtual ~CalculationDriver();
 
   // ReactionTestDriver implementation.
-  virtual std::string CreateQuestion() override;
+  virtual ReactionTestQuestion CreateQuestion() override;
   virtual bool IsCorrect(const std::string& answer) const override;
 
  private:

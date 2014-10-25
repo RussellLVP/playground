@@ -19,8 +19,8 @@ CalculationDriver::CalculationDriver() {}
 
 CalculationDriver::~CalculationDriver() {}
 
-std::string CalculationDriver::CreateQuestion() {
-  return "";
+ReactionTestQuestion CalculationDriver::CreateQuestion() {
+  return ReactionTestQuestion();
 }
 
 bool CalculationDriver::IsCorrect(const std::string& answer) const {

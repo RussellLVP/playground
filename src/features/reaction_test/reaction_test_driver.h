@@ -18,14 +18,16 @@
 
 #include <string>
 
+#include "features/reaction_test/reaction_test_question.h"
+
 // A reaction test driver defines the underlying logic of a test. Each driver gets complete freedom
 // in defining the format of the questions and answers.
 class ReactionTestDriver {
  public:
   virtual ~ReactionTestDriver() {}
 
-  // Creates a new reaction test. The question will be returned as a string.
-  virtual std::string CreateQuestion() = 0;
+  // Creates a new reaction test, and returns a new ReactionTestQuestion object with all the info.
+  virtual ReactionTestQuestion CreateQuestion() = 0;
 
   // Returns whether the |answer| is the correct answer to the running test.
   virtual bool IsCorrect(const std::string& answer) const = 0;

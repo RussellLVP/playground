@@ -15,9 +15,11 @@
 
 #include "features/reaction_test/reaction_test.h"
 
+#include "base/logging.h"
 #include "base/random.h"
 #include "features/reaction_test/drivers/calculation_driver.h"
 #include "features/reaction_test/drivers/random_string_driver.h"
+#include "features/reaction_test/reaction_test_question.h"
 #include "playground/services/service_manager.h"
 
 DEFINE_SERVICE(ReactionTest);
@@ -32,6 +34,7 @@ const int kInvalidDriverId = -1;
 ReactionTest::ReactionTest(Playground* playground)
     : Service(playground),
       current_driver_id_(kInvalidDriverId),
+      prize_money_(0),
       timer_(std::bind(&ReactionTest::Start, this)) {
   drivers_.push_back(std::make_unique<CalculationDriver>());
   drivers_.push_back(std::make_unique<RandomStringDriver>());
@@ -43,18 +46,44 @@ ReactionTest::ReactionTest(Playground* playground)
 ReactionTest::~ReactionTest() {}
 
 void ReactionTest::Start() {
+  DCHECK(drivers_.size()) << "There are no reaction test drivers available.";
+  if (!drivers_.size())
+    return;
+
   current_driver_id_ = Random::Next(0, drivers_.size() - 1);
 
-  std::string question = drivers_[current_driver_id_]->CreateQuestion();
+  ReactionTestQuestion question = drivers_[current_driver_id_]->CreateQuestion();
+  prize_money_ = GetPrizeMoneyForQuestion(question);
+
   // TODO(Russell): Present |question| to in-game users.
 
   // Schedule the next reaction test in case no one provides a valid answer.
   timer_.Start(GetNextReactionTestDelay(), false);
 }
 
-TimeSpan ReactionTest::GetNextReactionTestDelay() {
+TimeSpan ReactionTest::GetNextReactionTestDelay() const {
   int minimum_delay = configuration().GetInteger("minimum_delay", 120);
   int maximum_delay = configuration().GetInteger("maximum_delay", 300);
 
   return TimeSpan::FromSeconds(Random::Next(minimum_delay, maximum_delay));
+}
+
+int ReactionTest::GetPrizeMoneyForQuestion(const ReactionTestQuestion& question) const {
+  int minimum_prize = configuration().GetInteger("minimum_prize", 7500);
+  int maximum_prize = configuration().GetInteger("maximum_prize", 15000);
+  double multiplier;
+
+  switch (question.complexity) {
+  case ReactionTestQuestion::EasyQuestion:
+    multiplier = configuration().GetDouble("multiplier_easy", 0.75);
+    break;
+  case ReactionTestQuestion::NormalQuestion:
+    multiplier = configuration().GetDouble("multiplier_normal", 1.0);
+    break;
+  case ReactionTestQuestion::HardQuestion:
+    multiplier = configuration().GetDouble("multiplier_hard", 1.25);
+    break;
+  }
+
+  return static_cast<int>(multiplier * Random::Next(minimum_prize, maximum_prize));
 }
