@@ -16,6 +16,7 @@
 #include "playground/playground.h"
 
 #include "base/logging.h"
+#include "playground/communication/chat_manager.h"
 #include "playground/configuration.h"
 #include "playground/entities/player_manager.h"
 #include "playground/services/service_manager.h"
@@ -31,10 +32,7 @@ const char kConfigurationFile[] = "playground.json";
 
 Playground::Playground(ServerInterface* server_interface)
     : server_interface_(server_interface),
-      service_manager_(new ServiceManager()),
-      player_manager_(new PlayerManager()) {
-  server_interface_->AttachEventListener(player_manager_.get());
-
+      service_manager_(new ServiceManager()) {
   configuration_ = Configuration::FromFile(kConfigurationFile);
   if (!configuration_) {
     if (!server_interface->IsRunningTest())
@@ -43,6 +41,12 @@ Playground::Playground(ServerInterface* server_interface)
     configuration_ = Configuration::FromDefaults();
     CHECK(configuration_);
   }
+
+  chat_manager_.reset(new ChatManager(this));
+  server_interface_->AttachEventListener(chat_manager_.get());
+
+  player_manager_.reset(new PlayerManager());
+  server_interface_->AttachEventListener(player_manager_.get());
 
   service_manager_->Initialize(this);
 }

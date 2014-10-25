@@ -18,10 +18,12 @@
 #include "features/reaction_test/reaction_test_question.h"
 #include "playground/services/service_test.h"
 
-class ReactionTestServiceTest : public ServiceTest<ReactionTest> {};
+class ReactionTestServiceTest : public ServiceTest<ReactionTest> {
+
+};
 
 TEST_F(ReactionTestServiceTest, AlwaysPasses) {
-  
+
   EXPECT_TRUE(true);
 }
 

@@ -20,6 +20,7 @@
 
 #include "base/macros.h"
 
+class ChatManager;
 class Configuration;
 class JsonObject;
 class PlayerManager;
@@ -44,6 +45,7 @@ class Playground {
   JsonObject configuration() const;
 
   // Returns a references to the managers owned by this class.
+  ChatManager& chat_manager() { return *chat_manager_; }
   PlayerManager& player_manager() { return *player_manager_; }
 
 private:
@@ -55,6 +57,7 @@ private:
 
   // The entity managers owned by the server. Las Venturas Playground keeps track of entities by
   // itself, without relying on calling SA-MP natives for every bit of data.
+  std::unique_ptr<ChatManager> chat_manager_;
   std::unique_ptr<PlayerManager> player_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(Playground);
