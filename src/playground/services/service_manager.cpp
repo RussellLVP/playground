@@ -59,7 +59,5 @@ Service* ServiceManager::GetService(const char* name) {
 
 void ServiceManager::InitializeService(const char* name, ServiceRegistration* registration) {
   std::shared_ptr<Service> instance = std::shared_ptr<Service>(registration->Create(playground_));
-  instance->OnServiceInstalled();
-
   services_[name] = instance;
 }

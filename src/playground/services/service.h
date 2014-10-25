@@ -37,11 +37,6 @@ class Service {
   // done automatically by the DEFINE_SERVICE() macro.
   virtual const char* service_name() const = 0;
 
-  // Called when the service has been installed, and should be used to register the service with
-  // event listeners and activate timers. This should not be done in the constructor, as it won't
-  // be possible to create a weak pointer based on the service yet at that point.
-  virtual void OnServiceInstalled() {}
-
   // Returns the configuration object specific to this server. May be empty it if wasn't defined.
   JsonObject configuration() const;
 
