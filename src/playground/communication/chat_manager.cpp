@@ -15,33 +15,44 @@
 
 #include "playground/communication/chat_manager.h"
 
+#include "base/color.h"
 #include "base/logging.h"
 #include "playground/communication/chat_event_listener.h"
 #include "playground/communication/message_builder.h"
 #include "playground/entities/player_manager.h"
 #include "playground/playground.h"
+#include "playground/theme.h"
+#include "server/bindings/samp.h"
 
 ChatManager::ChatManager(Playground* playground)
     : playground_(playground) {}
 
 ChatManager::~ChatManager() {}
 
+// -------------------------------------------------------------------------------------------------
+
 void ChatManager::DistributeMessage(const MessageBuilder& builder) {
-  DistributeMessage(builder.ToString());
+  DistributeMessage(builder.ToString(), builder.color());
 }
 
 void ChatManager::DistributeMessage(const std::string& message) {
-  // TODO(Russell): Actually distribute the message to all in-game players.
+  DistributeMessage(message, theme::kDefaultTextColor);
+}
 
-  LOG(INFO) << "Distribute: [[" << message << "]]";
+void ChatManager::DistributeMessage(const std::string& message, const Color& color) {
+  samp::SendClientMessageToAll(color.ToInteger(), std::string(message));
 
   for (auto* listener : event_listeners_)
     listener->OnDistributeMessageToAll(message);
 }
 
+// -------------------------------------------------------------------------------------------------
+
 void ChatManager::AttachEventListener(::ChatEventListener* listener) {
   event_listeners_.push_back(listener);
 }
+
+// -------------------------------------------------------------------------------------------------
 
 bool ChatManager::OnPlayerText(int player_id, const std::string& message) {
   Player* player = playground_->player_manager().Get(player_id);

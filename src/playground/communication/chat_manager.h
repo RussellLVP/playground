@@ -22,6 +22,7 @@
 #include "server/listeners/chat_event_listener.h"
 
 class ChatEventListener;
+struct Color;
 class MessageBuilder;
 class Playground;
 
@@ -35,6 +36,7 @@ class ChatManager : public samp::ChatEventListener {
   // Sends |message| to all players on Las Venturas Playground.
   void DistributeMessage(const MessageBuilder& builder);
   void DistributeMessage(const std::string& message);
+  void DistributeMessage(const std::string& message, const Color& color);
 
   // Registers |listener| as an event listener for any event related to the chat manager.
   // TODO(Russell): Event unregistration should be automatic; make |listener| weak.

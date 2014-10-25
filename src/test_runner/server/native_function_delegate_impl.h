@@ -47,6 +47,7 @@ class NativeFunctionDelegateImpl : public TestController::NativeFunctionDelegate
   // -----------------------------------------------------------------------------------------------
   int GetWeather();
   int SetWeather(int weather_id);
+  int SendClientMessageToAll(int color, std::string* message);
 
   // a_players.inc
   int SetPlayerPos(int player_id, double x, double y, double z);

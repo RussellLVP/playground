@@ -24,6 +24,7 @@ NativeFunctionDelegateImpl::NativeFunctionDelegateImpl(ServerController* server_
       current_weather_(0) {
   ProvideNative("GetWeather", &NativeFunctionDelegateImpl::GetWeather);
   ProvideNative("SetWeather", &NativeFunctionDelegateImpl::SetWeather);
+  ProvideNative("SendClientMessageToAll", &NativeFunctionDelegateImpl::SendClientMessageToAll);
 
   ProvideNative("SetPlayerPos", &NativeFunctionDelegateImpl::SetPlayerPos);
   ProvideNative("GetPlayerPos", &NativeFunctionDelegateImpl::GetPlayerPos);
@@ -69,6 +70,10 @@ int NativeFunctionDelegateImpl::GetWeather() {
 
 int NativeFunctionDelegateImpl::SetWeather(int weather_id) {
   current_weather_ = weather_id;
+  return 0;
+}
+
+int NativeFunctionDelegateImpl::SendClientMessageToAll(int color, std::string* message) {
   return 0;
 }
 
