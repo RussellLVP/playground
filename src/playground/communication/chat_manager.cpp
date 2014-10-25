@@ -43,7 +43,7 @@ bool ChatManager::OnPlayerText(int player_id, const std::string& message) {
 
   bool cancelled = false;
   for (auto* listener : event_listeners_)
-    cancelled = listener->OnPlayerText(player, message, cancelled);
+    cancelled = !listener->OnPlayerText(player, message, cancelled);
 
   return cancelled;
 }

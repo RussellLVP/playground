@@ -21,6 +21,7 @@
 #include <vector>
 
 #include "gtest/gtest_prod.h"
+#include "playground/communication/chat_event_listener.h"
 #include "playground/services/service.h"
 #include "playground/services/timers/timer.h"
 
@@ -30,13 +31,17 @@ struct ReactionTestQuestion;
 // The reaction test feature sends an occasional puzzle to the connected players, a valid answer to
 // which will make them some money. The puzzle can be of repetitive nature ("copy this string") or
 // of mathematical nature ("calculate (60 - 15) * 2").
-class ReactionTest : public Service {
+class ReactionTest : public Service,
+                     public ChatEventListener {
   DECLARE_SERVICE(ReactionTest);
 
  public:
   // Starts a new reaction test by inviting all players to answer to a puzzle. The test will not be
   // started if there are no players in-game.
   void Start();
+
+  // ChatEventListener implementation.
+  virtual bool OnPlayerText(Player* player, const std::string& message, bool cancelled) override;
 
  protected:
   explicit ReactionTest(Playground* playground);

@@ -20,6 +20,9 @@
 #include "features/reaction_test/drivers/calculation_driver.h"
 #include "features/reaction_test/drivers/random_string_driver.h"
 #include "features/reaction_test/reaction_test_question.h"
+#include "playground/communication/chat_manager.h"
+#include "playground/entities/player.h"
+#include "playground/playground.h"
 #include "playground/services/service_manager.h"
 
 DEFINE_SERVICE(ReactionTest);
@@ -39,11 +42,15 @@ ReactionTest::ReactionTest(Playground* playground)
   drivers_.push_back(std::make_unique<CalculationDriver>());
   drivers_.push_back(std::make_unique<RandomStringDriver>());
 
+  playground->chat_manager().AttachEventListener(this);
+
   int start_delay = configuration().GetInteger("start_delay", 30);
   timer_.Start(TimeSpan::FromSeconds(start_delay), false);
 }
 
 ReactionTest::~ReactionTest() {}
+
+// -------------------------------------------------------------------------------------------------
 
 void ReactionTest::Start() {
   DCHECK(drivers_.size()) << "There are no reaction test drivers available.";
@@ -60,6 +67,25 @@ void ReactionTest::Start() {
   // Schedule the next reaction test in case no one provides a valid answer.
   timer_.Start(GetNextReactionTestDelay(), false);
 }
+
+// -------------------------------------------------------------------------------------------------
+
+bool ReactionTest::OnPlayerText(Player* player, const std::string& message, bool cancelled) {
+  if (cancelled)
+    return false;  // ignore messages which are blocked by other systems.
+
+  if (current_driver_id_ == kInvalidDriverId)
+    return true;  // don't check this message if there isn't an active reaction test right now.
+
+  if (!drivers_[current_driver_id_]->IsCorrect(message))
+    return true;  // the message does not contain the correct answer.
+
+  // TODO(Russell): |player| won. Give them money and tell others about it.
+
+  return true;
+}
+
+// -------------------------------------------------------------------------------------------------
 
 TimeSpan ReactionTest::GetNextReactionTestDelay() const {
   int minimum_delay = configuration().GetInteger("minimum_delay", 120);
