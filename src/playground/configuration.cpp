@@ -29,7 +29,7 @@ std::unique_ptr<Configuration> Configuration::FromString(const char* data) {
   stream << data;
 
   auto configuration = std::unique_ptr<Configuration>(new Configuration(stream));
-  if (!configuration->IsValid())
+  if (!configuration->object().IsValid())
     return nullptr;
 
   return configuration;
@@ -45,14 +45,13 @@ std::unique_ptr<Configuration> Configuration::FromFile(const char* filename) {
     return nullptr;
 
   auto configuration = std::unique_ptr<Configuration>(new Configuration(stream));
-  if (!configuration->IsValid())
+  if (!configuration->object().IsValid())
     return nullptr;
 
   return configuration;
 }
 
-Configuration::Configuration(std::istream& stream) 
-    : JsonObject(&configuration_) {
+Configuration::Configuration(std::istream& stream) {
   Json::Reader reader;
   if (!reader.parse(stream, configuration_))
     LOG(WARNING) << "Unable to parse JSON data: " << reader.getFormattedErrorMessages();
@@ -60,12 +59,7 @@ Configuration::Configuration(std::istream& stream)
 
 Configuration::~Configuration() {}
 
-bool Configuration::IsValid() const {
-  return configuration_.isObject();
-}
 
-const Json::Value& Configuration::Get(const std::string& name) const {
-  DCHECK(IsValid());
-
-  return configuration_[name];
+const JsonObject Configuration::object() const {
+  return JsonObject(&configuration_);
 }

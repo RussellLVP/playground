@@ -18,7 +18,6 @@
     <ClCompile Include="playground.cpp" />
     <ClCompile Include="plugin.cpp" />
     <ClCompile Include="configuration.cpp" />
-    <ClCompile Include="configuration_unittest.cpp" />
     <ClCompile Include="services\service.cpp" />
     <ClCompile Include="services\service_configuration.cpp" />
     <ClCompile Include="services\service_manager.cpp" />

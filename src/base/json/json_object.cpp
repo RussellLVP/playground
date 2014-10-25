@@ -55,6 +55,8 @@ Type ClampTo(LargeType value) {
 JsonObject::JsonObject(const Json::Value* object)
     : object_(object) {}
 
+JsonObject::~JsonObject() {}
+
 bool JsonObject::IsValid() const {
   return object_ && object_->isObject();
 }
@@ -109,4 +111,11 @@ double JsonObject::GetDouble(const std::string& key, double default_value) const
 
 JsonObject JsonObject::GetObject(const std::string& key) const {
   return JsonObject(GetValueOfType(object_, key, objectValue));
+}
+
+const Json::Value& JsonObject::Get(const std::string& name) const {
+  if (!object_ || !object_->isObject())
+    return Json::Value::null;
+
+  return (*object_)[name];
 }

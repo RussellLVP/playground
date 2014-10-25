@@ -19,6 +19,8 @@
 #include <stdint.h>
 #include <string>
 
+#include "gtest/gtest_prod.h"
+
 namespace Json { class Value; }
 
 // The JsonObject class provides an interface using which a consumer can communicate with JSON data.
@@ -26,6 +28,9 @@ namespace Json { class Value; }
 // not throw C++ exceptions.
 class JsonObject {
  public:
+  explicit JsonObject(const Json::Value* object);
+  ~JsonObject();
+
   // Returns if this JsonObject refers to a valid object. This may not be the case if it was created
   // using a nullptr as the hosting object.
   bool IsValid() const;
@@ -65,11 +70,16 @@ class JsonObject {
   // object, and is an object indeed. 
   JsonObject GetObject(const std::string& key) const;
 
- protected:
-  explicit JsonObject(const Json::Value* object);
-
  private:
+  // Returns the entry in |object_| identified by |name|. The value may be a Json::null value
+  // in case it has not been defined in the configuration file. The Get() function is not exposed to
+  // consumers, because we won't use C++ exceptions anywhere in this plugin, but provides for an
+  // interface that allows us to conveniently test the underlying JSON implementation.
+  const Json::Value& Get(const std::string& name) const;
+
   const Json::Value* object_;
+
+  FRIEND_TEST(JsonObjectTest, ReadRawValues);
 };
 
 #endif  // BASE_JSON_JSON_OBJECT_H_

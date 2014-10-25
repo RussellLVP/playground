@@ -21,40 +21,26 @@
 
 #include "base/json/json.h"
 #include "base/json/json_object.h"
-#include "base/macros.h"
-#include "gtest/gtest_prod.h"
 
 // Provides read-only access to the data contained in a JSON structure, either passed in as a string
 // or loaded through a file. Values can be read in any format.
-class Configuration : public JsonObject {
+class Configuration {
  public:
-  // Creates a new Configuration instance fed with |data| as the JSON structure.
+  // Creates a new JsonObject instance fed with |data| as the JSON structure.
   static std::unique_ptr<Configuration> FromString(const char* data);
 
-  // Creates a new Configuration instance fed by the contents of |filename|.
+  // Creates a new JsonObject instance fed by the contents of |filename|.
   static std::unique_ptr<Configuration> FromFile(const char* filename);
 
-  ~Configuration();
+  // Returns a JsonObject instance based on the configuration.
+  const JsonObject object() const;
 
-  // Returns whether this Configuration instance contains any data.
-  bool IsValid() const;
+  ~Configuration();
 
  private:
   explicit Configuration(std::istream& stream);
 
-  // Returns the entry in |configuration_| identified by |name|. The value may be a Json::null value
-  // in case it has not been defined in the configuration file. The Get() function is not exposed to
-  // consumers, because we won't use C++ exceptions anywhere in this plugin, but provides for an
-  // interface that allows us to conveniently test the underlying JSON implementation.
-  const Json::Value& Get(const std::string& name) const;
-
-  // Contains the JSON root node of the configuration tree.
   Json::Value configuration_;
-
-  bool valid_;
-
-  FRIEND_TEST(ConfigurationTest, ReadRawValues);
-  DISALLOW_COPY_AND_ASSIGN(Configuration);
 };
 
 #endif  // PLAYGROUND_CONFIGURATION_H_
