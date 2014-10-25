@@ -57,6 +57,8 @@ class NativeFunctionDelegateImpl : public TestController::NativeFunctionDelegate
   int GetPlayerHealth(int player_id, double* health);
   int SetPlayerArmour(int player_id, double armour);
   int GetPlayerArmour(int player_id, double* armour);
+  int GetPlayerMoney(int player_id);
+  int GivePlayerMoney(int player_id, int money);
   int GetPlayerName(int player_id, std::string* name, int length);
   int GetPlayerIp(int player_id, std::string* ip_address, int length);
   int SetPlayerVirtualWorld(int player_id, int world_id);

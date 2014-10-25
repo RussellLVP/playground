@@ -56,6 +56,18 @@ void Player::SetArmour(double armour) {
   samp::SetPlayerArmour(player_id_, armour);
 }
 
+int Player::GetMoney() const {
+  return samp::GetPlayerMoney(player_id_);
+}
+
+void Player::GiveMoney(int money) {
+  samp::GivePlayerMoney(player_id_, money);
+}
+
+void Player::SetMoney(int money) {
+  GiveMoney(money - GetMoney());
+}
+
 int Player::id() const {
   return player_id_;
 }

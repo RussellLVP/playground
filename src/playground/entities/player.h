@@ -48,6 +48,17 @@ class Player final : public Entity {
   // whereas values above 100 don't have special visual behavior.
   void SetArmour(double armour);
 
+  // Returns the amount of money currently owned by the player.
+  int GetMoney() const;
+
+  // Gives the player |money|, which will be added to their current total. Values equal to or higher
+  // than a billion will stick to 999.999.999 on the HUD as part of their local interface.
+  void GiveMoney(int money);
+
+  // Sets the amount of money this player has. Values equal to or higher than a billion will stick
+  // to 999.999.999 on the HUD as part of their local interface.
+  void SetMoney(int money);
+
   // Entity implementation.
   virtual int id() const override;
   virtual void GetPosition(Vector3D* position) const override;

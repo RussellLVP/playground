@@ -69,4 +69,16 @@ TEST_F(PlayerServerTest, BasicPlayerFunctionality) {
 
   player().SetArmour(60);
   EXPECT_DOUBLE_EQ(60, player().GetArmour());
+
+  player().SetMoney(1500);
+  EXPECT_EQ(1500, player().GetMoney());
+
+  player().GiveMoney(500);
+  EXPECT_EQ(2000, player().GetMoney());
+
+  player().GiveMoney(-1000);
+  EXPECT_EQ(1000, player().GetMoney());
+
+  player().SetMoney(0);
+  EXPECT_EQ(0, player().GetMoney());
 }

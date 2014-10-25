@@ -33,6 +33,7 @@ struct Player {
   int interior_id;
   double health;
   double armour;
+  int money;
   int virtual_world;
 };
 

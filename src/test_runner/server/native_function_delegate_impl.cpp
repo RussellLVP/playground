@@ -33,6 +33,8 @@ NativeFunctionDelegateImpl::NativeFunctionDelegateImpl(ServerController* server_
   ProvideNative("GetPlayerHealth", &NativeFunctionDelegateImpl::GetPlayerHealth);
   ProvideNative("SetPlayerArmour", &NativeFunctionDelegateImpl::SetPlayerArmour);
   ProvideNative("GetPlayerArmour", &NativeFunctionDelegateImpl::GetPlayerArmour);
+  ProvideNative("GetPlayerMoney", &NativeFunctionDelegateImpl::GetPlayerMoney);
+  ProvideNative("GivePlayerMoney", &NativeFunctionDelegateImpl::GivePlayerMoney);
   ProvideNative("GetPlayerName", &NativeFunctionDelegateImpl::GetPlayerName);
   ProvideNative("GetPlayerIp", &NativeFunctionDelegateImpl::GetPlayerIp);
   ProvideNative("SetPlayerVirtualWorld", &NativeFunctionDelegateImpl::SetPlayerVirtualWorld);
@@ -131,6 +133,19 @@ int NativeFunctionDelegateImpl::GetPlayerArmour(int player_id, double* armour) {
   GET_PLAYER_OR_RETURN(player, player_id);
 
   *armour = player->armour;
+  return 1;
+}
+
+int NativeFunctionDelegateImpl::GetPlayerMoney(int player_id) {
+  GET_PLAYER_OR_RETURN(player, player_id);
+
+  return player->money;
+}
+
+int NativeFunctionDelegateImpl::GivePlayerMoney(int player_id, int money) {
+  GET_PLAYER_OR_RETURN(player, player_id);
+
+  player->money += money;
   return 1;
 }
 

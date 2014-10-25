@@ -21,6 +21,7 @@ Player::Player(const std::string& nickname, const std::string& ip_address)
       interior_id(0),
       health(100),
       armour(0),
+      money(0),
       virtual_world(0) {}
 
 // -------------------------------------------------------------------------------------------------
