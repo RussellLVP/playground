@@ -15,16 +15,47 @@
 
 #include "features/reaction_test/reaction_test.h"
 
+#include <string>
+
 #include "features/reaction_test/reaction_test_question.h"
+#include "playground/communication/chat_event_listener.h"
+#include "playground/communication/chat_manager.h"
 #include "playground/services/service_test.h"
 
-class ReactionTestServiceTest : public ServiceTest<ReactionTest> {
+class ReactionTestServiceTest : public ServiceTest<ReactionTest>,
+                                public ChatEventListener {
+ public:
+  virtual ~ReactionTestServiceTest() {}
 
+  const std::string& last_message() const { return last_message_; }
+
+  // ServiceTest overrides.
+  virtual void SetUp() override {
+    ServiceTest<ReactionTest>::SetUp();
+
+    playground()->chat_manager().AttachEventListener(this);
+    last_message_.clear();
+  }
+
+  // ChatEventListener implementation.
+  virtual void OnDistributeMessageToAll(const std::string& message) {
+    last_message_ = message;
+  }
+
+ private:
+  std::string last_message_;
 };
 
-TEST_F(ReactionTestServiceTest, AlwaysPasses) {
+TEST_F(ReactionTestServiceTest, NewReactionTestConditions) {
+  ASSERT_TRUE(last_message().empty());
 
-  EXPECT_TRUE(true);
+  // No reaction test should be started if there are no players in-game.
+  service().Start();
+  EXPECT_TRUE(last_message().empty());
+
+  ConnectPlayer("CJ");
+  service().Start();
+  EXPECT_FALSE(last_message().empty());
 }
 
 TEST_F(ReactionTestServiceTest, PrizeMoneyComplexityDistribution) {

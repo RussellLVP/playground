@@ -31,6 +31,9 @@ class ChatManager : public samp::ChatEventListener {
   explicit ChatManager(Playground* playground);
   virtual ~ChatManager();
 
+  // Sends |message| to all players on Las Venturas Playground.
+  void DistributeMessage(const std::string& message);
+
   // Registers |listener| as an event listener for any event related to the chat manager.
   // TODO(Russell): Event unregistration should be automatic; make |listener| weak.
   void AttachEventListener(::ChatEventListener* listener);

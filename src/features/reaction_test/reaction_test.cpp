@@ -22,6 +22,7 @@
 #include "features/reaction_test/reaction_test_question.h"
 #include "playground/communication/chat_manager.h"
 #include "playground/entities/player.h"
+#include "playground/entities/player_manager.h"
 #include "playground/playground.h"
 #include "playground/services/service_manager.h"
 
@@ -42,7 +43,7 @@ ReactionTest::ReactionTest(Playground* playground)
   drivers_.push_back(std::make_unique<CalculationDriver>());
   drivers_.push_back(std::make_unique<RandomStringDriver>());
 
-  playground->chat_manager().AttachEventListener(this);
+  chat_manager().AttachEventListener(this);
 
   int start_delay = configuration().GetInteger("start_delay", 30);
   timer_.Start(TimeSpan::FromSeconds(start_delay), false);
@@ -57,12 +58,25 @@ void ReactionTest::Start() {
   if (!drivers_.size())
     return;
 
+  // Don't start a new reaction tests if there are no players in-game.
+  if (!player_manager().size())
+    return;
+
   current_driver_id_ = Random::Next(0, drivers_.size() - 1);
 
   ReactionTestQuestion question = drivers_[current_driver_id_]->CreateQuestion();
   prize_money_ = GetPrizeMoneyForQuestion(question);
 
-  // TODO(Russell): Present |question| to in-game users.
+  // TODO(Russell): Use the MessageBuilder here.
+  std::string message;
+  message += "The first player to ";
+  message += question.action;
+  message += " ";
+  message += question.question;
+  message += " wins $";
+  message += std::to_string(prize_money_);
+
+  chat_manager().DistributeMessage(message);
 
   // Schedule the next reaction test in case no one provides a valid answer.
   timer_.Start(GetNextReactionTestDelay(), false);

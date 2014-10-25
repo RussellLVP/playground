@@ -22,6 +22,7 @@
 #include "playground/services/service_macros.h"
 #include "playground/services/service_registration.h"
 
+class ChatManager;
 class PlayerManager;
 
 // A service is the base class of any component or feature in Las Venturas Playground, which allows
@@ -40,6 +41,7 @@ class Service {
   // Returns the configuration object specific to this server. May be empty it if wasn't defined.
   JsonObject configuration() const;
 
+  ChatManager& chat_manager() const;
   PlayerManager& player_manager() const;
 
  private:

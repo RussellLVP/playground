@@ -28,7 +28,10 @@ class ChatEventListener {
   
   // Triggered when |player| sends |message| to the chatbox. |cancelled| indicates whether a previous
   // listener cancelled distribution of the message to other players.
-  virtual bool OnPlayerText(Player* player, const std::string& message, bool cancelled) = 0;
+  virtual bool OnPlayerText(Player* player, const std::string& message, bool cancelled) { return true; }
+
+  // Triggered when a feature implemented in Las Venturas Playground sends a message to the chatbox.
+  virtual void OnDistributeMessageToAll(const std::string& message) {}
 
 };
 

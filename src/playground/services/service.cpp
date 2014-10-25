@@ -27,6 +27,10 @@ JsonObject Service::configuration() const {
   return playground_->configuration().GetObject("services").GetObject(service_name());
 }
 
+ChatManager& Service::chat_manager() const {
+  return playground_->chat_manager();
+}
+
 PlayerManager& Service::player_manager() const {
   return playground_->player_manager();
 }

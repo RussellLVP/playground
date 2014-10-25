@@ -25,6 +25,15 @@ ChatManager::ChatManager(Playground* playground)
 
 ChatManager::~ChatManager() {}
 
+void ChatManager::DistributeMessage(const std::string& message) {
+  // TODO(Russell): Actually distribute the message to all in-game players.
+
+  LOG(INFO) << "Distribute: [[" << message << "]]";
+
+  for (auto* listener : event_listeners_)
+    listener->OnDistributeMessageToAll(message);
+}
+
 void ChatManager::AttachEventListener(::ChatEventListener* listener) {
   event_listeners_.push_back(listener);
 }
