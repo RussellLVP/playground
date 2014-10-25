@@ -21,6 +21,7 @@
 #include "features/reaction_test/drivers/random_string_driver.h"
 #include "features/reaction_test/reaction_test_question.h"
 #include "playground/communication/chat_manager.h"
+#include "playground/communication/message_builder.h"
 #include "playground/entities/player.h"
 #include "playground/entities/player_manager.h"
 #include "playground/playground.h"
@@ -67,14 +68,13 @@ void ReactionTest::Start() {
   ReactionTestQuestion question = drivers_[current_driver_id_]->CreateQuestion();
   prize_money_ = GetPrizeMoneyForQuestion(question);
 
-  // TODO(Russell): Use the MessageBuilder here.
-  std::string message;
-  message += "The first player to ";
-  message += question.action;
-  message += " ";
-  message += question.question;
-  message += " wins $";
-  message += std::to_string(prize_money_);
+  MessageBuilder message("The first player to ");
+  message.Append(question.action)
+         .Append(" ")
+         .Append(question.question, Color(50, 50, 50))  // TODO(Russell): Use a highlight.
+         .Append(" wins ")
+         .AppendMoney(prize_money_, Color(50, 50, 50))  // TODO(Russell): Use a highlight.
+         .Append(".");
 
   chat_manager().DistributeMessage(message);
 

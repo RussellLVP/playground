@@ -17,6 +17,7 @@
 
 #include "base/logging.h"
 #include "playground/communication/chat_event_listener.h"
+#include "playground/communication/message_builder.h"
 #include "playground/entities/player_manager.h"
 #include "playground/playground.h"
 
@@ -24,6 +25,10 @@ ChatManager::ChatManager(Playground* playground)
     : playground_(playground) {}
 
 ChatManager::~ChatManager() {}
+
+void ChatManager::DistributeMessage(const MessageBuilder& builder) {
+  DistributeMessage(builder.ToString());
+}
 
 void ChatManager::DistributeMessage(const std::string& message) {
   // TODO(Russell): Actually distribute the message to all in-game players.

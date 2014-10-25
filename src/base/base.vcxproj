@@ -87,6 +87,7 @@
     <ClCompile Include="time_unittest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="color.h" />
     <ClInclude Include="json\json-forwards.h" />
     <ClInclude Include="json\json.h" />
     <ClInclude Include="json\json_object.h" />

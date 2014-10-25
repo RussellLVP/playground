@@ -22,6 +22,7 @@
 #include "server/listeners/chat_event_listener.h"
 
 class ChatEventListener;
+class MessageBuilder;
 class Playground;
 
 // The chat manager is responsible for curating the messages which players send to the chatbox on
@@ -32,6 +33,7 @@ class ChatManager : public samp::ChatEventListener {
   virtual ~ChatManager();
 
   // Sends |message| to all players on Las Venturas Playground.
+  void DistributeMessage(const MessageBuilder& builder);
   void DistributeMessage(const std::string& message);
 
   // Registers |listener| as an event listener for any event related to the chat manager.

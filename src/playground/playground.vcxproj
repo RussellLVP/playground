@@ -13,6 +13,8 @@
   <ItemGroup>
     <ClCompile Include="communication\chat_manager.cpp" />
     <ClCompile Include="communication\chat_manager_servertest.cpp" />
+    <ClCompile Include="communication\message_builder.cpp" />
+    <ClCompile Include="communication\message_builder_unittest.cpp" />
     <ClCompile Include="entities\player.cpp" />
     <ClCompile Include="entities\player_manager.cpp" />
     <ClCompile Include="entities\player_manager_servertest.cpp" />
@@ -33,6 +35,7 @@
   <ItemGroup>
     <ClInclude Include="communication\chat_event_listener.h" />
     <ClInclude Include="communication\chat_manager.h" />
+    <ClInclude Include="communication\message_builder.h" />
     <ClInclude Include="entities\entity.h" />
     <ClInclude Include="entities\entity_manager.h" />
     <ClInclude Include="entities\player.h" />
