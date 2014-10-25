@@ -35,6 +35,17 @@ class JsonObject {
   // using a nullptr as the hosting object.
   bool IsValid() const;
 
+  // Returns whether this JsonObject is of the given type.
+  bool IsInteger() const;
+  bool IsUnsignedInteger() const;
+  bool IsFloat() const;
+  bool IsDouble() const;
+  bool IsArray() const;
+  bool IsObject() const;
+
+  // Returns the number of items in this object if it's an array.
+  unsigned int size() const;
+
   // Returns if this object contains |key|, referring to a value of any type.
   bool Contains(const std::string& key) const;
 

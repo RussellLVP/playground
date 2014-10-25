@@ -61,6 +61,34 @@ bool JsonObject::IsValid() const {
   return object_ && object_->isObject();
 }
 
+bool JsonObject::IsInteger() const {
+  return object_ && object_->isInt64();
+}
+
+bool JsonObject::IsUnsignedInteger() const {
+  return object_ && object_->isUInt64();
+}
+
+bool JsonObject::IsFloat() const {
+  return object_ && object_->isDouble();
+}
+
+bool JsonObject::IsDouble() const {
+  return object_ && object_->isDouble();
+}
+
+bool JsonObject::IsArray() const {
+  return object_ && object_->isArray();
+}
+
+bool JsonObject::IsObject() const {
+  return object_ && object_->isObject();
+}
+
+unsigned int JsonObject::size() const {
+  return IsArray() ? object_->size() : 0;
+}
+
 bool JsonObject::Contains(const std::string& key) const {
   return IsValid() && object_->isMember(key);
 }
