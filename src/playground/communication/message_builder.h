@@ -42,7 +42,7 @@ class MessageBuilder {
   std::string ToString() const;
 
   // Returns the base color of this message.
-  const Color& color() const;
+  const Color& color() const { return color_; }
 
  private:
   // Sets the color in the stream to match |color|.

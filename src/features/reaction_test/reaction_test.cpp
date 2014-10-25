@@ -26,6 +26,7 @@
 #include "playground/entities/player_manager.h"
 #include "playground/playground.h"
 #include "playground/services/service_manager.h"
+#include "playground/theme.h"
 
 DEFINE_SERVICE(ReactionTest);
 
@@ -68,12 +69,12 @@ void ReactionTest::Start() {
   ReactionTestQuestion question = drivers_[current_driver_id_]->CreateQuestion();
   prize_money_ = GetPrizeMoneyForQuestion(question);
 
-  MessageBuilder message("The first player to ");
+  MessageBuilder message("The first player to ", theme::kReactionTestColor);
   message.Append(question.action)
          .Append(" ")
-         .Append(question.question, Color(50, 50, 50))  // TODO(Russell): Use a highlight.
+         .Append(question.question, theme::kReactionTestHighlightColor)
          .Append(" wins ")
-         .AppendMoney(prize_money_, Color(50, 50, 50))  // TODO(Russell): Use a highlight.
+         .AppendMoney(prize_money_, theme::kReactionTestHighlightColor)
          .Append(".");
 
   chat_manager().DistributeMessage(message);

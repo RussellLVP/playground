@@ -33,13 +33,17 @@ struct Color {
         G(other.G),
         B(other.B) {}
 
-  bool operator==(const Color& other) {
+  int ToInteger() const {
+    return (R << 16) + (G << 8) + B;
+  }
+
+  bool operator==(const Color& other) const {
     return other.R == R &&
            other.G == G &&
            other.B == B;
   }
 
-  bool operator!=(const Color& other) {
+  bool operator!=(const Color& other) const {
     return other.R != R ||
            other.G != G ||
            other.B != B;
