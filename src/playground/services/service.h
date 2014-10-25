@@ -18,9 +18,11 @@
 
 #include <memory>
 
-#include "playground/playground.h"
+#include "base/json/json_object.h"
 #include "playground/services/service_macros.h"
 #include "playground/services/service_registration.h"
+
+class PlayerManager;
 
 // A service is the base class of any component or feature in Las Venturas Playground, which allows
 // services to conveniently access other internal systems. Services are owned by the ServiceManager.
@@ -29,16 +31,21 @@ class Service {
   virtual ~Service() {}
 
  protected:
-  explicit Service(Playground* playground)
-      : playground_(playground) {}
+  explicit Service(Playground* playground);
+
+  // Returns the name of the current service. Must be implemented in each service, which will be
+  // done automatically by the DEFINE_SERVICE() macro.
+  virtual const char* service_name() const = 0;
 
   // Called when the service has been installed, and should be used to register the service with
   // event listeners and activate timers. This should not be done in the constructor, as it won't
   // be possible to create a weak pointer based on the service yet at that point.
   virtual void OnServiceInstalled() {}
 
-  // Returns the player manager owned by the Playground instance.
-  PlayerManager& GetPlayerManager() const { return playground_->player_manager(); }
+  // Returns the configuration object specific to this server. May be empty it if wasn't defined.
+  JsonObject configuration() const;
+
+  PlayerManager& player_manager() const;
 
  private:
   // Weak reference to the Playground instance that owns this service.

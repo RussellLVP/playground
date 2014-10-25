@@ -23,7 +23,8 @@ DEFINE_SERVICE(ReactionTest);
 ReactionTest::ReactionTest(Playground* playground)
     : Service(playground),
       timer_(std::bind(&ReactionTest::Start, this)) {
-  timer_.Start(TimeSpan::FromSeconds(30), false);
+  int start_delay = configuration().GetInteger("start_delay", 30);
+  timer_.Start(TimeSpan::FromSeconds(start_delay), false);
 }
 
 void ReactionTest::Start() {
@@ -32,5 +33,8 @@ void ReactionTest::Start() {
 }
 
 TimeSpan ReactionTest::GetNextReactionTestDelay() {
-  return TimeSpan::FromSeconds(Random::Next(120, 300));
+  int minimum_delay = configuration().GetInteger("minimum_delay", 120);
+  int maximum_delay = configuration().GetInteger("maximum_delay", 300);
+
+  return TimeSpan::FromSeconds(Random::Next(minimum_delay, maximum_delay));
 }

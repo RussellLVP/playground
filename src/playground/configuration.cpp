@@ -27,7 +27,6 @@ namespace {
 const char kDefaultConfiguration[] = R"json(
 {
 
-
 })json";
 
 }  // namespace

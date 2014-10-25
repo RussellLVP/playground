@@ -32,7 +32,7 @@ void ServiceManager::RegisterService(const char* name, ServiceRegistration* regi
 ServiceManager::ServiceManager() {}
 
 void ServiceManager::Initialize(Playground* playground) {
-  TemporaryChange<Playground*>(&playground_, playground);
+  TemporaryChange<Playground*> change(&playground_, playground);
   for (auto& service : s_registered_services_) {
     if (services_.find(service.first) != services_.end())
       continue;

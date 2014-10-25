@@ -15,3 +15,18 @@
 
 #include "playground/services/service.h"
 
+#include "base/logging.h"
+#include "playground/playground.h"
+
+Service::Service(Playground* playground)
+    : playground_(playground) {
+  DCHECK(playground);
+}
+
+JsonObject Service::configuration() const {
+  return playground_->configuration().GetObject("services").GetObject(service_name());
+}
+
+PlayerManager& Service::player_manager() const {
+  return playground_->player_manager();
+}

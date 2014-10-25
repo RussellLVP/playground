@@ -26,6 +26,7 @@
 // of mathematical nature ("calculate (60 - 15) * 2").
 class ReactionTest : public Service {
   DECLARE_SERVICE(ReactionTest);
+
  public:
   // Starts a new reaction test by inviting all players to answer to a puzzle. The test will not be
   // started if there are no players in-game.

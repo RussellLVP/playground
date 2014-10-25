@@ -22,6 +22,7 @@
 #define DECLARE_SERVICE(Implementation) \
  public: \
   static const char* GetName() { return #Implementation; } \
+  virtual const char* service_name() const override; \
  private: \
   friend struct ServiceRegistrationImpl<Implementation>; \
   friend class Service;
@@ -29,6 +30,7 @@
 // Defines the service which is implemented in the |Implementation| class. This will create a static
 // initializer that will register the service with the service manager.
 #define DEFINE_SERVICE(Implementation) \
-  ServiceRegistrationImpl<Implementation> registration;
+  ServiceRegistrationImpl<Implementation> registration; \
+  const char* Implementation::service_name() const { return #Implementation; }
 
 #endif  // PLAYGROUND_SERVICES_SERVICE_MACROS_H_
