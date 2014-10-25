@@ -13,13 +13,48 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "playground/services/service_test.h"
-
 #include "features/reaction_test/reaction_test.h"
+
+#include "features/reaction_test/reaction_test_question.h"
+#include "playground/services/service_test.h"
 
 class ReactionTestServiceTest : public ServiceTest<ReactionTest> {};
 
 TEST_F(ReactionTestServiceTest, AlwaysPasses) {
   
   EXPECT_TRUE(true);
+}
+
+TEST_F(ReactionTestServiceTest, PrizeMoneyComplexityDistribution) {
+  const int kIterations = 500;
+
+  ReactionTestQuestion question;
+  uint64_t easy_total = 0,
+           normal_total = 0,
+           hard_total = 0;
+
+  question.complexity = ReactionTestQuestion::EasyQuestion;
+  for (int i = 0; i < kIterations; ++i)
+    easy_total += service().GetPrizeMoneyForQuestion(question);
+
+  easy_total /= kIterations;
+
+  question.complexity = ReactionTestQuestion::NormalQuestion;
+  for (int i = 0; i < kIterations; ++i)
+    normal_total += service().GetPrizeMoneyForQuestion(question);
+
+  normal_total /= kIterations;
+
+  question.complexity = ReactionTestQuestion::HardQuestion;
+  for (int i = 0; i < kIterations; ++i)
+    hard_total += service().GetPrizeMoneyForQuestion(question);
+
+  hard_total /= kIterations;
+
+  EXPECT_GT(easy_total, 0);
+  EXPECT_GT(normal_total, 0);
+  EXPECT_GT(hard_total, 0);
+
+  EXPECT_LT(easy_total, normal_total);
+  EXPECT_LT(normal_total, hard_total);
 }

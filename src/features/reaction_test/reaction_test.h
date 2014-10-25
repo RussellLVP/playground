@@ -20,6 +20,7 @@
 #include <string>
 #include <vector>
 
+#include "gtest/gtest_prod.h"
 #include "playground/services/service.h"
 #include "playground/services/timers/timer.h"
 
@@ -61,6 +62,8 @@ class ReactionTest : public Service {
 
   // Timer which will trigger creation of the next reaction test.
   Timer timer_;
+
+  FRIEND_TEST(ReactionTestServiceTest, PrizeMoneyComplexityDistribution);
 };
 
 #endif  // FEATURES_REACTION_TEST_REACTION_TEST_H_

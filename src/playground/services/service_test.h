@@ -28,7 +28,7 @@ template <class ServiceImpl>
 class ServiceTest : public ServerTest {
  protected:
   ServiceImpl& service() {
-    ServiceBase* service = playground()->service_manager().GetService(ServiceImpl::GetName());
+    Service* service = playground()->service_manager().GetService(ServiceImpl::GetName());
     CHECK(service) << "The " << ServiceImpl::GetName() << " service has not been defined.";
 
     return *dynamic_cast<ServiceImpl*>(service);
