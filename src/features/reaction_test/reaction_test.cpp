@@ -80,7 +80,8 @@ bool ReactionTest::OnPlayerText(Player* player, const std::string& message, bool
   if (!drivers_[current_driver_id_]->IsCorrect(message))
     return true;  // the message does not contain the correct answer.
 
-  // TODO(Russell): |player| won. Give them money and tell others about it.
+  // TODO(Russell): |player| won. Tell everyone about it.
+  player->GiveMoney(prize_money_);
 
   return true;
 }
