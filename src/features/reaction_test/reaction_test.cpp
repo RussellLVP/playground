@@ -96,13 +96,21 @@ bool ReactionTest::OnPlayerText(Player* player, const std::string& message, bool
 
   if (!drivers_[current_driver_id_]->IsCorrect(message))
     return true;  // the message does not contain the correct answer.
-  
+ 
   double duration = static_cast<double>((Time::Now() - start_time_).InMilliseconds()) / 1000.0;
-  LOG(INFO) << "Duration: " << duration;
+  
+  // {player} has won the reaction test in {time} seconds. Congratulations!
+  MessageBuilder congratulation(theme::kReactionTestColor);
+  congratulation.Append(player->name(), theme::kReactionTestHighlightColor)
+                .Append(" has won the reaction test in ")
+                .Append(duration, theme::kReactionTestHighlightColor)
+                .Append(" seconds. Congratulations!");
 
-  // TODO(Russell): |player| won. Tell everyone about it.
+  chat_manager().DistributeMessage(congratulation);
+
   player->GiveMoney(prize_money_);
 
+  current_driver_id_ = kInvalidDriverId;
   return true;
 }
 

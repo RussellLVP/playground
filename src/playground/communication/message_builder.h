@@ -33,6 +33,10 @@ class MessageBuilder {
   // Appends |value| to the message, optionally specifying the color it should be written in.
   MessageBuilder& Append(const std::string& value);
   MessageBuilder& Append(const std::string& value, Color color);
+  MessageBuilder& Append(double value);
+  MessageBuilder& Append(double value, int decimals);
+  MessageBuilder& Append(double value, Color color);
+  MessageBuilder& Append(double value, int decimals, Color color);
 
   // Append monetary values to the message. The number will automatically be formatted.
   MessageBuilder& AppendMoney(int money);

@@ -59,6 +59,26 @@ MessageBuilder& MessageBuilder::Append(const std::string& value, Color color) {
   return *this;
 }
 
+MessageBuilder& MessageBuilder::Append(double value) {
+  return Append(value, 3, color_);
+}
+
+MessageBuilder& MessageBuilder::Append(double value, int decimals) {
+  return Append(value, decimals, color_);
+}
+
+MessageBuilder& MessageBuilder::Append(double value, Color color) {
+  return Append(value, 3, color);
+}
+
+MessageBuilder& MessageBuilder::Append(double value, int decimals, Color color) {
+  if (current_color_ != color)
+    SetColor(color);
+
+  stream_ << std::setprecision(decimals) << value;
+  return *this;
+}
+
 MessageBuilder& MessageBuilder::AppendMoney(int money) {
   return AppendMoney(money, color_);
 }
