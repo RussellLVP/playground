@@ -15,14 +15,48 @@
 
 #include "features/reaction_test/drivers/random_string_driver.h"
 
+#include <algorithm>
+
+#include "base/random.h"
+
+namespace {
+
+// Valid characters to be used in reaction tests. Some characters have been omitted because they
+// look very similar to other characters, which may lead to confused players.
+const char kValidCharacters[] = "ABCDEFGHJKLMNPQRSTUVWXYZ123456789";
+
+}  // namespace
+
 RandomStringDriver::RandomStringDriver() {}
 
 RandomStringDriver::~RandomStringDriver() {}
 
 ReactionTestQuestion RandomStringDriver::CreateQuestion() {
-  return ReactionTestQuestion();
+  answer_.clear();
+
+  ReactionTestQuestion question;
+  question.complexity = ReactionTestQuestion::EasyQuestion;
+  question.action = "repeat";
+
+  int question_length = 6;
+
+  // There's a 25% chance that we'll create a normal-difficulty question, which has ten characters.
+  // All other questions will be of easy difficulty and exist of six characters.
+  if (Random::Next(0, 4) == 0) {
+    question.complexity = ReactionTestQuestion::NormalQuestion;
+    question_length = 10;
+  }
+
+  // Generate the string which should be repeated by the player.
+  for (int i = 0; i < question_length; ++i)
+    answer_.insert(answer_.end(), 1, kValidCharacters[Random::Next(0, sizeof(kValidCharacters) - 1)]);
+
+  return question;
 }
 
 bool RandomStringDriver::IsCorrect(const std::string& answer) const {
-  return answer == answer_;
+  std::string uppercase = answer;
+  std::transform(uppercase.begin(), uppercase.end(), uppercase.begin(), toupper);
+
+  return uppercase == answer_;
 }
