@@ -16,6 +16,8 @@
 #ifndef FEATURES_REACTION_TEST_DRIVERS_RANDOM_STRING_DRIVER_
 #define FEATURES_REACTION_TEST_DRIVERS_RANDOM_STRING_DRIVER_
 
+#include <string>
+
 #include "features/reaction_test/reaction_test_driver.h"
 
 // Reaction test driver which presents a random string to the user. Given answers must contain the
@@ -25,11 +27,15 @@ class RandomStringDriver : public ReactionTestDriver {
   RandomStringDriver();
   virtual ~RandomStringDriver();
 
+  // Returns the answer to the most recently started reaction test.
+  std::string answer() const { return answer_; }
+
   // ReactionTestDriver implementation.
   virtual ReactionTestQuestion CreateQuestion() override;
   virtual bool IsCorrect(const std::string& answer) const override;
 
  private:
+  std::string answer_;
 };
 
 #endif  // FEATURES_REACTION_TEST_DRIVERS_RANDOM_STRING_DRIVER_

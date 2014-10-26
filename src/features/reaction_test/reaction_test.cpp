@@ -65,10 +65,12 @@ void ReactionTest::Start() {
     return;
 
   current_driver_id_ = Random::Next(0, drivers_.size() - 1);
+  start_time_ = Time::Now();
 
   ReactionTestQuestion question = drivers_[current_driver_id_]->CreateQuestion();
   prize_money_ = GetPrizeMoneyForQuestion(question);
 
+  // The first person to {action} {question} wins ${amount}.
   MessageBuilder message("The first player to ", theme::kReactionTestColor);
   message.Append(question.action)
          .Append(" ")
@@ -94,6 +96,9 @@ bool ReactionTest::OnPlayerText(Player* player, const std::string& message, bool
 
   if (!drivers_[current_driver_id_]->IsCorrect(message))
     return true;  // the message does not contain the correct answer.
+  
+  double duration = static_cast<double>((Time::Now() - start_time_).InMilliseconds()) / 1000.0;
+  LOG(INFO) << "Duration: " << duration;
 
   // TODO(Russell): |player| won. Tell everyone about it.
   player->GiveMoney(prize_money_);
@@ -128,4 +133,11 @@ int ReactionTest::GetPrizeMoneyForQuestion(const ReactionTestQuestion& question)
   }
 
   return static_cast<int>(multiplier * Random::Next(minimum_prize, maximum_prize));
+}
+
+void ReactionTest::OverrideDriverForTesting(ReactionTestDriver* driver) {
+  drivers_.clear();
+
+  DCHECK(driver);
+  drivers_.push_back(std::unique_ptr<ReactionTestDriver>(driver));
 }

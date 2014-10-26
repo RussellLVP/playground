@@ -25,11 +25,15 @@ class CalculationDriver : public ReactionTestDriver {
   CalculationDriver();
   virtual ~CalculationDriver();
 
+  // Returns the answer to the most recently started reaction test.
+  std::string answer() const { return answer_; }
+
   // ReactionTestDriver implementation.
   virtual ReactionTestQuestion CreateQuestion() override;
   virtual bool IsCorrect(const std::string& answer) const override;
 
  private:
+  std::string answer_;
 };
 
 #endif  // FEATURES_REACTION_TEST_DRIVERS_CALCULATION_DRIVER_H_

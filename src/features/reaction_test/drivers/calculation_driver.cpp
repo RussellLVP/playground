@@ -24,5 +24,5 @@ ReactionTestQuestion CalculationDriver::CreateQuestion() {
 }
 
 bool CalculationDriver::IsCorrect(const std::string& answer) const {
-  return false;
+  return answer_ == answer;
 }

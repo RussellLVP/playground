@@ -15,11 +15,16 @@
 
 #include "features/reaction_test/reaction_test.h"
 
+#include <algorithm>
 #include <string>
 
+#include "features/reaction_test/drivers/calculation_driver.h"
+#include "features/reaction_test/drivers/random_string_driver.h"
 #include "features/reaction_test/reaction_test_question.h"
 #include "playground/communication/chat_event_listener.h"
 #include "playground/communication/chat_manager.h"
+#include "playground/entities/player.h"
+#include "playground/entities/player_manager.h"
 #include "playground/services/service_test.h"
 
 class ReactionTestServiceTest : public ServiceTest<ReactionTest>,
@@ -56,6 +61,50 @@ TEST_F(ReactionTestServiceTest, NewReactionTestConditions) {
   ConnectPlayer("CJ");
   service().Start();
   EXPECT_FALSE(last_message().empty());
+}
+
+TEST_F(ReactionTestServiceTest, CalculationDriverTest) {
+  CalculationDriver* driver = new CalculationDriver();
+  service().OverrideDriverForTesting(driver);
+
+  int player_id = ConnectPlayer("CJ");
+
+  Player* player = playground()->player_manager().Get(player_id);
+  ASSERT_TRUE(player != nullptr);
+
+  int money = player->GetMoney();
+
+  service().Start();
+  EXPECT_FALSE(last_message().empty());
+  service().OnPlayerText(player, driver->answer(), false);
+  EXPECT_GT(player->GetMoney(), money);
+}
+
+TEST_F(ReactionTestServiceTest, RandomStringDriverTest) {
+  RandomStringDriver* driver = new RandomStringDriver();
+  service().OverrideDriverForTesting(driver);
+
+  int player_id = ConnectPlayer("CJ");
+
+  Player* player = playground()->player_manager().Get(player_id);
+  ASSERT_TRUE(player != nullptr);
+
+  int money = player->GetMoney();
+
+  service().Start();
+  EXPECT_FALSE(last_message().empty());
+  service().OnPlayerText(player, driver->answer(), false);
+  EXPECT_GT(player->GetMoney(), money);
+
+  money = player->GetMoney();
+  service().Start();
+  
+  std::string answer = driver->answer();
+  std::transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
+  ASSERT_NE(answer, driver->answer());
+
+  service().OnPlayerText(player, answer, false);
+  EXPECT_GT(player->GetMoney(), money);
 }
 
 TEST_F(ReactionTestServiceTest, PrizeMoneyComplexityDistribution) {

@@ -24,5 +24,5 @@ ReactionTestQuestion RandomStringDriver::CreateQuestion() {
 }
 
 bool RandomStringDriver::IsCorrect(const std::string& answer) const {
-  return false;
+  return answer == answer_;
 }

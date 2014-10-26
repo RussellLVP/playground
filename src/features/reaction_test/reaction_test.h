@@ -56,11 +56,18 @@ class ReactionTest : public Service,
   // by the complexity of the question, as well by a certain amount of randomness.
   int GetPrizeMoneyForQuestion(const ReactionTestQuestion& question) const;
 
+  // Enables tests to override the available drivers for testing. All currently registered drivers
+  // will be removed, and |driver| will be inserted as the only one. Ownership is passed.
+  void OverrideDriverForTesting(ReactionTestDriver* driver);
+
   // Vector of drivers which can produce questions and answers for the reaction tests.
   std::vector<std::unique_ptr<ReactionTestDriver>> drivers_;
 
   // Id of the driver which is handling the current test, if any. -1 means that no test is active.
   int current_driver_id_;
+
+  // Time at which the current reaction test started.
+  Time start_time_;
 
   // Amount of prize money offered for the player solving the current reaction test.
   int prize_money_;
@@ -68,6 +75,8 @@ class ReactionTest : public Service,
   // Timer which will trigger creation of the next reaction test.
   Timer timer_;
 
+  FRIEND_TEST(ReactionTestServiceTest, CalculationDriverTest);
+  FRIEND_TEST(ReactionTestServiceTest, RandomStringDriverTest);
   FRIEND_TEST(ReactionTestServiceTest, PrizeMoneyComplexityDistribution);
 };
 
